@@ -1,0 +1,70 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/login.css" rel="stylesheet" type="text/css" />
+<div class="container" style="background:white;">
+    <div class="topic">
+        <div class="row">
+            <div class="col-xs-7 col-xs-offset-1 set_title"><span>头像设置</span></div>
+        </div>
+    </div>
+    <div class="install">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="row">
+                    <div class="col-xs-3 col-xs-offset-2">
+                        <dl>
+                            <dt><img src="__THEME__/image/yw-install1.png"/></dt>
+                            <dd>头像设置</dd>
+                        </dl>
+                    </div>
+                    <div class="col-xs-3">
+                        <dl>
+                            <dt><img src="__THEME__/image/yw-install4.png"/></dt>
+                            <dd>基本信息</dd>
+                        </dl>
+                    </div>
+                    <div class="col-xs-3">
+                        <dl>
+                            <dt><img src="__THEME__/image/yw-install4.png"/></dt>
+                            <dd>热点话题</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="page-wrap">
+        <div class="reg-wrap">
+            <!--<div class="title">{:L('PUBLIC_UPLOAD_IMAGE')}</div>-->
+            <div class="reg-main">
+                <!--注册步骤-->
+                <div class="article article-avatar boxShadow portrait">
+                    <div class="item-step2 row">
+                        {:W('Avatar',array('avatar'=>$user_info,'defaultImg'=>$user_info['avatar_big'],'callback'=>'nextStep'))}                   
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-md-offset-4"><php>if(!$need_photo){</php><a class="btn-green-small" href="javascript:void(0);" onclick="nextStep();">{:L('PUBLIC_BACKUP')}</a><php>}</php></div>
+                    </div>
+                    
+                </div>
+                <!--//注册步骤-->
+            </div>
+        </div>
+    </div>
+</div>
+    
+<script type="text/javascript">
+    var nextStep = function(){
+    	var tag_open = '{$tag_open}';
+    	var interester_open = '{$interester_open}';
+    	if((tag_open==0) && (interester_open==0)){
+    			location.href = "<php>echo U('public/Register/doStep4')</php>";
+    	}else{
+    		if(tag_open==1){
+    			location.href = "<php>echo U('public/Register/step3');</php>";
+    		}else{
+    			location.href = "<php>echo U('public/Register/step4');</php>";
+    		}
+    	}  
+    };
+</script>
+<include file="__THEME__/public_footer" />

@@ -1,0 +1,64 @@
+<select class="form-control birthday1" name="industryP" id="industryP" onchange="changeIndustry(this)"></select>
+<select class="form-control birthday1" name="industryC" id="industryC" onchange="changeIndustry(this)"></select>
+<input event-node="input_industry" type="hidden" id="indus_current" name="industry_ids" value="{$selected}"/>
+<input type="hidden" id="indus_current_name" name="industry_names" value="{$industry_names}" />
+
+<script type="text/javascript">
+var indus_json = eval({$list});			// 地区JSON数据
+var indus_arrNodeChild = new Array();		// 子树数组
+var indus_selected = '{$selected}';		// 默认选中的地区
+
+// 行业初始化
+var init = function() {
+	indus_selected = indus_selected == '' ? $('#indus_current').val() : indus_selected;
+	var arrSelect = indus_selected.split(',');
+	// 获取树形结构的子树
+	var option1 = '<option value="0">请选择</option>';
+	var option2 = '<option value="0">请选择</option>';
+	$.each(indus_json, function(i, n) {
+		var selected1 = (n.id == arrSelect[0]) ? 'selected="selected"' : '';
+		option1 += '<option value="' + n.id + '" ' + selected1 + '>' + n.title + '</option>'
+		indus_arrNodeChild[parseInt(i.replace(/industry_/, ''))] = n.child;
+		if(n.child !== null) {
+			$.each(n.child, function(ii, nn) {
+				if(n.id == arrSelect[0]) {
+					var selected2 = (nn.id == arrSelect[1]) ? 'selected="selected"' : '';
+					option2 += '<option value="' + nn.id + '" ' + selected2 + '>' + nn.title + '</option>';
+				}
+				indus_arrNodeChild[ii] = nn.child;
+			});
+		}
+	});
+	$('#industryP').append(option1);
+	$('#industryC').append(option2);
+};
+// 改变行业方法
+var changeIndustry = function(obj) {
+	var id = $(obj).attr('id');
+	var val = $(obj).val();
+	if(id == 'industryP'){
+		if(indus_arrNodeChild[val] !== null) {
+			if(val == 0) {
+				$('#industryC').html('<option value="0">请选择</option>');
+			}
+			var select = '<option value="0">请选择</option>';
+			$.each(indus_arrNodeChild[val], function(i, n) {
+				select += '<option value="' + n.id + '">' + n.title + '</option>';
+			});
+			$('#industryC').html(select);
+		}
+	}
+	
+			
+	var current = new Array();
+	typeof($('#industryP').val()) !== 'undefined' && current.push($('#industryP').val());
+	typeof($('#industryC').val()) !== 'undefined' && current.push($('#industryC').val());
+	$('#indus_current').val(current.join(','));
+	var currentName = new Array();
+	$('#industryP option:selected').html() != '请选择' && currentName.push($('#industryP option:selected').html());
+	$('#industryC option:selected').html() != '请选择' && currentName.push($('#industryC option:selected').html());
+	$('#indus_current_name').val(currentName.join(' '));
+} 
+
+init();
+</script>

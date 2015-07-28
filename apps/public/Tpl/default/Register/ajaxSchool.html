@@ -1,0 +1,118 @@
+<div class="School_province School_border">
+	<volist name="province" id="v" key="k">
+		<span class="prov_{$v.area_id}"><a href="javascript:;" onclick="getRes({$v.area_id})" >{$v.title}</a></span>
+	</volist>
+</div>
+<div class="School_city School_border">
+</div>
+<div class="School_area School_border" style="display:none">
+</div>
+<div class="School_border" style="  border-bottom: 0;margin-bottom: 0;padding:3px 8px;">在<b id="School_Local">东城区</b>的学校中搜索：<input type="text" onkeyup="search_School(this)"/></div>
+<div class="School_con School_border"><div class="row"></div>
+</div>
+<style>
+	.School_border {border: 1px solid #aeaeae;padding: 2px 2px;margin-bottom: 8px;}
+	.School_border span {padding: 3px 9px;display: inline-block;}
+	.School_border span.active {background: blue;border-radius: 3px;}
+	.School_border span.active a {color: white;}
+	.School_con .row {margin: 0; overflow-y: scroll; max-height: 400px;}
+
+</style>
+<script>
+	var arr= '';
+	var t = '{$type}';
+	function getRes(id) {
+	/*  }); */
+	 	
+	 	$('.prov_'+id).addClass('active');
+	 	$('.prov_'+id).siblings().removeClass('active');
+		$.post("{:U('public/School/getSchool')}",{t: t,id:id},function(data){
+			arr = data;
+			if(typeof(data.school) == 'object'){
+				$('.School_city').html('');
+				var html = '';
+				var tmpArr = data.school;
+				for(var a in tmpArr){
+					html += '<span class="col-xs-3 school_'+tmpArr[a].school_id+'"><a href="javascript:;" onclick="choose_School('+tmpArr[a].school_id+')">'+tmpArr[a].title+'</a></span>';
+				}
+				$('.School_con .row').html(html);			
+			}else{
+				var html = '';
+				for(var o in arr){
+				 	html += '<span class="city_'+arr[o].id+'" data-id="'+arr[o].id+'"><a href="javascript:;" onclick="getCity('+arr[o].id+')" data-id="'+arr[o].id+'">'+arr[o].title+'</a></span>';
+				}
+				$('.School_city').html(html);
+				$('.School_city span:first a').click();
+			}
+	        showSchoolLocal();
+		},'json');
+	}
+
+	function getCity(id){
+		$('.city_'+id).addClass('active');
+	 	$('.city_'+id).siblings().removeClass('active');
+		if(arr[id].child){
+			var tmpArr = arr[id].child;
+			var html = '';
+			for(var a in tmpArr){
+				html += '<span class="area_'+tmpArr[a].id+'"><a href="javascript:;" onclick="getSchool('+tmpArr[a].id+')">'+tmpArr[a].title+'</a></span>';
+			}
+			$('.School_area').html(html).css('display','block');
+			$('.School_area span:first a').click();
+		} else if (arr[id].school){
+			$('.School_area').html('').css('display', 'none');
+			var html = '';
+			var tmpArr = arr[id].school;
+			for(var a in tmpArr){
+				html += '<span class="col-xs-3 school_'+tmpArr[a].school_id+'"><a href="javascript:;" onclick="choose_School('+tmpArr[a].school_id+')">'+tmpArr[a].title+'</a></span>';
+			}
+			$('.School_con .row').html(html);
+		} else {
+			$('.School_area').html('').css('display', 'none');
+		}
+		showSchoolLocal();
+	}
+
+	function getSchool(id){
+		$('.area_'+id).addClass('active');
+		$('.area_'+id).siblings().removeClass('active');
+		var id1 = $('.School_city span.active').attr('data-id');
+		var tmpArr = arr[id1].child;
+		var school_tmpArr = tmpArr[id].school;
+		var html = '';
+		for(var a in school_tmpArr){
+			//alert($school_tmpArr[a].school_id);
+			html += '<span class="col-xs-3 school_'+school_tmpArr[a].school_id+'"><a href="javascript:;" onclick="choose_School('+school_tmpArr[a].school_id+')">'+school_tmpArr[a].title+'</a></span>';
+		}
+		html = html == '' ? '<span class="col-xs-12" style="text-align: center;">暂无该地学校信息</span>' : html;
+		$('.School_con .row').html(html);
+		showSchoolLocal();
+	}
+
+	function choose_School(id) {
+		var title = $('.modal-body .school_'+id).children('a').html();
+		$('input[name='+t+'_school]').val(title);
+		$('input[name='+t+'_id').val(id);
+		$('.modal-header .close').click();
+	}
+
+	function showSchoolLocal() {
+		var html = $('.School_province .active').children('a').html();
+		html += $('.School_city .active').length > 0 ? $('.School_city .active').children('a').html() : '';
+		html += $('.School_area .active').length > 0 ? $('.School_area .active').children('a').html() : '';
+		$('#School_Local').html(html);
+	}
+
+	function search_School(obj) {
+		var text = $(obj).val();
+		if(text != ''){
+			$('.School_con span').css('display','none');
+			$('.School_con a:contains('+text+')').parent('span').css('display','block');
+		}else{
+			$('.School_con span').css('display','block');
+		}
+		
+	}
+	//初始化
+	getRes('{$id}');
+</script>

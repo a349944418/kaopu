@@ -1,0 +1,107 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+
+<style>
+    .pid_weiba .active{
+        background: #FC5241;
+        color:white;
+    }
+</style>
+
+<div class="center1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="square">
+                            <h6><span><img src="__THEME__/image/square.jpg"/></span>话题广场</h6>
+                            <div class="supervise pid_weiba">
+                                <volist name="weiba_info" id="vo">
+                                    <a href="javascript:;" data-id="{$vo.weiba_id}" <eq name="i" value="1">class="active"</eq> >{$vo.weiba_name}</a>
+                                </volist>
+                            </div>
+                            <div class="health child_weiba">
+                                <volist name="weibaList" id="vo">
+                                    <div class="health-left">
+                                        <dl class="clearfix">
+                                            <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}" width="50"/></a></dt>
+                                            <dd class="guanz">
+                                                <span>{:W('FollowWeiba',array('weiba_id'=>$vo['weiba_id'],'follow_state'=>array('following'=>$vo['following'])))}</span>
+                                                <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a>
+                                            </dd>
+                                            <dd>{$vo.intro}</dd>
+                                        </dl>
+                                    </div>
+                                </volist>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="visual1">
+                            <php>if($userinfo) {</php>
+                                <div class="visual1-top clearfix">
+                                    <div class="visual1-left">
+                                        <img src="{$userinfo.avatar_big}" width="100%"/>
+                                    </div>
+                                    <div class="visual1-right">
+                                        <p class="shi"><a href="{$user['space_url']}">{$userinfo['uname']}</a></p>
+                                        <p class="jue">{$userinfo['intro']|getShort=100}</p>
+                                    </div>
+                                </div>
+                                <div class="quiz">
+                                    我的关注 ······ （<h6 style="display:inline-block">话题 {:count($userinfo['weibaList'])}</h6>）
+                                    <div class="row" style="margin: 0;">
+                                        <volist name="userinfo['weibaList']" id="vo" offset="0" length='6'>
+                                            <div class="col-xs-2 tiwen1" style="padding: 0;"><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" title="{$vo.weiba_name}"><img src="{$vo.logo}" width="90%"></a></div>
+                                        </volist>
+                                    </div>
+                                </div>
+                                <div class="quiz">
+                                    <div class="row">
+                                        <div class="col-xs-3 tiwen">提问<span>{$userinfo['postCount']|default=0}</span></div>
+                                        <div class="col-xs-3 tiwen">回答<span>{$userinfo['replyCount']|default=0}</span></div>
+                                        <div class="col-xs-3 tiwen">分享<span>3</span></div>
+                                        <div class="col-xs-3 tiwen1">收藏<span>{$userinfo['favoriteCount']|default=0}</span></div>
+                                    </div>
+                                </div>
+                            <php>}</php>
+                            <div class="ask">
+                                <a href="javascript:;" onclick="showquiz('{:U('weiba/Index/quickPost')}')" id="quiz">提问</a>
+                            </div>
+                            
+                            <div class="maybe">
+                                {:Addons::hook('show_ad_space', array('place'=>'weiba_right'))}
+                            </div>
+                            <div class="related">
+                                <h6>问题排行榜</h6>
+                                <volist name="replyH_Post" id="vo">
+                                    <p><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo[post_id]))}">{$vo.title}</a>&nbsp; <span>{$vo.reply_count}个回答</span></p>
+                                </volist>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $('.pid_weiba a').click(function(){
+            $('.child_weiba').html('<img src="'+THEME_URL+'/image/loading1.gif" style="margin:15px auto;display:block;"/>');
+            $(this).addClass('active').siblings().removeClass('active');
+            var pid = $(this).attr('data-id');
+            var html = '';
+            $.post(U('weiba/Index/getWeibaChild'),{pid:pid},function(data){
+                if(data.status == 1) {
+                    $('.child_weiba').html(data.data);
+                }
+            },'json');
+        })
+    })
+</script>
+
+<include file="__THEME__/public_footer" />

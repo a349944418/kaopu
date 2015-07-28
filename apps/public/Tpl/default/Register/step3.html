@@ -1,0 +1,284 @@
+<include file="__THEME__/public_header" />
+<style type="text/css">
+	.reg-main .article dl.form-set dd{
+		margin: 0;
+	}
+	.reg-main .article dl.form-set dd input {
+		padding: 5px;
+		border:1px solid #ccc;
+		margin-right: 15px;
+	}
+    .sexselect {background: #e6e6e6;border-color:#adadad}
+</style>
+<script>
+    var d = new Date();
+    var nowyear = d.getFullYear();
+    var yearOption = '<option value="0">入学时间</option>';
+    for(var i = 1950; i<= nowyear; i++){
+        yearOption += '<option value="'+i+'">'+i+'</option>';
+    }
+</script>
+<div class="container" style="background:white;">
+    <div class="topic">
+        <div class="row">
+            <div class="col-xs-7 col-xs-offset-1 set_title"><span>基本信息</span></div>
+        </div>
+    </div>
+    <div class="install">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="row">
+                    <div class="col-xs-3 col-xs-offset-2">
+                        <dl>
+                            <dt><img src="__THEME__/image/yw-install1.png"/></dt>
+                            <dd>头像设置</dd>
+                        </dl>
+                    </div>
+                    <div class="col-xs-3">
+                        <dl>
+                            <dt><img src="__THEME__/image/yw-install2.png"/></dt>
+                            <dd>基本信息</dd>
+                        </dl>
+                    </div>
+                    <div class="col-xs-3">
+                        <dl>
+                            <dt><img src="__THEME__/image/yw-install4.png"/></dt>
+                            <dd>热点话题</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="page-wrap">
+    	<div class="reg-wrap">
+    		<div class="reg-main">
+    			<!--注册步骤-->
+    			<div class="article article-avatar boxShadow clearfix">
+                    <form action="{:U('public/Register/doStep3')}" id="baseInfo" method="post">
+    				<div class="item item-step3">
+                        <div class="information">
+                            <h3 class="clearfix"><span>基本信息</span><img src="__THEME__/image/information1.png"/></h3>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="row">
+                                        <div class="col-sm-2 information1">
+                                            真实姓名：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <div class="form-group">
+                                                <input type="text" name="truename" class="form-control" placeholder="真实姓名">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2 information1">
+                                            性别：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <div class="form-group">
+                                                <button class="btn btn-default nan " type="submit">男</button><button class="btn btn-default nv sexselect" type="submit">女</button>
+                                                <input name="sex" type="hidden" value="2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2 information1">
+                                            手机号：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <div class="form-group">
+                                                <input type="tel" class="form-control" name="mobile" placeholder="手机号">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2 information1">
+                                            生日：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            {:W('Birth',array('curY'=>1990,'curM'=>1,'day'=>1))}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2 information1">
+                                            地区：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            {:W('Area',array('curPro'=>0,'curCity'=>0,'area'=>0,'tpl'=>'selectArea'))}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-2 information1">
+                                            个人简介：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <textarea class="form-control" rows="3" name="intro"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="information">
+                            <h3 class="clearfix"><span>基本信息</span><img src="__THEME__/image/information1.png"/></h3>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="row school1">
+                                        <div class="col-sm-2 information1">
+                                            小学：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control school" name="primary_school">
+                                            <select class="form-control birthday1" name="primary_school_time">
+                                                <script>document.write(yearOption);</script>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row school1">
+                                        <div class="col-sm-2 information1">
+                                            中学：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control school" name="middle_school" data-toggle="modal" data-target="#comModal" data-whatever="middle_school" data-backdrop="static" readonly>
+                                            <input type="hidden" name="middle_id">
+                                            <select class="form-control birthday1" name="middle_school_time">
+                                                <script>document.write(yearOption);</script>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row school1">
+                                        <div class="col-sm-2 information1">
+                                            高中：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control school" name="high_school" data-toggle="modal" data-target="#comModal" data-whatever="high_school" readonly>
+                                            <input type="hidden" name="high_id" >
+                                            <select class="form-control birthday1" name="high_school_time">
+                                                <script>document.write(yearOption);</script>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row school1">
+                                        <div class="col-sm-2 information1">
+                                            大学：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control school" name="university_school" data-toggle="modal" data-target="#comModal" data-whatever="university_school" readonly>
+                                            <input type="hidden" name="university_id">
+                                            <select class="form-control birthday1" name="university_time">
+                                                <script>document.write(yearOption);</script>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="row school1">
+                                        <div class="col-sm-2 information1">
+                                            专业：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control school" name="department">
+                                        </div>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="information">
+                            <h3 class="clearfix"><span>工作信息</span><img src="__THEME__/image/information1.png"/></h3>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="row school1">
+                                        <div class="col-sm-2 information1">
+                                            公司名称：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control school" name="company_name">
+                                        </div>
+                                    </div>
+                                    <div class="row school1">
+                                        <div class="col-sm-2 information1">
+                                            公司行业：
+                                        </div>
+                                        <div class="col-sm-10">
+                                            {:W('Industry',array('curPid'=>0,'curChild'=>0))}
+                                        </div>
+                                    </div>
+                                    <div class="row school2">
+                                        <div class="col-sm-2 information1"></div>
+                                        <div class="col-sm-10">
+                                            <input class="btn btn-default sub" type="submit" value="提交">
+                                            <a class="btn btn-default bu" href="{:U('public/Register/step4')}" role="button">进入下一步</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    				</div>
+                    </FORM>
+    			</div>
+
+    			<!--//注册步骤-->
+    		</div>
+    	</div>
+    </div>
+</div>
+<script type="text/javascript">
+$.validator.addMethod("isMobile", function(value, element) {   
+    var tel = /^1[3|4|5|8][0-9]\d{8}$/;
+    return this.optional(element) || (tel.test(value));
+}, "请正确填写您的手机号码");
+$(function(){
+    //选择学校
+    $('#comModal').on('show.bs.modal', function (e) {
+        var button = $(e.relatedTarget);
+        var type = button.data('whatever');
+        var modal = $(this);
+        if(type == 'middle_school') {
+            $('.modal-dialog').addClass('modal-lg');
+            $.post('{:U("public/Register/ajaxSchool")}',{t:'middle', id: '110000'},function(data){
+              modal.find('.modal-body').html(data);
+            },'html');
+            modal.find('.modal-title').text('选择学校');
+        } else if(type == 'high_school') {
+            $('.modal-dialog').addClass('modal-lg');
+            $.post('{:U("public/Register/ajaxSchool")}',{t:'high', id: '110000'},function(data){
+              modal.find('.modal-body').html(data);
+            },'html');
+            modal.find('.modal-title').text('选择高中');
+        } else if(type == 'university_school') {
+            $('.modal-dialog').addClass('modal-lg');
+            $.post('{:U("public/Register/ajaxSchool")}',{t:'university', id:1},function(data){
+              modal.find('.modal-body').html(data);
+            },'html');
+            modal.find('.modal-title').text('选择大学');
+        }
+    })
+
+    $('#baseInfo').validate({
+        rules : {
+            truename : {
+                minlength: 2,
+                maxlength: 32,
+            },
+            mobile : "isMobile",
+        },
+        message : {
+            truename : {
+                minlength : '请正确填写你的姓名',
+                maxlength : '真实姓名不超过32个字节',
+            }
+        }
+    })
+    //性别选择
+    $('.nan').click(function(){
+        $(this).addClass('sexselect');
+        $('.nv').removeClass('sexselect');
+        $('input[name=sex]').val('1');
+    })
+    $('.nv').click(function(){
+        $(this).addClass('sexselect');
+        $('.nan').removeClass('sexselect');
+        $('input[name=sex]').val('2');
+    })
+})
+
+</script>
+<include file="__THEME__/public_footer" />

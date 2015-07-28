@@ -1,0 +1,19 @@
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+<volist name="weibaList" id="vo">
+    <div class="health-left">
+        <dl class="clearfix">
+            <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}" width="50"/></a></dt>
+            <dd class="guanz">
+                <span>
+                    <if condition="0 eq $vo['following']">
+                        <a event-node="doFollowWeiba" href="javascript:;" id="follow{$vo.weiba_id}" onclick="followWeibas('{$vo.weiba_id}', 'do');"> + 关注</a>
+                    <else />
+                        <a event-node="unFollowWeiba" href="javascript:;" id="follow{$vo.weiba_id}" onclick="followWeibas('{$vo.weiba_id}', 'un');">已关注</a>
+                    </if>
+                </span>
+                <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a>
+            </dd>
+            <dd>{$vo.intro}</dd>
+        </dl>
+    </div>
+</volist>

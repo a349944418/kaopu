@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><neq name= '_title' value=''>{$_title} - {$site.site_name}<else />{$site.site_name} - {$site.site_slogan}</neq></title>
+<meta content="<neq name= '_keywords' value=''>{$_keywords}<else />{$site.site_header_keywords}</neq>" name="keywords">
+<meta content="<neq name= '_description' value=''>{$_description}<else />{$site.site_header_description}</neq>" name="description">
+{:Addons::hook('public_meta')}
+<link href="__THEME__/image/favicon.ico?v={$site.sys_version}" type="image/x-icon" rel="shortcut icon">
+<link href="__THEME__/css/bootstrap.min.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<link href="__THEME__/css/page.css?v={$site.sys_version}" rel="stylesheet" type="text/css" />
+<php>if(!empty($appCssList)):</php>
+<volist name='appCssList' id='cl'>
+<link href="{:APP_PUBLIC_URL}/{$cl}?v={$site.sys_version}" rel="stylesheet" type="text/css"/>
+</volist>
+<php>endif;</php>
+<script>
+/**
+ * 全局变量
+ */
+var SITE_URL  = '<php> echo SITE_URL;</php>';
+var UPLOAD_URL= '<php> echo UPLOAD_URL;</php>';
+var THEME_URL = '__THEME__';
+var APPNAME   = '<php> echo APP_NAME;</php>';
+var MID		  = '<php> echo $mid;</php>';
+var UID		  = '<php> echo $uid;</php>';
+var initNums  =  '<php> echo $initNums;</php>';
+var SYS_VERSION = '<php> echo $site["sys_version"];</php>'
+var Get_Comment_List_URL = '<php> echo U("widget/Comment/getCommentList"); </php>';
+// Js语言变量
+var LANG = new Array();
+</script>
+<php>if(!empty($langJsList)) {</php>
+<volist name="langJsList" id="vo">
+<script src="{$vo}?v={$site.sys_version}"></script>
+</volist>
+<php>}</php>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+<script src="__THEME__/js/js.php?t=js&f=jquery-1.7.1.min.js,common.js,core.js,module.js,module.common.js,jwidget_1.0.0.js,jquery.atwho.js,jquery.caret.js,ui.core.js,ui.draggable.js,plugins/core.comment.js,plugins/core.digg.js,jquery.min.js,bootstrap.min.js,jquery.form.js,jquery.validate.min.js&v={$site.sys_version}.js"></script>
+<script type="text/javascript" charset="utf-8" src="__THEME__/js/editor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__THEME__/js/weiba.js"></script>
+{:Addons::hook('public_head',array('uid'=>$uid))}
+</head>
+<body>

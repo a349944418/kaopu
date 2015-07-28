@@ -1,0 +1,32 @@
+<select name="birthY" id="birthY" class="form-control birthday"></select>
+<select name="birthM" id="birthM" class="form-control birthday"></select>
+<select name="birthD" id="birthD" class="form-control birthday"></select>
+<script>
+var yearArr = eval({$yearArr});
+var monthArr = eval({$monthArr});
+var dayArr = eval({$dayArr});
+var curY = '{$curY}';
+var curM = '{$curM}';
+var day = '{$day}';
+var init = function() {
+	var opY = '';
+	var opM = '';
+	var opD = '';
+	$.each(yearArr, function(i, n) {
+		var selected1 = curY == n ? 'selected = "selected"' : '';
+		opY += '<option value="' + n + '"' + selected1 + '>' + n + '</option>'; 
+	})
+	$.each(monthArr, function(ii, nn) {
+		var selected2 = curM == nn ? 'selected = "selected"' : '';
+		opM += '<option value="' + nn + '"' + selected2 + '>' + nn + '</option>'; 
+	})	
+	$.each(dayArr, function(iii, nnn) {
+		var selected3 = day == nnn ? 'selected = "selected"' : '';
+		opD += '<option value="' + nnn + '"' + selected3 + '>' + nnn + '</option>'; 
+	})
+	$('#birthY').append(opY);
+	$('#birthM').append(opM);
+	$('#birthD').append(opD);
+}
+init();
+</script>

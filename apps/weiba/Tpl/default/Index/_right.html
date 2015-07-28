@@ -1,0 +1,55 @@
+<div class="visual1">
+    <php>if($userinfo) {</php>
+        <div class="visual1-top clearfix">
+            <div class="visual1-left">
+              <img src="{$userinfo.avatar_big}" width="100%"/>
+            </div>
+            <div class="visual1-right">
+              <p class="shi"><a href="{$user['space_url']}">{$userinfo['uname']}</a></p>
+                <p class="jue">{$userinfo['intro']|getShort=100}</p>
+            </div>
+        </div>
+        <div class="quiz">
+          我的关注 ······ （<h6 style="display:inline-block">话题 {:count($userinfo['weibaList'])}</h6>）
+          <div class="row" style="margin: 0;">
+            <volist name="userinfo['weibaList']" id="vo" offset="0" length='6'>
+              <div class="col-xs-2 tiwen1" style="padding: 0;"><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" title="{$vo.weiba_name}"><img src="{$vo.logo}" width="90%"></a></div>
+            </volist>
+          </div>
+        </div>
+        <div class="quiz">
+            <div class="row">
+                <div class="col-xs-3 tiwen"><a href="{:U('public/Profile/question',array('uid'=>$uid))}">提问<span>{$userinfo['postCount']|default=0}</span></a></div>
+                <div class="col-xs-3 tiwen"><a href="{:U('public/Profile/index',array('uid'=>$uid))}">回答<span>{$userinfo['replyCount']|default=0}</a></span></div>
+                <div class="col-xs-3 tiwen"><a href="{:U('public/Profile/share',array('uid'=>$uid))}">分享<span>{$userinfo['shareCount']|default=0}</span></a></div>
+                <div class="col-xs-3 tiwen1"><a href="{:U('public/Profile/collection',array('uid'=>$uid))}">收藏<span>{$userinfo['favoriteCount']|default=0}</span></a></div>
+            </div>
+        </div>
+    <php>}</php>
+    <div class="ask">
+        <a href="javascript:;" onclick="showquiz('{:U('weiba/Index/quickPost')}')" id="quiz">提问</a>
+    </div>
+    <div class="maybe">
+      {:Addons::hook('show_ad_space', array('place'=>'weiba_right'))}
+    </div>
+    <div class="topics">
+      <h6>热门话题</h6>
+        <p>
+          <volist name="weiba_recommend" id="vo">
+            <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" >{$vo.weiba_name}</a>
+          </volist>
+        </p>
+    </div>
+    <div class="draft" style="display:none;">
+      <p class="draft1">我的草稿</p>
+        <p class="draft2">我的收藏</p>
+        <p class="draft3">我关注的问题</p>
+        <p class="draft4">邀请我回答的问题</p>
+        <p class="draft5">所有问题</p>
+        <p class="draft6">话题广场</p>
+        <p class="draft7">公共编辑动态</p>
+        <p class="draft8">社区服务中心</p>
+    </div>
+</div>
+
+

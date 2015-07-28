@@ -1,0 +1,118 @@
+<include file="__THEME__/public_header" />
+
+<script src="__THEME__/js/input_extend.js"></script>
+<script >
+    $(function(){
+        $("#weiba_title").changeTips({
+            divTip:".title_changes",
+            url : "{:U('weiba/Search/title')}"
+        }); 
+        $('#weiba_flag').changeTips({
+            divTip:".flag_changes",
+            url : "{:U('weiba/search/weibaName')}"
+        })
+    })
+    
+</script>    
+<style>
+    .form-group {position: relative;}
+    .title_changes, .flag_changes{width:100%; position:absolute; top:57px; list-style:none; background:#FFF; border:1px solid #66afe9; border-top: none; display:none; z-index: 1000; padding: 0px;}
+
+    .title_changes li, .title_changes p, .flag_changes li, .flag_changes p{padding:2px 12px;}
+    .title_changes p, .flag_changes p{ color: #bbb;font-size: 12px;padding-bottom: 0px;}
+
+    .title_changes li.active, .flag_chenges li.active{ background:#CEE7FF;}
+</style>
+<div class="center">
+	<div class="container">
+        <div class="row">
+	   	   	<div class="col-md-10 col-md-offset-1 clearfix extend">
+                <h2 style="margin: 15px auto;">编辑<eq name="post_detail.post_type" value="1">问题</eq><eq name="post_detail.post_type" value="2">分享</eq></h2>
+                <div class="weiba-manage" style="margin: 20px 0;">                     
+                    <form method="post" action="{:U('weiba/Index/doPostEdit')}" onkeydown="if(event.keyCode==13){return false;}" name="weibaPost" id="weibaPost">
+                        <input type="hidden" value="{$post_detail.post_type}" name="post_type" id="post_type">
+                        <input type="hidden" value="{$post_detail.post_id}" name="post_id">
+                        <input type="hidden" value="{$weiba_id}" name="weiba_id" id="weiba_id">
+                        <div class="form-group">
+                            <label for="title">标题：</label>
+                            <input class="form-control" type="text" name="title" id="weiba_title" autocomplete="off" value="{$post_detail.title}">
+                            <ul class="title_changes"></ul>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">详情：</label>
+                            {:W('Editor',array('contentName'=>'content','value'=>$post_detail['content']))}
+                        </div>
+                        <div class="form-group post_reason" <eq name="post_detail.post_type" value="1">style="display:none;"</eq> >
+                            <label for="title">分享理由：</label>
+                            <textarea name="post_reason" id="post_reason" class="form-control" rows="3" style="resize:none;">{$post_detail.post_reason}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="weiba_flag" class="weiba_flag">选择话题：
+                                <volist name="weiba_Arr" id="vo">
+                                    <div style="background:#FC5241;color:white;display:inline-block;border-radius:10px;font-weight: normal;padding: 0 10px;">{$vo.weiba_name} <button type="button" class="close" aria-label="Close" onclick="del_weiba_flag('{$vo.weiba_id}',this);"><span aria-hidden="true">&times;</span></button></div>&nbsp;
+                                </volist>
+                            </label>
+                            <input type="text" class="form-control" id="weiba_flag" autocomplete="off">
+                            <ul class="flag_changes"></ul>
+                        </div>
+                        <div style="text-align:right"><a href="javascript:;" onclick="">取消</a> &nbsp;&nbsp; <button type="submit" class="btn btn-danger" style="background-color:#FC5241;color:white;" onclick="return weibaPost_submit_check()">发布</button></div>
+                    </form>                
+                </div>
+           	</div>
+        </div>
+	</div>
+</div>
+<script>
+    function choose_weiba_flag(id,name){
+      var con = $('#weiba_id').val();
+      if(con == ''){
+        con = id;
+      } else {
+        con += ','+id;
+      }
+      name = '<div style="background:#FC5241;color:white;display:inline-block;border-radius:10px;font-weight: normal;padding: 0 10px;">'+name+' <button type="button" class="close" aria-label="Close" onclick="del_weiba_flag('+id+',this);"><span aria-hidden="true">&times;</span></button></div>&nbsp;';
+      $('#weiba_id').val(con);
+      $('.form-group .weiba_flag').append(name);
+      $('#weiba_flag').val('');
+    }
+
+    function del_weiba_flag(id, obj) {
+        $(obj).parent('div').remove();
+        var txt = '';
+        var con = $('#weiba_id').val();
+        var arr = con.split(',');
+        for(var i=0;i<arr.length;i++){
+            if(arr[i] != id){
+                txt += arr[i]+',';
+            }
+        }
+        $('#weiba_id').val(txt.substr(0,txt.length-1));
+    }
+
+    function weibaPost_submit_check() {
+        var txt = UE.getEditor('content').getContentTxt();
+        txt = txt.replace(/\s+/g,"");
+        if(txt.length < 1 || txt == '请填写详情') {         
+            UE.getEditor('content').focus();
+            UE.getEditor('content').setContent('请填写详情');
+            return false;
+        }
+        
+        var weiba_id = $('#weiba_id').val();
+        if(weiba_id.length < 1) {
+            $('#weiba_flag').attr('placeholder', '请选择标签').focus();
+            return false;
+        }
+
+        var title = $('#title').val();
+        if(title.length < 1) {
+            $('#title').attr('placeholder', '请填写标题').focus();
+            return false;
+        }
+
+        UE.getEditor('content').getKfContent(function(content){
+            $('#weibaPost').submit();
+        })
+    }
+</script>
+<include file="__THEME__/public_footer" />

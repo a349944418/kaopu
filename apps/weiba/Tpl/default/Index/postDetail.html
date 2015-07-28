@@ -1,0 +1,89 @@
+<include file="__THEME__/public_header" />
+  
+<div class="center1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+              <div class="row">
+                  <div class="col-md-9">
+                      <div class="content">
+                          <div class="volunteer">
+                              <volist name="relation_res" id="vo">
+                                  <span ><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo[weiba_id]))}" target="_blank">{$vo.weiba_name}</a></span>
+                              </volist>
+                          </div>
+                            <p class="title"><php>if($post_detail['post_type'] == 2) {</php>【分享】-- <php>}</php>{$post_detail.title}</p>
+                            <div class="enshrine">
+                                <div class="problem clearfix">
+                                    <span class="fenxiang" style="display:none"><a href="#">分享</a></span>
+                                    {$user_info[$post_detail['post_uid']]['space_link']}<span class="pl5 pr5 f9">/</span><span class="f9">{$post_detail.post_time|friendlyDate}发布</span> 
+                                    <php>if($GLOBALS['ts']['mid']){</php>
+                                      <php>if( ( $mid==$post_detail['post_uid'] && CheckPermission('weiba_normal','weiba_edit') ) || CheckWeibaPermission( $weiba_admin , '' , 'weiba_edit' ) ){</php>
+                                        <i class="vline">|</i>
+                                        <a href="{:U('weiba/Index/postEdit',array('post_id'=>$post_detail['post_id']))}">编辑</a>
+                                      <php>}</php>
+                                      <php>if( ($mid==$post_detail['post_uid'] && CheckPermission('weiba_normal','weiba_del')) || CheckWeibaPermission($weiba_admin,'','weiba_del') ){</php>
+                                        <i class="vline">|</i>
+                                        <a href="javascript:;" class="post_del" event-args='post_id={$post_detail['post_id']}&weiba_id={$post_detail['weiba_id']}&log=0'>删除</a>
+                                      <php>}</php>
+                                    <php>}</php>
+                                </div>
+                                <php>if($post_detail['post_type'] == 2) {</php>
+                                  <div style="padding:15px 15px 5px;border-top: 1px dashed #ccc;margin-top:10px;">分享理由：{$post_detail.post_reason}</div>
+                                <php>}</php>
+                                <div class="wb_content">
+                                  {$post_detail.content}
+                                </div>                               
+                            </div>
+                            <div class="answer">
+                              <p class="paixu">按投票排序<span class="glyphicon glyphicon-resize-vertical"></p></span><p>{$post_detail.reply_count}个回答</p>
+                            </div>
+                            {:W('WeibaReply',array('tpl'=>'detail', 'weiba_id'=>$post_detail['weiba_id'], 'post_id'=>$post_detail['post_id'], 'post_uid'=>$post_detail['post_uid'], 'feed_id'=>$post_detail['feed_id'], 'limit'=>'20', 'order'=>'DESC', 'addtoend'=>0))}  
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="problem-focused">
+                          <p class="focused">
+                            <php>if($post_detail['favorite']==1){</php>
+                                <a event-args="post_id={$post_detail['post_id']}&weiba_id={$post_detail['weiba_id']}&post_uid={$post_detail['post_uid']}" href="javascript:void(0)" event-node="post_unfavorite" id="favorite">已关注</a>
+                            <php>}else{</php>
+                                <a event-args="post_id={$post_detail['post_id']}&weiba_id={$post_detail['weiba_id']}&post_uid={$post_detail['post_uid']}" href="javascript:void(0)" event-node="post_favorite" id="favorite">关注问题</a>
+                            <php>}</php>
+
+                            <span>{$post_detail.favorite_count}</span>人关注该问题</p>
+                            <p>
+                              <volist name="favorite_people" id="vo">
+                                <a href="{:U('public/Profile/index',array('uid'=>$vo[uid]))}" title="{$vo.uname}"><img src="{$vo.avatar_middle}" width="11%"/></a></p>
+                              </volist>
+                        </div>
+                        <div class="related">
+                          <h6>相关问题</h6>
+                            <p><a href="#">怎么用一句话，写出一个悲情的有爱的诗感的爱情故事？</a><span>790个回答</span></p>
+                            <p><a href="#">如何用一句话形容「心动」？</a><span>2102个回答</span></p>
+                            <p><a href="#">如何用一句话说一个悲伤的故事</a><span>19个回答</span></p>
+                            <p><a href="#">如何一句话反驳「你行你上啊」？</a><span>45个回答</span></p>
+                            <p><a href="#">王小波《红佛夜奔》一句话什么意思？</a><span>3个回答</span></p>
+                        </div>
+                        <div class="related">
+                          <h6>问题排行榜</h6>
+                            <volist name="replyH_Post" id="vo">
+                              <p><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo[post_id]))}">{$vo.title}</a>&nbsp; <span>{$vo.reply_count}个回答</span></p>
+                            </volist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  $(function(){
+    $('.wb_content span.cursor').remove();
+    $('.wb_content .selectable').remove();
+    $('.wb_content .hasCursor').removeClass('mathquill-embedded-latex').removeClass('mathquill-rendered-math').removeClass('hasCursor');
+    $(".wb_content span[mathquill-command-id]").children().click(function(){return false;})
+  })
+</script>
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+<script src="__THEME__/js/module.weibo.js"></script>
+<include file="__THEME__/public_footer" />

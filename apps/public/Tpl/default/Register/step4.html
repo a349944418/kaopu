@@ -1,0 +1,124 @@
+<include file="__THEME__/public_header" />
+<div class="container" style="background:white;">
+    <div class="topic">
+        <div class="row">
+            <div class="col-xs-7 col-xs-offset-1 set_title"><span>热点话题</span></div>
+        </div>
+    </div>
+    <div class="install">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="row">
+                    <div class="col-xs-3 col-xs-offset-2">
+                        <dl>
+                            <dt><img src="__THEME__/image/yw-install1.png"/></dt>
+                            <dd>头像设置</dd>
+                        </dl>
+                    </div>
+                    <div class="col-xs-3">
+                        <dl>
+                            <dt><img src="__THEME__/image/yw-install2.png"/></dt>
+                            <dd>基本信息</dd>
+                        </dl>
+                    </div>
+                    <div class="col-xs-3">
+                        <dl>
+                            <dt><img src="__THEME__/image/yw-install3.png"/></dt>
+                            <dd>热点话题</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div id="page-wrap">
+		<div class="reg-wrap">
+			<div class="reg-main">
+				<!--注册步骤-->
+				<div class="article article-avatar boxShadow">
+					<div class="item-step4">
+						<div class="Focus">
+				        	<div class="row">
+				            	<div class="col-md-8 col-md-offset-2">
+				                	<div class="row">
+				                        <div class="col-sm-2 yw-Focus1">
+				                            我的关注：
+				                        </div>
+				                        <div class="col-sm-10">
+				                        	<div class="row checked_weiba">
+					                        	
+					                        </div>
+				                        </div>    
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
+						<div class="row">
+				        	<div class="col-md-10 col-md-offset-1">
+				        		<div class="management">
+				                    <div class="row management1">
+				                    	<volist name="weiba_recommend" id="vo">
+											<div class="col-xs-3">
+					                            <a href="javascript:;" weiba_id="{$vo.weiba_id}" title="{$vo.weiba_name}" class="weiba_check"><img src="{$vo.logo}" width="100%"/></a>
+					                        </div>
+				                    	</volist>
+				                    </div>
+				                </div>
+				            </div>
+            			<div>
+            			<div class="row">
+				        	<div class="col-md-10 col-md-offset-1">
+				            	<div class="steps">
+				                	<a class="btn btn-default steps1" id="weiba_submit">提交</a>
+				                    <a class="btn btn-default steps2" href="{:U('public/Register/doStep4')}" role="button">进入下一步</a>
+				                </div>
+				            </div>
+				        </div>
+				        <p class="note">注：比较受广大群众关注或者欢迎的新闻或者信息,或指某时期引人注目的地方或问题<br/>网上热点，就是网民关注的事件，比如家里女婴被偷事件，比如热门歌曲小苹果，网络反腐等等，所谓热点就是这人民群众关心的事件或人！</p>
+					</div>
+				</div>
+				<!--//注册步骤-->
+			</div>
+		</div></div></div>
+	</div>
+</div>
+<script>
+$(function(){
+	//选中关注的微吧
+	$('.weiba_check').click(function(){
+		var title = $(this).attr('title');
+		var href = $(this).attr('href');
+		var data_id = $(this).attr('weiba_id');
+		if($('.checked_weiba span[data-id='+data_id+']').length < 1){
+			var html = '<div class="col-sm-3 yw-Focus2" > <span data-id="'+data_id+'">'+title+'<a href="javascript:;" onclick="del_checked_weiba(this);"><img src="__THEME__/image/yw-cha.jpg"/></a></span> </div>';
+			$('.checked_weiba').append(html);
+		}
+	})
+	//提交
+	$('#weiba_submit').click(function(){
+		var href = "{:U('public/Register/bulkWeibaDoFollow')}";
+		var user_tags = ''; 
+		$.each($('.checked_weiba > div'), function(){;
+			if($(this).find('span').attr('data-id').length> 0){
+				user_tags += $(this).find('span').attr('data-id') + ',';
+			}			
+		});
+		user_tags = user_tags.substring(0,user_tags.length-1);
+		if(user_tags.length>0){
+			$.post(href, {user_tags:user_tags}, function(msg) {
+				msg = eval('('+msg+')');
+				if(msg.status){
+					location.href = "<php>echo U('public/Register/doStep4')</php>";
+				}
+			});
+		}
+	})
+})
+
+//删除选中的微吧
+function del_checked_weiba(obj){
+	$(obj).parent().parent('.yw-Focus2').remove();
+}
+</script>
+<script src="__THEME__/js/account/module.register.js"></script>
+<include file="__THEME__/public_footer" />

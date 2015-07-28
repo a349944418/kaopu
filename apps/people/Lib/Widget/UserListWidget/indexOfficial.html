@@ -1,0 +1,20 @@
+<php>if(empty($userList['data'])):</php>
+	<!-- <p>暂时没有相关用户</p> -->
+<php>else:</php>
+  <div class="page">{$userList.html}</div>
+	<div class="row test-container">
+		<volist name="userList.data" id="vo">		
+			<div class="col-xs-3" style="padding:2%;"><a href="{$vo.space_url}" data-toggle="popover" data-placement="bottom"><img src="{$vo.avatar_middle}" width="100%" class="img-circle yw-spectrum1"/><div class="data-content">{:htmlspecialchars_decode($vo['info'])}</div></a></div>
+		</volist>
+	</div>
+  <div class="row" style="color:#fff;">
+    <div class="col-md-12">
+        <div class="popover bottom in col-xs-12 yw-topic" role="tooltip"  style="display: block; width:100%;">
+            <div class="arrow"></div>
+            <div class="popover-content">
+            	{:htmlspecialchars_decode($userList[data][0][info])}
+            </div>
+        </div>
+    </div>
+  </div>
+<php>endif;</php>

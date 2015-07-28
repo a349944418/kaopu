@@ -1,0 +1,111 @@
+<!--评论列表-->
+<eq name='showlist' value="1"> 
+<div class="comment_lists" id="commentlist_{$post_id}">
+    <volist name='list.data' id='vo' key="k">
+		  <div class="comment_list clearfix figure" model-node="comment_list">
+        <dl class="clearfix">
+          <dt><a href="{$vo.user_info.space_url}" target="_blank"><img src="{$vo.user_info.avatar_tiny}" width="25"/></a></dt>
+          <dd>{$vo.user_info.space_link}</dd>
+        </dl>
+        <div class="reply_content">
+          {$vo.content}
+        </div>
+        <div class="problem clearfix problem2">
+            <span>({$vo.ctime|friendlyDate})</span><span class="pinglun"><a href="javascript:void(0)" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$vo.reply_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&feed_id={$feed_id}&comment_id={$vo.comment_id}&addtoend={$addtoend}' >101条评论</a></span><span class="zan"><a href="#">赞</a></span><span class="fenxiang"><a href="#">分享</a></span><span class="shou"><a href="#">收藏</a></span>
+        </div>
+      </div>   
+		</volist> 
+</div>
+<!--页码-->
+   <neq name='list.html' value=''>
+   <div id="page" class="page">
+      {$list.html}
+   </div>
+   </neq>
+   <!--页码/end-->
+</eq>
+<!-- 评论框 -->
+<php>if($GLOBALS['ts']['mid']){</php>
+  <script type="text/javascript" charset="utf-8" src="__THEME__/js/editor/ueditor.all.min.js"></script>
+  <script type="text/javascript" src="__THEME__/js/editor/lang/zh-cn/zh-cn.js"></script>
+  <script type="text/javascript" charset="utf-8" src="__THEME__/js/editor/kityformula-plugin/addKityFormulaDialog.js"></script>
+  <script type="text/javascript" charset="utf-8" src="__THEME__/js/editor/kityformula-plugin/getKfContent.js"></script>
+  <script type="text/javascript" charset="utf-8" src="__THEME__/js/editor/kityformula-plugin/defaultFilterFix.js"></script>
+  <div class="friend" model-node='comment_textarea'>
+    <div class="friend1" >
+        <div class="wangyou">
+          <p class="wang">网友评论</p>
+          <div class="wbreply_contents" model-node='mini_editor'>
+            <script type="text/plain" id="wbreply_contents_input" style="height:140px;">
+                <p>{$value}</p>
+            </script>
+          </div>
+          <div class="cancellation clearfix">
+            <dl>
+                <dt><img src="{$user['avatar_tiny']}" width="20"/></dt>
+                <dd><span>{$user['uname']}</span>|<a href="{:U('public/Passport/logout')}">注销</a></dd>
+            </dl>
+            <button class="btn btn-default"  event-args=' weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&feed_id={$feed_id}&addtoend={$addtoend}&to_reply_id=0&to_uid=0' style="background:#000; color:#fff; float:right;" id="wb_reply_submit">发布</button>
+          </div>
+        </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+      var noreply = 0;
+      var start_content = '';
+      //实例化编辑器
+      var reply = UE.getEditor('wbreply_contents_input');
+      $(function(){
+          $(".edui-body-container").css("width", "100%");
+          $('.edui-editor').css('width','100%');
+      })
+      //提交评论
+      $('#wb_reply_submit').click(function(){
+        if ( noreply == 1 ){
+          return;
+        }else{
+          noreply = 1;
+        }
+        setTimeout(function (){
+          noreply = 0;
+        },5000);
+        var attrs = M.getEventArgs(this);
+        attrs.ifShareFeed = 0;
+        attrs.widget_appname = 'weiba';
+        var comment_list = $('.comment_lists');
+
+        var content = reply.getContent();
+        var strlen = content.length;
+        if(strlen<1) {
+          return false;
+        }
+        $(this).html('<span>回复中...</span>');
+        if(start_content == content) {
+          return false; //不要重复评论
+        }
+        start_content = content;
+        attrs.content = content;
+        $.post(U('widget/WeibaReply/addReply'),attrs,function(msg){
+
+          if(msg.status == "0"){
+            ui.error(msg.data);
+          }else{
+            if("undefined" != typeof(comment_list.children('.comment_list')) ){
+              ui.success('评论成功');
+              if(attrs.addtoend = 1){
+                comment_list.eq(0).append(msg.data);
+              }else{
+                $(msg.data).insertBefore(comment_list.find('.comment_list').get(0));
+              }
+            }else{
+              ui.success('评论成功');
+              comment_list.eq(0).html(msg.data);
+            }
+            //重置
+            reply.setContent('');
+          }
+          $('#wb_reply_submit').html('发布');
+        },'json');
+      })
+  </script>
+<php>}</php>

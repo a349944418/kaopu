@@ -1,0 +1,84 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+<script type="text/javascript" src="__THEME__/js/plugins/core.comment.js"></script>
+<php></php>
+<div class="center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+              <div class="row">
+                  <div class="col-sm-9">
+                      <php> if ($weiba_recommend) { </php>
+                          <div class="Interest1 clearfix">
+                              <div class="Interest row">
+                                    <div class="Interest-left col-sm-1">
+                                        <img src="__THEME__/image/Interest.png"/>
+                                    </div>
+                                    <div class="Interest-right col-sm-11">
+                                        <p class="may"><span style="display:none;"><a href="#"><img src="__THEME__/image/cha.png"/></a></span>你可能感兴趣的话题</p>
+                                        <p class="According"><span style="display:none;"><a href="#">上一页</a><a href="#">下一页</a></span>动态中会根据关注话题来显示你的内容-<a href="{:U('weiba/Index/weibaList')}">查看更多推荐</a></p>
+                                    </div>
+                                </div>
+                                <div class="ascension row">
+                                    <div class="Interest-left col-sm-1"></div>
+                                    <div class="col-sm-11"><div class="row">
+                                    <volist name="weiba_recommend" id="vo" offset="0" length='4'>
+                                      <dl class="col-sm-3">
+                                          <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" ><img src="{$vo.logo}" width="124px"/></dt>
+                                          <dd class="rebellious"><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" >{$vo.weiba_name}</a></dd>
+                                          <dd class="people">{$vo.follower_count}人关注</dd>
+                                          <dd class="guan">{:W('FollowWeiba',array('weiba_id'=>$vo['weiba_id'],'follow_state'=>array('following'=>0),'isrefresh'=>1))}</dd>
+                                      </dl>
+                                    </volist>
+                                  </div></div>
+                                </div>
+                          </div>
+                      <php> } </php>
+                      <div class="confused clearfix">
+                          <div class="confused-top row">
+                              <div class="confused-left col-sm-1">
+                                  <img src="__THEME__/image/confused-left.png"/>
+                                </div>
+                                <div class="confused-right col-sm-11">
+                                  <p><span>动态</span>&nbsp;&nbsp;/&nbsp;&nbsp;学习中的困惑</p>
+                                </div>
+                            </div>
+                            <div class="confused-bottom row">
+                              <div class="Interest-left col-sm-1"></div>
+                              <div class="col-sm-11">
+                                <volist name="postList[data]" id="vo">
+                                  <div class="higher">
+                                    <h5><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><eq name="vo.post_type" value="2">【分享】-- &nbsp;</eq>{$vo.title}</a></h5>
+                                      <p class="from">{:date('Y/m/d',$vo['post_time'])} | 来自：<a href="{:U('public/Profile/index',array('uid'=>$vo['post_uid']))}">{$vo.post_uname}</a> | 阅读：{$vo.read_count}</p>
+                                      <div class="trouble"><php>if($vo['content_img']){ echo '<img src="'.$vo[content_img].'" width="25%" style="float:left;margin-right:15px;"/>'; } </php>{$vo[content]|getShort=400}</div>
+                                      <div style="clear:both"></div>
+                                      <div class="problem clearfix">
+                                        <span class="chakan"><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}">查看原文</a></span>
+                                        <span class="guanzhu">
+                                          <php>if($vo['favorite']==1){</php>
+                                            <a event-args="post_id={$vo['post_id']}&post_uid={$vo['post_uid']}" href="javascript:void(0)" event-node="post_unfavorite" id="favorite">已关注</a>
+                                          <php>}else{</php>
+                                            <a event-args="post_id={$vo['post_id']}&post_uid={$vo['post_uid']}" href="javascript:void(0)" event-node="post_favorite" id="favorite">关注问题</a>
+                                          <php>}</php>
+                                        </span>
+                                        <span class="pinglun"><a class="comment_btns" href="javascript:void(0)" event-args="row_id={$vo[post_id]}&app_name=weiba&table=feed&cancomment=0"><span id="question{$vo.post_id}_reply_count">{$vo.reply_count|default=0}</span>条评论</a></span><span class="zan" style="display:none;"><a href="#">赞</a></span><span class="fenxiang" style="display:none;"><a href="#">分享</a></span>
+                                      </div>
+                                      <div id="comment_detail_{$vo[post_id]}" class="comments repeat clearfix popover bottom in" style="display:none;"></div>
+                                  </div>
+                                </volist>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-3">
+                      <include file="_right" />
+                  </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<include file="__THEME__/public_footer" />

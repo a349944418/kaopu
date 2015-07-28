@@ -1,0 +1,12 @@
+[2015-05-22 10:06:39] schedule_id = 3 的任务已运行。任务url为: addons/Online/checkOnline ，任务描述为: 自动更新统计数 。
+[2015-05-22 10:06:39] schedule_id = 4 的任务已运行。任务url为: addons/Message/doSendFeedMail ，任务描述为: 每分钟都检查并发送一批邮件，给最近没登录的用户 。
+[2015-05-22 11:07:22] schedule_id = 3 的任务已运行。任务url为: addons/Online/checkOnline ，任务描述为: 自动更新统计数 。
+[2015-05-22 11:07:22] schedule_id = 4 的任务已运行。任务url为: addons/Message/doSendFeedMail ，任务描述为: 每分钟都检查并发送一批邮件，给最近没登录的用户 。
+[2015-05-22 11:24:47] schedule_id = 3 的任务已运行。任务url为: addons/Online/checkOnline ，任务描述为: 自动更新统计数 。
+[2015-05-22 11:24:47] schedule_id = 4 的任务已运行。任务url为: addons/Message/doSendFeedMail ，任务描述为: 每分钟都检查并发送一批邮件，给最近没登录的用户 。
+[2015-05-22 12:03:01] schedule_id = 3 的任务已运行。任务url为: addons/Online/checkOnline ，任务描述为: 自动更新统计数 。
+[2015-05-22 12:03:01] schedule_id = 4 的任务已运行。任务url为: addons/Message/doSendFeedMail ，任务描述为: 每分钟都检查并发送一批邮件，给最近没登录的用户 。
+[2015-05-22 13:10:48] schedule_id = 3 的任务已运行。任务url为: addons/Online/checkOnline ，任务描述为: 自动更新统计数 。
+[2015-05-22 13:10:49] schedule_id = 4 的任务已运行。任务url为: addons/Message/doSendFeedMail ，任务描述为: 每分钟都检查并发送一批邮件，给最近没登录的用户 。
+[2015-05-22 13:14:14] schedule_id = 3 的任务已运行。任务url为: addons/Online/checkOnline ，任务描述为: 自动更新统计数 。
+[2015-05-22 13:14:14] schedule_id = 4 的任务已运行。任务url为: addons/Message/doSendFeedMail ，任务描述为: 每分钟都检查并发送一批邮件，给最近没登录的用户 。

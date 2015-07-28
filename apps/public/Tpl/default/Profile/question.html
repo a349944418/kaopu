@@ -1,0 +1,36 @@
+<include file="__THEME__/public_header" />
+<div class="center">
+    <div class="container-fluid">
+        <div class="row">
+            <img src="__THEME__/image/container-fluid.jpg" width="100%"/>
+        </div>
+    </div>
+    <div class="container">
+        <include file="_top" />
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <volist name="question.data" id="vo">
+                    <div class="row lyrics">
+                        <div class="col-xs-1 text-center">
+                          <div class="browse">{$vo.read_count}<br>浏览</div>
+                        </div>
+                        <div class="col-xs-11">
+                          <p><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}">{$vo.title}</a></p>
+                            <p><span>{$vo.reply_count}</span>个回答｜<span>{$vo.favorite_count}</span>关注</p>
+                        </div>
+                    </div>
+                </volist>
+                <!--页码-->
+               <neq name='question.html' value=''>
+                   <div id="page" class="page">
+                      {$question.html}
+                   </div>
+               </neq>
+               <!--页码/end-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="__THEME__/public_footer" />
+<script src="__THEME__/js/module.weibo.js"></script>

@@ -1,0 +1,35 @@
+<include file="__THEME__/public_header" />
+<div class="center">
+    <div class="container-fluid">
+        <div class="row">
+            <img src="__THEME__/image/container-fluid.jpg" width="100%"/>
+        </div>
+    </div>
+    <div class="container">
+        <include file="_top" />
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <volist name="favorite.data" id="vo">
+                    <div class="row experiment">
+                        <p class="enlightenment"><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}" style="color:black;">{$vo.title}</a><span>---{$vo.favorite_count}关注| {$vo.reply_count}回答 | {:date('Y/m/d',$vo['post_time'])} </span></p>
+                        <if condition="$vo['is_del'] eq 0">
+                            <p class="experiment1">{$vo[content]|getShort=400}</p>
+                        <else/>
+                            <p class="experiment1">原文已被删除</p>
+                        </if>
+                    </div>
+                </volist>
+                <!--页码-->
+               <neq name='favorite.html' value=''>
+                   <div id="page" class="page">
+                      {$favorite.html}
+                   </div>
+               </neq>
+               <!--页码/end-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="__THEME__/public_footer" />
+<script src="__THEME__/js/module.weibo.js"></script>

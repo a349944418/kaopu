@@ -1,0 +1,61 @@
+<include file="__THEME__/public_header" />
+
+<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="__APP__/weiba.js"></script>
+<style>
+  .share .active {font-weight:bold;}
+</style>
+<div class="center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-1">
+              <div class="dynamic clearfix">
+                  <dl>
+                      <dt><img src="{$weiba_detail['logo']}" width="48px"/></dt>
+                        <dd class="Adobe">{$weiba_detail['weiba_name']}</dd>
+                        <dd class="share"><span><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_detail['weiba_id']))}" <eq name="t" value="">class="active"</eq>>动态</a></span><span><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_detail['weiba_id'],'type'=>'s'))}" <eq name="t" value="s">class="active"</eq> >分享</a></span><span><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_detail['weiba_id'],'type'=>'a'))}" <eq name="t" value="a">class="active"</eq> >全部问题</a></span></dd>
+                    </dl>
+                    <p><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_detail['weiba_id'],'type'=>$t))}"  class="<php>if($order=='reply_time'){</php> hover<php>}</php>">热门排序</a>|<a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_detail['weiba_id'],'type'=>$t,'order'=>'post_time'))}"  class="<php>if($order=='post_time'){</php> hover<php>}</php>">时间排序</a></p>
+                </div>
+                <div class="weiba_postlist">
+
+                  <if condition="$list[data]" >
+                      <volist name="list.data" id="vo">
+                          <div class="making">
+                            <div class="making-top clearfix">
+                                <a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><p><if condition="$vo[post_type] eq 2">【分享】-- &nbsp;</if>{$vo.title}<php>if($vo['top']==2){</php><i class="ico-bar-top ml5">置顶</i><php>}</php><php>if($vo['top']==1){</php><i class="ico-bar-top0 ml5">置顶</i><php>}</php><php>if($vo['digest']==1){</php><i class="ico-bar-fine ml5">精华</i><php>}</php></p></a><span>{$vo.post_time|friendlyDate}</span>
+                              </div>
+                              <div class="making-bottom clearfix">
+
+                                <p><php> if($vo['reply_count']>0){</php>{$vo.reply_count}个<php>}else{</php>还没有<php>}</php>回答
+                                  <span>
+                                      <php>if($vo['favorite']==1){</php>
+                                        <a event-args="post_id={$vo['post_id']}&post_uid={$vo['post_uid']}" href="javascript:void(0)" event-node="post_unfavorite" id="favorite">已关注</a>
+                                      <php>}else{</php>
+                                        <a event-args="post_id={$vo['post_id']}&post_uid={$vo['post_uid']}" href="javascript:void(0)" event-node="post_favorite" id="favorite">关注问题</a>
+                                      <php>}</php>
+                                  </span>
+                                </p>
+                              </div>
+                          </div>
+                      </volist>
+                  <else/>
+                      <div class="making">
+                          <div class="making-top clearfix">
+                            该分类下暂无问答
+                          </div>
+                      </div>
+                  </if>
+                </div>
+                <neq name='list.html' value=''>
+                  <div id="page" class="page" style="">{$list.html}</div>
+                </neq>
+            </div>
+            <div class="col-sm-3">
+              
+            </div>
+        </div>
+    </div>
+</div>
+
+<include file="__THEME__/public_footer" />

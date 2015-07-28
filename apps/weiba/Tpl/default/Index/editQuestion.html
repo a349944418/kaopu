@@ -1,0 +1,95 @@
+<include file="__THEME__/public_header" />
+<div class="center1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-11 col-md-offset-1">
+            	<div class="row">
+                	<div class="col-md-9">
+                    	<div class="Modify">
+                        	<p> 
+                                <volist name="relation_res" id="vo">
+                                    <span class="shijian">{$vo.weiba_name}</span>
+                                </volist>
+                                <a href="javascript:;" onclick="edit_flag(this)">修改<span class="glyphicon glyphicon-pencil"></span></a>
+                            </p>
+                            <div class="design">
+                            	<p id="editTitle"><span class="title">{$res.title}</span><a href="javascript:;" onclick="edit_Title();">修改<span class="glyphicon glyphicon-pencil"></span></a></p>
+                            </div>
+                            <div class="workshop">
+                            	<div class="wb_content">{$res.content}</div><a href="javascript:;" onclick="edit_content()">修改<span class="glyphicon glyphicon-pencil"></span></a>
+                                <div class="contents" style="display:none"> <script type="text/plain" id="content" style="height:240px;"> <p></p> </script> <textarea  name="content"  cols="" rows="20" id="content" style="width:100%; margin-bottom:10px;display:none;width:99%;"></textarea> </div>
+                            </div>
+                            <div class="problem clearfix">
+                                <span class="pinglun"><a href="#">{$res.reply_count}条评论</a></span><span class="zan"><a href="#">赞</a></span><span class="fenxiang" style="display:none"><a href="#">分享</a></span><span class="invitation">邀请回答</span><input type="email" class="form-control" id="inputEmail3" placeholder="Email" style="width:153px; border-right:none; float:left; height:27px; line-height:27px; border-radius:0px;"><button type="submit" class="btn btn-default" style="float:left; background:url(image/submit.jpg) no-repeat; height:27px; border-left:none; border-radius:0px;"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                    	<include file="_right" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var title = '',content = '',flag = 0,current_ele='',current_name='',id={$Think.get.id};
+    function edit_Title() {
+        if(flag){
+            alert('请修改过'+current_name+'后，再来编辑标题');
+        }else{
+            title = $('#editTitle .title').html();
+            $('#editTitle').html('<input type="text" id="title" value="'+title+'"/> &nbsp;<button onclick="save_title();">确定</button>'); 
+            flag = 1;
+            current_ele = 'title';
+            current_name = '标题';
+        }    
+    }
+    function edit_flag() {
+        if(flag){
+            alert('请修改过'+current_name+'后，再来编辑标签');
+        }else{
+            title = $(obj).parent('p').children('.title').html();
+            $(obj).parent('p').html('<input type="text" id="title" value="'+title+'"/> &nbsp;<button>确定</button>'); 
+            flag = 1;
+            current_ele = 'title';
+            current_name = '标题';
+        }
+    }
+
+    function edit_content() {
+        if(flag){
+            alert('请修改过'+current_name+'后，再来编辑内容');
+        }else{
+            content = $('.workshop .wb_content').html();
+            $('.contents p').html(content);
+            $('.contents textarea').html(content);
+            $('.workshop .contents').css('display','block');
+            var um = UM.getEditor('content');
+            um.setWidth("98%");$(".edui-body-container").css("width", "100%");
+            flag = 1;
+            current_ele = 'wb_content';
+            current_name = '描述';
+        }
+    }
+
+    function save_title() {
+        var title_save = $('#title').val();
+        if(title_save != title){
+            $.post('{:U("weiba/Index/ajax_saveTitle")}', {title:title_save,id:id},function(data){
+                if(data.status){
+                    $('#editTitle').html('<span class="title">'+title_save+'</span><a href="javascript:;" onclick="edit_Title(this);">修改<span class="glyphicon glyphicon-pencil"></span></a>');
+                    flag = 0;
+                }
+            },'json');
+        } else {
+            $('#editTitle').html('<span class="title">'+title+'</span><a href="javascript:;" onclick="edit_Title(this);">修改<span class="glyphicon glyphicon-pencil"></span></a>');
+            flag = 0;
+        }
+    }
+    function save_content() {
+
+    }
+</script>
+<include file="__THEME__/public_footer" />
