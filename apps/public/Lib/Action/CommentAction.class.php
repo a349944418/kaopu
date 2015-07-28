@@ -55,6 +55,9 @@ class CommentAction extends Action {
 			}
 		}
 		model('UserCount')->resetUserCount($this->mid, 'unread_comment',  0);
+		foreach($list['data'] as $k=>$v){
+			$list['data'][$k]['wb_title'] = D($v['app'].'_post')->where('post_id='.$v['row_id'])->getField('title');
+		}
 		$this->assign('list', $list);
 		// dump($list);exit;
 		$this->setTitle($keyword.'的评论');					// 我的评论
