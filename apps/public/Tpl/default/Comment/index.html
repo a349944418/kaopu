@@ -73,7 +73,7 @@
                 <div class="feed_list" id="comment_list" model-node='comment_list'>
                   <dl class="clearfix">
                     <dt><a href="{$vo.user_info.space_url}"><img src="{$vo.user_info.avatar_small}" width="50" height="50"></a></dt>
-                    <dd class="feng"><span><space uid="vo.user_info.uid">{uname}</space> : </span>{$vo.content}<span>（<a href="{$vo.sourceInfo.source_url}">{$vo.wb_title}</a>）</span></dd>
+                    <dd class="feng"><span><space uid="vo.user_info.uid">{uname}</space> : </span>{$vo.content}<span>（<a href="{:U('weiba/Index/postDetail', array('post_id'=>$vo['row_id']))}">{$vo.wb_title}</a>）</span></dd>
                     <dd class="huifu"><span>{$vo.ctime|friendlyDate}</span>|<!-- <a href="#">回复</a>| -->
                       <php>if(CheckPermission('core_normal','comment_del')){</php>
                           <a event-args="comment_id={$vo.comment_id}" event-node="comment_del" href="javascript:void(0);">{:L('PUBLIC_STREAM_DELETE')}</a>
