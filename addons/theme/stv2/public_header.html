@@ -69,11 +69,12 @@
                         <input name="mod" value="Search" type="hidden"/>
                         <input type="hidden" name="t" value="2"/>
                         <input type="hidden" name="a" value="public"/> -->
-                        <input type="hidden" name="type" value="2"/>
                         <div class="form-group">
                             <div class="input-group">
-                                <input autocomplete="off" id="searchweiba_input" class="s-txt left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>搜微吧 / 帖子<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微吧 / 帖子';" event-node="searchKey" name='k'><a href="javascript:void(0)" class="btn-search" onclick="if(getLength($('#searchweiba_input').val()) && $('#searchweiba_input').val()!=='搜微吧 / 帖子'){ $('#search_weiba').submit(); return false;}"><span>搜索</span></a>
-                            </div></div>
+                                <input autocomplete="off" id="searchweiba_input" class="form-control left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>搜微吧 / 帖子<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微吧 / 帖子';" event-node="searchKey" name='k'>
+                                <div class="input-group-addon"><a href="javascript:void(0)" class="ico-search left" onclick="if(getLength($('#searchweiba_input').val()) && $('#searchweiba_input').val()!=='搜微吧 / 帖子'){ $('#search_weiba').submit(); return false;}"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></div>
+                            </div>
+                        </div>
                     </form>
                     <!-- <form name="search_feed" role="search" class="navbar-form navbar-left" id="search_feed" method="get" action="{:U('public/Search/index')}" >
                         <div class="form-group">
@@ -100,7 +101,7 @@
                                 <li rel="unread_notify" style="display:none"><span></span>，<a href="{:U('public/Message/notify')}">{:L('PUBLIS_MESSAGE_REMIND')}</a></li>
                                 <!-- <li><a  href="{:U('public/Mention/index')}">@提到我的</a></li> -->
                                 <li><a  href="{:U('public/Comment/index', array('type'=>'receive'))}">收到的评论</a></li>
-                                <!-- <li><a  href="{:U('public/Comment/index', array('type'=>'send'))}">发出的评论</a></li> -->
+                                <li><a  href="{:U('public/Comment/index', array('type'=>'send'))}">发出的评论</a></li>
                                 <!-- <li><a  href="{:U('public/Message/index')}">我的私信</a></li> -->
                                 <li><a  href="{:U('public/Message/notify')}">系统消息</a></li>
                                 <!-- 消息菜单钩子 -->

@@ -7,9 +7,8 @@
 <div id="center1">
     <div class="container">
         <div class="row">
-            <div class="col-md-11 col-md-offset-1">
-              <div class="row">
-                  <div class="col-sm-9">
+            <div class="boxShadow clearfix" style="margin:20px 0;">
+                <div class="col-sm-9" style="  border-right: 1px solid #ebebeb;">
                      <div id="col5" class="st-index-main confused clearfix">
                         <div class="extend-foot">
                           <php>if(!$searchkey){</php>
@@ -17,31 +16,32 @@
                           <php>}else{</php>
 
                             <php>if(!$postList['data']){</php>
-                              <!-- <p class="mb20">抱歉，暂时没有与“{$searchkey}”相关的帖子</p> -->
                               <div class="weiba-sort f9 clearfix mb20">
-                                  <span class="right"><a href="{:U('weiba/Index/search',array('k'=>$searchkey,'type'=>1))}">搜微吧</a>&nbsp;|&nbsp;搜帖子</span>
-                                  <span class="no-result">抱歉，暂时没有与&nbsp;“<span style="color:red;">{$searchkey}</span>”&nbsp;相关的帖子</span>
-                              </div> 
-                              <div class="right-box clearfix">
-                                <h3>热门微吧推荐</h3>
-                                <ul>
-                                   <volist name="weiba_recommend" id="vo">
-                                      <li>
-                                          <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" class="face"><img src="{$vo.logo}" width="50" height="50"/><span>{$vo.weiba_name}</span></a>
-                                      </li>
-                                  </volist>
-                                 </ul>
+                                  <span class="no-result">抱歉，暂时没有与&nbsp;“<span style="color:red;">{$searchkey}</span>”&nbsp;相关的问题</span>
                               </div>
                             <php>}else{</php>
                               <div class="weiba-sort f9 clearfix">
-                                  <span class="right"><a href="{:U('weiba/Index/search',array('k'=>$searchkey,'type'=>1))}">搜微吧</a>&nbsp;|&nbsp;搜帖子</span>
-                                  <span>共搜索到{$postList.count}个相关帖子</span>                             
+                                  <span>共搜索到{$postList.count}个相关问题</span>                             
                               </div>                
                               <div class="weiba_postlist">
                                  <ul>
                                   <volist name="postList.data" id="vo">
-                                   <li><div class="name"><span class="right num"><i class="arrow-weiba"></i>{$vo.reply_count}</span><a target="_blank" href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><span style="vertical-align:-2px;">{$vo.title}</span><php>if(strstr($vo['content'],'<img')){</php><i class="ico-img"></i><php>}</php><php>if($vo['top']==2){</php><i class="ico-bar-top ml5">置顶</i><php>}</php><php>if($vo['digest']==1){</php><i class="ico-bar-fine ml5">精华</i><php>}</php></a></div>
-                                    <div class="f9"><php>if($vo['last_reply_time'] && $vo['last_reply_uid']){</php><span class="right">{$user_info[$vo['last_reply_uid']]['space_link']}<span class="pl5 pr5">/</span>{$vo.last_reply_time|friendlyDate}</span><php>}</php><span>【{$vo.weiba}】{$user_info[$vo['post_uid']]['space_link']}<span class="pl5 pr5">/</span>{$vo.post_time|friendlyDate}发布</span></div></li>
+                                    <li>
+                                      <div class="name"><span class="right num"><i class="arrow-weiba"></i>{$vo.reply_count}</span>
+                                        <a target="_blank" href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><span style="vertical-align:-2px;">{$vo.title}</span>
+                                          <php>if(strstr($vo['content'],'<img')){</php>
+                                            <i class="ico-img"></i>
+                                          <php>}</php>
+                                          <php>if($vo['top']==2){</php><i class="ico-bar-top ml5">置顶</i><php>}</php>
+                                          <php>if($vo['digest']==1){</php><i class="ico-bar-fine ml5">精华</i><php>}</php>
+                                        </a>
+                                      </div>
+                                    <div class="f9">
+                                      <span>【
+                                        <volist name="vo.weiba" id="v">
+                                          <a href="{:U('weiba/Index/detail',array('weiba_id'=>$v['weiba_id']))}">{$v.weiba_name}</a>
+                                        </volist>
+                                        】{$user_info[$vo['post_uid']]['space_link']}<span style="margin-right:5px;">/</span>{$vo.post_time|friendlyDate}发布</span></div></li>
                                   </volist>
                                  </ul>
                                  <div id="page" class="page" style="">{$postList.html}</div>
@@ -51,8 +51,28 @@
                          </div>
                      </div>
                   </div>
-                  <div class="col-sm-3">
-                    <include file="_right" /> 
+                  <div class="col-sm-3 person-set" style="left:-1px;">
+                    <div class="st-index-main confused clearfix">
+                      <php>if(!$countWeibaList){</php>
+                        <div class="weiba-sort f9 clearfix">
+                            <span>未搜索到相关话题</span>                             
+                        </div>
+                      <php>}else{</php>
+                        <div class="weiba-sort f9 clearfix">
+                            <span>相关话题</span>                             
+                        </div>
+                        <ul class="rank-box1">
+                          <volist name="weibaList" id="vo">
+                            <li>
+                                <dl>
+                                   <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img width="50"  src="{$vo.logo}"></a></dt>
+                                   <dd><p><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a></p><p>粉丝数：{$vo.follower_count}&#12288;帖子数：{$vo.thread_count}</p></dd>
+                                </dl>
+                            </li>
+                          </volist>
+                        </ul>
+                      <php>}</php>
+                    </div>
                   </div>
            	  </div>
             </div>

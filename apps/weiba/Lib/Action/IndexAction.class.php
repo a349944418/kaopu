@@ -950,9 +950,9 @@ class IndexAction extends Action {
 		$this->setDescription( '搜索'.$k );
 
 		//微吧推荐
-		$this->_weiba_recommend(9,50,50);
+		//$this->_weiba_recommend(9,50,50);
 		//微吧排行榜
-		$this->_weibaOrder();
+		//$this->_weibaOrder();
 		$this->assign('nav','search');
 		if($k == ""){
 			if($_REQUEST['type'] == '1'){
@@ -964,51 +964,37 @@ class IndexAction extends Action {
 		}
 		$_POST['k'] && $_SERVER['QUERY_STRING'] = $_SERVER['QUERY_STRING'].'&k='.$k;
 		$this->assign('searchkey',$k);
-		$map['is_del'] = 0;
-		if($_REQUEST['type'] == '1'){
-			//搜微吧
-			$map['weiba_name'] = array('like','%'.$k.'%');
-			//$where['intro'] = array('like','%'.$k.'%');
-			//$where['_logic'] = 'or';
-			//$map['_complex'] = $where;
-			$weibaList = D('weiba')->where($map)->findPage(10);
-			if($weibaList['data']){
-				foreach($weibaList['data'] as $k=>$v){
-					$weibaList['data'][$k]['logo'] = getImageUrlByAttachId($v['logo'],100,100);
-				}
-				$weiba_ids = getSubByKey($weibaList['data'], 'weiba_id');
-				$this->_assignFollowState($weiba_ids);
-				$this->assign('weibaList',$weibaList);
-			}else{
-				//微吧推荐
-				$this->_weiba_recommend(9,50,50);
+		$map1['is_del'] = 0;
+		//搜微吧
+		$map1['weiba_name'] = array('like','%'.$k.'%');
+		$weibaList = D('weiba')->where($map1)->order('follower_count desc')->limit(10)->select();
+		if($weibaList){
+			foreach($weibaList as $k=>$v){
+				$weibaList[$k]['logo'] = getImageUrlByAttachId($v['logo'],100,100);
 			}
-			$this->display('search_weiba');
-		}else{
-			//搜帖子
-			$map['weiba_id'] = array('in',getSubByKey(D('weiba')->where('is_del=0')->field('weiba_id')->findAll(),'weiba_id'));
-			$map['title'] = array('like','%'.$k.'%');
-			//$where['content'] = array('like','%'.$k.'%');
-			//$where['_logic'] = 'or';
-			//$map['_complex'] = $where;
-			$postList = D('weiba_post')->where($map)->order('post_time desc')->findPage(20);
-			if($postList['data']){
-				$weiba_ids = getSubByKey($postList['data'], 'weiba_id');
-				$nameArr = $this->_getWeibaName($weiba_ids);
-				foreach($postList['data'] as $k=>$v){
-					$postList['data'][$k]['weiba'] = $nameArr[$v['weiba_id']];
-				}
-				$post_uids = getSubByKey($postList['data'], 'post_uid');
-				$reply_uids = getSubByKey($postList['data'], 'last_reply_uid');
-				$uids = array_unique(array_merge($post_uids,$reply_uids));
-				$this->_assignUserInfo($uids);
-				$this->assign('postList',$postList);
-			}else{
-				//微吧推荐
-				$this->_weiba_recommend(9,50,50);
+			$this->assign('weibaList',$weibaList);
+			$this->assign('countWeibaList', count($weibaList));
+		}
+		//搜帖子
+		$map['is_del'] = array('neq',1);
+		$map['title'] = array('like','%'.$k.'%');
+		//$where['content'] = array('like','%'.$k.'%');
+		//$where['_logic'] = 'or';
+		//$map['_complex'] = $where;
+		$postList = D('weiba_post')->where($map)->order('post_time desc')->findPage(10);
+		if($postList['data']){
+			$weiba_ids = getSubByKey($postList['data'], 'weiba_id');
+			$nameArr = $this->_getWeibaName($weiba_ids);
+			foreach($postList['data'] as $k=>$v){
+				$postList['data'][$k]['weiba'] = D('weiba_relation')->where('post_id='.$v['post_id'])->field('weiba_id, weiba_name') -> limit(3) -> select();
 			}
-			$this->display('search_post');
-		}	
+			$post_uids = getSubByKey($postList['data'], 'post_uid');
+			$reply_uids = getSubByKey($postList['data'], 'last_reply_uid');
+			$uids = array_unique(array_merge($post_uids,$reply_uids));
+			$this->_assignUserInfo($uids);
+			$this->assign('postList',$postList);
+		}
+		$this->display('search_post');	
 	}
 
 	/**

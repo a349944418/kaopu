@@ -94,11 +94,11 @@
 .weiba_postlist li{padding:15px 0 20px;border-bottom:1px dotted #ddd;}
 .weiba_postlist li:hover{background:#f6f6f6;}
 .weiba_postlist .name{margin:0 0 18px 0;}
-.weiba_postlist .name .num{color:#ff9722;border:1px solid #ccc;position:relative;background:#fcfcfc;padding:1px 8px;border-radius:2px;-webkit-border-radius:2px;-zom-border-radius:2px;-kthml-border-radius:2px;}
+.weiba_postlist .name .num{color:#ff9722;border:1px solid #ccc;position:relative;background:#fcfcfc;padding:1px 6px;border-radius:2px;-webkit-border-radius:2px;-zom-border-radius:2px;-kthml-border-radius:2px;margin-right: 8px;}
 .weiba_postlist .num .arrow-weiba{position:absolute;left:5px;bottom:-6px;}
-.weiba_postlist .name a{font-size:18px; font-family: "微软雅黑";}
+.weiba_postlist .name a{font-size:16px; font-family: "微软雅黑";}
 .weiba_postlist .name a i{font-family:"宋体";font-size:12px; line-height:14px; overflow:hidden; display:inline-block; vertical-align:middle;*vertical-align:-2px;}
-.weiba_postlist .f9 a{color: #999;}
+.weiba_postlist .f9 a{color: #999; margin: 0 5px;}
 
 .lh25{ line-height:25px;}
 

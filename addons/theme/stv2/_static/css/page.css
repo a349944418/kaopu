@@ -130,7 +130,7 @@ a:hover{ text-decoration:none;}
 .Interest-right p.According span a{ color:#8b8b8b; padding:0 5px;}
 .Interest-right p.may span{ float:right; margin-right:2%;}
 .Interest-right p.may{ font-family:"微软雅黑"; font-size:18px; color:#323436;}
-.confused, .Interest{ margin-top:25px;}
+.confused, .Interest{ margin:25px 0;}
 .ascension dl{ float:left; padding-right:6%; padding-top:10px; margin-bottom: 0;}
 .ascension dl dd.rebellious{ color:#215b88; font-size:12px; line-height:20px; padding-top:6px;}
 .ascension dl dd.people{ color:#727272; font-size:13px; line-height:18px;}
@@ -292,7 +292,7 @@ a:hover{ text-decoration:none;}
 .nav-left dd a:link, .nav-left dd a:visited {color: #545454; display: block; height: 30px; line-height: 30px; text-align: center; } 
 .person-set {background: #fff none repeat scroll 0 0; border-left: 1px solid #ebebeb; }
 .feed-nav {position: relative; } .feed-nav .set-hd {margin: 0 0 5px; } .set-hd h3 {border-bottom: 1px solid #ebebeb; font-size: 14px; font-weight: 700; padding: 0 0 10px; } .mod-feed-tab .inner-feed-nav .current a {background: #d9d9d9 none repeat scroll 0 0; color: #666; } .mod-feed-tab .inner-feed-nav li a, .mod-feed-tab .inner-feed-nav li a:hover {color: #666; display: inline-block; font-size: 12px; line-height: 14px; padding: 5px 10px; white-space: nowrap; word-break: break-all; } 
-.feng .name {font-size:12px;line-height: 14px;}
+.weiba_postlist .name, .feng .name {font-size:12px;line-height: 14px;}
 .private h5{ font-size:14px; line-height:22px; border-bottom:1px solid #ccc; padding-top:33px; padding-bottom:11px; font-weight:bold;}
 .private h5 span{ float:right;}
 .private h5 span a{ color:#444;}
@@ -304,6 +304,14 @@ a:hover{ text-decoration:none;}
 .private dl dd.feng span{ color:#FC5140;}
 .private dl dd.huifu a{ display:inline-block; padding:0 1%;}
 .private dl dd.huifu span{ display:inline-block; padding:0 1%;}
+
+/*搜索页*/
+.rank-box1 li {margin: 15px 0 0; overflow: hidden; }
+.rank-box1 dl {overflow: hidden; margin-bottom: 0px;}
+.rank-box1 dt {float: left; }
+.rank-box1 dt img {border-radius: 8px;}
+.rank-box1 dd {margin: 0 0 0 60px; }
+.rank-box1 dd p {line-height: 16px; }
 
 /*网页尾部*/
 .footer{ background:#1F2229;}
