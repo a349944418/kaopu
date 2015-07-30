@@ -8,7 +8,6 @@
 		border:1px solid #ccc;
 		margin-right: 15px;
 	}
-    .sexselect {background: #e6e6e6;border-color:#adadad}
 </style>
 <script>
     var d = new Date();
@@ -54,7 +53,7 @@
     	<div class="reg-wrap">
     		<div class="reg-main">
     			<!--注册步骤-->
-    			<div class="article article-avatar boxShadow clearfix">
+    			<div class="article article-avatar clearfix">
                     <form action="{:U('public/Register/doStep3')}" id="baseInfo" method="post">
     				<div class="item item-step3">
                         <div class="information">
@@ -77,7 +76,7 @@
                                         </div>
                                         <div class="col-sm-10">
                                             <div class="form-group">
-                                                <button class="btn btn-default nan " type="submit">男</button><button class="btn btn-default nv sexselect" type="submit">女</button>
+                                                <button class="btn btn-default nan ">男</button><button class="btn btn-default nv sexselect" >女</button>
                                                 <input name="sex" type="hidden" value="2">
                                             </div>
                                         </div>
@@ -226,31 +225,6 @@ $.validator.addMethod("isMobile", function(value, element) {
     return this.optional(element) || (tel.test(value));
 }, "请正确填写您的手机号码");
 $(function(){
-    //选择学校
-    $('#comModal').on('show.bs.modal', function (e) {
-        var button = $(e.relatedTarget);
-        var type = button.data('whatever');
-        var modal = $(this);
-        if(type == 'middle_school') {
-            $('.modal-dialog').addClass('modal-lg');
-            $.post('{:U("public/Register/ajaxSchool")}',{t:'middle', id: '110000'},function(data){
-              modal.find('.modal-body').html(data);
-            },'html');
-            modal.find('.modal-title').text('选择学校');
-        } else if(type == 'high_school') {
-            $('.modal-dialog').addClass('modal-lg');
-            $.post('{:U("public/Register/ajaxSchool")}',{t:'high', id: '110000'},function(data){
-              modal.find('.modal-body').html(data);
-            },'html');
-            modal.find('.modal-title').text('选择高中');
-        } else if(type == 'university_school') {
-            $('.modal-dialog').addClass('modal-lg');
-            $.post('{:U("public/Register/ajaxSchool")}',{t:'university', id:1},function(data){
-              modal.find('.modal-body').html(data);
-            },'html');
-            modal.find('.modal-title').text('选择大学');
-        }
-    })
 
     $('#baseInfo').validate({
         rules : {
@@ -266,17 +240,6 @@ $(function(){
                 maxlength : '真实姓名不超过32个字节',
             }
         }
-    })
-    //性别选择
-    $('.nan').click(function(){
-        $(this).addClass('sexselect');
-        $('.nv').removeClass('sexselect');
-        $('input[name=sex]').val('1');
-    })
-    $('.nv').click(function(){
-        $(this).addClass('sexselect');
-        $('.nan').removeClass('sexselect');
-        $('input[name=sex]').val('2');
     })
 })
 

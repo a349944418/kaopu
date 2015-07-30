@@ -578,12 +578,7 @@ M.addEventFns({
 	},
 	// 昵称验证
 	uname: {
-		focus: function() {
-			this.className='s-txt-focus';
-			return false;
-		},
 		blur: function() {
-			this.className='s-txt';
 
 			var dUname = this;
 			var sUrl = dUname.getAttribute('checkurl');
@@ -605,9 +600,6 @@ M.addEventFns({
 			}, 'json');
 			$(this.dTips).hide();
 		},
-		load: function() {
-			this.className='s-txt';
-		}
 	},
 	//用户类型
 	utype: {

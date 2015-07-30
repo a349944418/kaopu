@@ -16,6 +16,7 @@ dl {margin-bottom: 0px}
 .btn-big, .btn-big span, .btn-cancel span, .btn-grey-white, .btn-green-small, .btn-green-big, .btn-register, .btn-login, .btn-att-green, .btn-att-white, .btn-copy, .btn-cancel, .btn-grey {cursor: pointer; display: inline-block; vertical-align: middle; }
 .layer-mini-info .action .btn-cancel span, .layer-content .btn-cancel span, .layer-follow-list .btn-cancel span, .weiba-manage .btn-cancel span, .form-avatar .btn-cancel span, .tipoff-manage .btn-cancel span {padding: 5px 12px; }
 .btn-cancel {background-position: 0 -452px; padding: 0 0 0 2px; }
+.sexselect {background: #e6e6e6;border-color:#adadad}
 .yw-spectrum1{ border:3px solid #fff; border-radius:50%;}
 .boxShadow {background: #fff none repeat scroll 0 0; box-shadow: 0 0 5px #cccccc; }
 .yw-topic{ margin-top:6px; padding-top:28px; padding-bottom:13px;background-size:cover;-moz-background-size:cover;-webkit-background-size:cover;}

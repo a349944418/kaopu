@@ -1,92 +1,97 @@
 <include file="__THEME__/public_header" />
-
-<div id="page-wrap">
-  <div id="main-wrap">
-    <div id="col" class="st-grid content-bg">
-      <div id="col4" class="main-left">
+<!-- <php>dump($user_info);</php> -->
+<div id="page-wrap" class="center1">
+  <div id="main-wrap" class="container">
+    <div id="st-index-grid" class="row boxShadow" style="margin:20px 0;">
+      <div id="col4" class="main-left col-md-2">
         <!--tab菜单-->
         <include file="_tabs" />
       </div>
-      <div id="col7" class="main-right">
-        <div class="extend minh person-set">
+      <div id="col7" class="main-right col-md-10 person-set">
+        <div class="extend minh">
           <div class="set-hd"><h3>{$tabName}</h3></div>
           <!--信息设置项 基本信息-->
           <form action="{:U('public/Account/doSaveProfile')}" method="post" model-node='account_save'>
-            <dl class="form-set">
-              <dd>
-                <div class="form-tt"><font color="red"> * </font>{:L('PUBLIC_LOGIN_EMAIL')}：</div>
-                <div class="form-row">{$user_info['email']}</div>
-              </dd>
-              <!--
-              <dd>
-                <div class="form-tt">{:L('PUBLIC_REAL_NAME')}：</div>
-                <div class="form-row">{$user_info['uname']}</div>
-              </dd>
-              -->
-              <dd>
-                <div class="form-tt"><font color="red"> * </font>{:L('PUBLIC_NICKNAME')}：</div>
-                <div class="form-row">
-                  <input event-node="uname" event-args="old_name={$user_info['uname']}" name="uname" checkurl="{:U('public/Register/isUnameAvailable')}" autocomplete="off" type="text" value="{$user_info['uname']}" />
-                </div>
-                <input type="hidden" name="old_name" value="{$user_info['uname']}" />
-              </dd>
-              <dd>
-                <div class="form-tt"><font color="red"> * </font>{:L('PUBLIC_GENDER')}：</div>
-                <div class="form-row">
-                  <label><input name="sex" type="radio" value="1" class="s-ck" <if condition="1 eq $user_info['sex']">checked="checked"</if> />{:L('PUBLIC_MALE')}</label>
-                  <label><input name="sex" type="radio" value="2" class="s-ck" <if condition="2 eq $user_info['sex']">checked="checked"</if> />{:L('PUBLIC_FEMALE')}</label>
-                </div>
-              </dd>
-              <dd>
-                <div class="form-tt"><font color="red"> * </font>地区：</div>
-                <div class="form-row">{:W('Area',array('curPro'=>$user_info['province'],'curCity'=>$user_info['city'],'area'=>$user_info['area'],'city_names'=>$user_info['location'],'tpl'=>'selectArea'))}</div>
-              </dd>
-<!--             
-              <dd>
-                <div class="form-tt"><font color="red"> * </font>职业信息：</div>
-                <div class="form-row">
-                  <font id="userCategory">{$user_info['category']}</font>&nbsp;&nbsp;
-                  <a style="color:#36c" href="javascript:void(0)" onclick="editUserCategory();">修改</a>
-                </div>
-              </dd> 
-              <dd>
-                <div class="form-tt">{:L('PUBLIC_LANG_SET')}：</div>
-                <div class="form-row">
-                  <php>empty($user_info['lang']) &&  $user_info['lang'] = C('DEFAULT_LANG');</php>
-                  <volist name='langType' id='l'>
-                  <label><input type ='radio' name='lang' value='{$l}' <eq name='user_info.lang' value="$l"> checked="checked"</eq>> {$l}</label>
-                  </volist> 
-                </div>
-              </dd>
-              <volist name="user_profile_setting[ACTION_NAME]['child']" id="u_p_s_v">
-              <dd>
-                <div class="form-tt"><eq name='u_p_s_v.required' value='1'><font color="red"> * </font></eq> {:L('PUBLIC_PROFILESET_'.strtoupper($u_p_s_v['field_key']))}：</div>
-                <div class="form-row">
-                  {:W('FormInput', array_merge($u_p_s_v, array('type' => $u_p_s_v['form_type'], 'name' => $u_p_s_v['field_key'], 'default_value' => $u_p_s_v['form_default_value'], 'value' => $user_profile[$u_p_s_v['field_id']]['field_data'],'required'=>$u_p_s_v['required'],'field_name'=>$u_p_s_v['field_name'],'canChange'=>0,'editable'=>$u_p_s_v['editable'])))}
-                </div>
-              </dd>
-              </volist>
-              <dd>
-                <div class="form-tt">个人标签：</div>
-                <div class="form-row">
-                {:W('Tag', array('width'=>'400px', 'row_id'=>$mid, 'tpl'=>'tags'))}
-                </div>
-              </dd> 
--->
-              <dd>
-                <div class="form-tt"> 个人简介：</div>
-                <div class="form-row">
-                  <textarea class="s-textarea" name="intro">{$user_info['intro']}</textarea>
-                </div>
-              </dd>
-              <dd>
-                <div class="form-tt"></div>
-                <div class="form-row">
-                  <a event-node="submit_btn" href="#" class="btn-green-big">{:L('PUBLIC_SAVE')}</a>
-                </div>
-                <input type="text" style="display:none">
-              </dd>
-            </dl>
+              <div class="row">
+                  <div class="col-sm-2 information1">
+                      {:L('PUBLIC_LOGIN_EMAIL')}：
+                  </div>
+                  <div class="col-sm-9 information1" style="text-align:left;font-weight:normal;margin-bottom:15px">
+                      {$user_info['email']}
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-2 information1">
+                      {:L('PUBLIC_NICKNAME')}：
+                  </div>
+                  <div class="col-sm-9">
+                      <div class="form-group">
+                          <input type="text" event-node="uname" event-args="old_name={$user_info['uname']}" name="uname" checkurl="{:U('public/Register/isUnameAvailable')}" autocomplete="off" class="form-control" value="{$user_info['uname']}">
+                          <input type="hidden" name="old_name" value="{$user_info['uname']}" />
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-2 information1">
+                      真实姓名：
+                  </div>
+                  <div class="col-sm-9">
+                      <div class="form-group">
+                          <input type="text" name="truename" class="form-control" value="{$user_info['truename']}">
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-2 information1">
+                      性别：
+                  </div>
+                  <div class="col-sm-10">
+                      <div class="form-group">
+                          <button class="btn btn-default nan <if condition='1 eq $user_info[sex]'>sexselect</if> ">男</button><button class="btn btn-default nv <if condition='2 eq $user_info[sex]'>sexselect</if> " >女</button>
+                          <input name="sex" type="hidden" value="{$user_info.sex}">
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-2 information1">
+                      手机号：
+                  </div>
+                  <div class="col-sm-9">
+                      <div class="form-group">
+                          <input type="tel" class="form-control" name="mobile" placeholder="{$user_info.mobile}">
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-2 information1">
+                      生日：
+                  </div>
+                  <div class="col-sm-9" style="margin-bottom: 15px;">
+                      {:W('Birth',array('curY'=>date("Y",$user_info[birthY]),'curM'=>date("m",$user_info[birthM]),'day'=>date("d",$user_info[birthD])))}
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-2 information1">
+                      地区：
+                  </div>
+                  <div class="col-sm-9" style="margin-bottom: 15px;">
+                      {:W('Area',array('curPro'=>$user_info['province'],'curCity'=>$user_info['city'],'area'=>$user_info['area'],'tpl'=>'selectArea'))}
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-2 information1">
+                      个人简介：
+                  </div>
+                  <div class="col-sm-9">
+                      <textarea class="form-control" rows="3" name="intro">{$user_info['intro']}</textarea>
+                  </div>
+              </div>
+              <div class="row" style="margin:20px 0;">
+                  <div class="col-sm-2 information1"></div>
+                  <div class="col-sm-10">
+                      <a class="btn btn-default sub" href="javascript:void(0);" event-node="submit_btn">保存</a>
+                  </div>
+              </div>
           </form>
         </div>
       </div>

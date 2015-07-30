@@ -58,6 +58,10 @@ class AccountAction extends Action
 				$user_info['category'] .= '<a href="#" class="link btn-cancel"><span>'.$value['title'].'</span></a>&nbsp;&nbsp;';
 			}
 		}
+
+		$user_info['birthY'] = date('Y', $user_info['birthday']);
+		$user_info['birthM'] = ltrim(date('m', $user_info['birthday']),0);
+		$user_info['birthD'] = ltrim(date('d', $user_info['birthday']),0);
 		$this->assign('user_info', $user_info);
 		$this->assign($data);
 		$this->setTitle( L('PUBLIC_PROFILESET_INDEX') );			// 个人设置
@@ -101,6 +105,9 @@ class AccountAction extends Action
 			$save['sex']  = 1 == intval($_POST['sex']) ? 1 : 2;
 		//	$save['lang'] = t($_POST['lang']);
 			$save['intro'] = t($_POST['intro']);
+			$save['truename'] = t($_POST['truename']);
+			$save['birthday'] = strtotime(intval($_POST['birthY']).'-'.intval($_POST['birthM']).'-'.intval($_POST['birthD']));
+			$save['mobile'] = t($_POST['mobile']);
 			// 添加地区信息
 			$save['location'] = t($_POST['city_names']);
 			$cityIds = t($_POST['city_ids']);

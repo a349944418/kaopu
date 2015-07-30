@@ -1,15 +1,47 @@
 $(function(){
+  //选择学校
   $('#comModal').on('show.bs.modal', function (e) {
-    var button = $(e.relatedTarget);
-    var type = button.data('whatever');
-    var modal = $(this);
-    if(type == 'register'){
-      $('.modal-dialog').addClass('modal-sm');
-      $.post(U("public/Register/ajaxReg"),{},function(data){
-        modal.find('.modal-body').html(data);
-      },'html');
-      modal.find('.modal-title').text('感谢您的注册');
-    } 
+      var button = $(e.relatedTarget);
+      var type = button.data('whatever');
+      var modal = $(this);
+      if(type == 'register'){
+          $('.modal-dialog').addClass('modal-sm');
+          $.post(U("public/Register/ajaxReg"),{},function(data){
+            modal.find('.modal-body').html(data);
+          },'html');
+          modal.find('.modal-title').text('感谢您的注册');
+        } else if(type == 'middle_school') {
+          $('.modal-dialog').addClass('modal-lg');
+          $.post('{:U("public/Register/ajaxSchool")}',{t:'middle', id: '110000'},function(data){
+            modal.find('.modal-body').html(data);
+          },'html');
+          modal.find('.modal-title').text('选择学校');
+      } else if(type == 'high_school') {
+          $('.modal-dialog').addClass('modal-lg');
+          $.post('{:U("public/Register/ajaxSchool")}',{t:'high', id: '110000'},function(data){
+            modal.find('.modal-body').html(data);
+          },'html');
+          modal.find('.modal-title').text('选择高中');
+      } else if(type == 'university_school') {
+          $('.modal-dialog').addClass('modal-lg');
+          $.post('{:U("public/Register/ajaxSchool")}',{t:'university', id:1},function(data){
+            modal.find('.modal-body').html(data);
+          },'html');
+          modal.find('.modal-title').text('选择大学');
+      }
+  })
+  //性别选择
+  $('.nan').click(function(){
+      $(this).addClass('sexselect');
+      $('.nv').removeClass('sexselect');
+      $('input[name=sex]').val('1');
+      return false;
+  })
+  $('.nv').click(function(){
+      $(this).addClass('sexselect');
+      $('.nan').removeClass('sexselect');
+      $('input[name=sex]').val('2');
+      return false;
   })
   //获取评论
   $('.comment_btns').click(function(){
