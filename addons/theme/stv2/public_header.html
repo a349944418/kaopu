@@ -82,7 +82,7 @@
                                     <!-- 消息菜单钩子 -->
                                     {:Addons::hook('header_message_dropmenu')}
                                 <php>if(CheckPermission('core_normal','send_message')){</php>
-                                <li class="border"><a event-node="postMsg" href="javascript:void(0)" onclick="ui.sendmessage()">{:L('PUBLIC_SEND_PRIVATE_MESSAGE')}&raquo;</a></li>
+                                <!-- <li class="border"><a event-node="postMsg" href="javascript:void(0)" onclick="ui.sendmessage()">{:L('PUBLIC_SEND_PRIVATE_MESSAGE')}&raquo;</a></li> -->
                                 <php>}</php>
                                 </ul>
                             </li>
