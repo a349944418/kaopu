@@ -505,9 +505,6 @@ class IndexAction extends Action {
 		
 	}
 
-	public function getContent() {
-		echo 111;
-	}
 
 	/**
      * 获取评论列表
@@ -940,10 +937,11 @@ class IndexAction extends Action {
 	 * @return  void
 	 */
 	public function search(){
-		// 获取个人信息
-		$userinfo = model ( 'User' )->getUserInfo ( $this->mid );
-		$this->assign('userinfo', $userinfo);
-
+		if($this->mid) {
+			// 获取个人信息
+			$userinfo = model ( 'User' )->getUserInfo ( $this->mid );
+			$this->assign('userinfo', $userinfo);
+		}	
 		$k = t($_REQUEST['k']);
 		$this->setTitle( '搜索'.$k );
 		$this->setKeywords( '搜索'.$k );

@@ -1,5 +1,16 @@
 $(function(){
-
+  $('#comModal').on('show.bs.modal', function (e) {
+    var button = $(e.relatedTarget);
+    var type = button.data('whatever');
+    var modal = $(this);
+    if(type == 'register'){
+      $('.modal-dialog').addClass('modal-sm');
+      $.post(U("public/Register/ajaxReg"),{},function(data){
+        modal.find('.modal-body').html(data);
+      },'html');
+      modal.find('.modal-title').text('感谢您的注册');
+    } 
+  })
   //获取评论
   $('.comment_btns').click(function(){
     var count = $(this).children('span').html();
