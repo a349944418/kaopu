@@ -2,6 +2,20 @@
 /* CSS Document */
 li{list-style:none;}
 ul {padding: 0;}
+dl {margin-bottom: 0px}
+.ts_confirm {background: rgba(0, 0, 0, 0) url("../image/pagedarkbg.png") repeat scroll 0 0; clear: left; margin-top: 20px; position: absolute; text-align: center; z-index: 9; }
+.ico-error, .ico-ok, .ico-wait, .ico-no, .ico-ok-big, .ico-error-big {background: rgba(0, 0, 0, 0) url("../image/ico-tips.png") no-repeat scroll 0 0; display: inline-block; }
+.ts_confirm .ico-close {position: absolute; right: 5px; top: 5px; }
+.ts_confirm .layer-mini-info {background: #fff none repeat scroll 0 0; border: 1px solid #ccc; padding: 15px; position: relative; color: #999; min-width: 170px; width: 200px;}
+.layer-mini-info .action {margin: 15px 0 0; text-align: center; }
+.ico-error {background-position: -39px 0; height: 20px; margin: 0 5px 0 0; vertical-align: -4px; width: 20px; }
+.btn-green-small, .btn-green-small:hover {background: #414448 none repeat scroll 0 0; border-radius: 2px; color: #fff; font-size: 12px; height: 24px; line-height: 24px; text-align: center; width: 50px; }
+.mr10 {margin-right: 10px;}
+.btn-green-big span, .btn-green-small span {color: #fff; }
+.btn-cancel span {background-position: right -484px; color: #666; display: inline-block; line-height: 14px; padding: 5px; }
+.btn-big, .btn-big span, .btn-cancel span, .btn-grey-white, .btn-green-small, .btn-green-big, .btn-register, .btn-login, .btn-att-green, .btn-att-white, .btn-copy, .btn-cancel, .btn-grey {cursor: pointer; display: inline-block; vertical-align: middle; }
+.layer-mini-info .action .btn-cancel span, .layer-content .btn-cancel span, .layer-follow-list .btn-cancel span, .weiba-manage .btn-cancel span, .form-avatar .btn-cancel span, .tipoff-manage .btn-cancel span {padding: 5px 12px; }
+.btn-cancel {background-position: 0 -452px; padding: 0 0 0 2px; }
 .yw-spectrum1{ border:3px solid #fff; border-radius:50%;}
 .boxShadow {background: #fff none repeat scroll 0 0; box-shadow: 0 0 5px #cccccc; }
 .yw-topic{ margin-top:6px; padding-top:28px; padding-bottom:13px;background-size:cover;-moz-background-size:cover;-webkit-background-size:cover;}
