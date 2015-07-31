@@ -58,7 +58,7 @@
                   </div>
                   <div class="col-sm-9">
                       <div class="form-group">
-                          <input type="tel" class="form-control" name="mobile" placeholder="{$user_info.mobile}">
+                          <input type="tel" class="form-control" name="mobile" value="{$user_info.mobile}">
                       </div>
                   </div>
               </div>
@@ -67,7 +67,7 @@
                       生日：
                   </div>
                   <div class="col-sm-9" style="margin-bottom: 15px;">
-                      {:W('Birth',array('curY'=>date("Y",$user_info[birthY]),'curM'=>date("m",$user_info[birthM]),'day'=>date("d",$user_info[birthD])))}
+                      {:W('Birth',array('curY'=>$user_info[birthY],'curM'=>$user_info[birthM],'day'=>$user_info[birthD]))}
                   </div>
               </div>
               <div class="row">
