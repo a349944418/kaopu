@@ -82,7 +82,12 @@ class PassportAction extends Action
 			$info 	= $this->passport->getSuccess();
 			$data 	= ($GLOBALS['ts']['site']['home_url'])?$GLOBALS['ts']['site']['home_url']:0;
 		}
-		header('Location:'.$data);
+		if($data){
+			header('Location:'.$data);
+		} else {
+			$this->error('账号或密码错误');
+		}
+		
 	}	
 	
 	/**

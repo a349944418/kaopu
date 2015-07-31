@@ -19,25 +19,25 @@ class AccountAction extends Action
 		$profile_category_list = $this->_profile_model->getCategoryList();
 		
 		$tab_list[] = array('field_key'=>'index','field_name'=>L('PUBLIC_PROFILESET_INDEX'));				// 基本资料
-		$tab_list[] = array('field_key'=>'tag','field_name'=>L('PUBLIC_PROFILE_TAG'));				// 基本资料
-		$tab_lists = $profile_category_list;
+		// $tab_list[] = array('field_key'=>'tag','field_name'=>L('PUBLIC_PROFILE_TAG'));				// 基本资料
+		// $tab_lists = $profile_category_list;
 
-		foreach($tab_lists as $v) {
-			$tab_list[] = $v;			// 后台添加的资料配置分类
-		}
+		// foreach($tab_lists as $v) {
+		// 	$tab_list[] = $v;			// 后台添加的资料配置分类
+		// }
 		$tab_list[] = array('field_key'=>'avatar','field_name'=>L('PUBLIC_IMAGE_SETTING'));				// 头像设置
-		$tab_list[] = array('field_key'=>'domain','field_name'=>L('PUBLIC_DOMAIN_NAME'));				// 个性域名
-		$tab_list[] = array('field_key'=>'authenticate','field_name'=>'申请认证');	// 申请认证
-		$tab_list_preference[] = array('field_key'=>'privacy','field_name'=>L('PUBLIC_PRIVACY'));					// 隐私设置
-		$tab_list_preference[] = array('field_key'=>'notify','field_name'=>'通知设置');					// 通知设置
-		$tab_list_preference[] = array('field_key'=>'blacklist','field_name'=>'黑名单');					// 黑名单
+		//$tab_list[] = array('field_key'=>'domain','field_name'=>L('PUBLIC_DOMAIN_NAME'));				// 个性域名
+		//$tab_list[] = array('field_key'=>'authenticate','field_name'=>'申请认证');	// 申请认证
+		//$tab_list_preference[] = array('field_key'=>'privacy','field_name'=>L('PUBLIC_PRIVACY'));					// 隐私设置
+		//$tab_list_preference[] = array('field_key'=>'notify','field_name'=>'通知设置');					// 通知设置
+		//$tab_list_preference[] = array('field_key'=>'blacklist','field_name'=>'黑名单');					// 黑名单
 		$tab_list_security[] = array('field_key'=>'security','field_name'=>L('PUBLIC_ACCOUNT_SECURITY'));		// 帐号安全	
 		
 		//插件增加菜单
-		$tab_list_security[] = array('field_key'=>'bind','field_name'=>'帐号绑定');		// 帐号绑定
+		//$tab_list_security[] = array('field_key'=>'bind','field_name'=>'帐号绑定');		// 帐号绑定
 		
 		$this->assign('tab_list',$tab_list);
-		$this->assign('tab_list_preference',$tab_list_preference);
+		//$this->assign('tab_list_preference',$tab_list_preference);
 		$this->assign('tab_list_security',$tab_list_security);
 	}
 
@@ -355,6 +355,7 @@ class AccountAction extends Action
     	$_POST['oldpassword'] = t($_POST['oldpassword']);
     	$_POST['password'] = t($_POST['password']);
     	$_POST['repassword'] = t($_POST['repassword']);
+
     	// 验证信息
     	if ($_POST['oldpassword'] === '') {
     		$this->error('请填写原始密码');
@@ -381,7 +382,6 @@ class AccountAction extends Action
     	$user_model = model('User');
     	$map['uid'] = $this->mid;
     	$user_info = $user_model->where($map)->find();
-
     	if($user_info['password'] == $user_model->encryptPassword($_POST['oldpassword'], $user_info['login_salt'])) {
 			$data['login_salt'] = rand(11111, 99999);
 			$data['password'] = $user_model->encryptPassword($_POST['password'], $data['login_salt']);

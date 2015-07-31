@@ -476,11 +476,7 @@ M.addEventFns({
 	},
 	// 密码验证
 	password: {
-		focus: function() {
-			this.className = 's-txt-focus';
-		},
 		blur: function() {
-			this.className = 's-txt';
 			var dWeight = this.parentModel.childModels["password_weight"][0];
 			var sValue = this.value + "";
 			var nL = sValue.length;
@@ -506,7 +502,6 @@ M.addEventFns({
 		},
 		load: function() {
 			this.value = '';
-			this.className='s-txt';
 
 			var dPwd = this,
 				dWeight = this.parentModel.childModels["password_weight"][0],
@@ -549,14 +544,10 @@ M.addEventFns({
 		}
 	},
 	repassword: {
-		focus: function() {
-			this.className='s-txt-focus';
-		},
 		keyup:function(){
 			this.value = this.value.replace(/^\s+|\s+$/g,""); 
 		},
 		blur: function() {
-			this.className='s-txt';
 
 			var sPwd = this.parentModel.childEvents["password"][0].value,
 				sRePwd = this.value;
@@ -572,9 +563,6 @@ M.addEventFns({
 				this.bIsValid = true;
 			}
 		},
-		load: function() {
-			this.className='s-txt';
-		}
 	},
 	// 昵称验证
 	uname: {
