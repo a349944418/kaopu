@@ -12,8 +12,8 @@ if(extension_loaded('zlib')){
 $gettype = 'css';
 $allowed_content_types	=	array('css');
 $getfiles	= explode(',', strip_tags($_GET['f']));
-// $offset = 60 * 60 * 24 * 7; //过期7天
-$offset = 1;
+$offset = 60 * 60 * 24 * 7; //过期7天
+//$offset = 1;
 
 
 if($gettype=='css'){
