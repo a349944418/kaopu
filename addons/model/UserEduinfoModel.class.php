@@ -28,12 +28,13 @@ Class UserEduinfoModel extends Model {
 			if(($arr[$v.'_school'] && $k==1) || ($arr[$v.'_school'] && $arr[$v.'_id']) || $arr[$v.'_time']) {
 				$data['school_name'] = $arr[$v.'_school'];
 				$data['school_id'] = $arr[$v.'_id'];
-				$data['school_time'] = $arr[$v.'_time'];
+				$data['school_time'] = $arr[$v.'_school_time'];
 				$data['aid'] = $arr[$v.'_aid'];
 				$data['school_type'] = $k;
 				$this->add($data);
 			}
 		}
+		return 1;
 	}
 }
 ?>

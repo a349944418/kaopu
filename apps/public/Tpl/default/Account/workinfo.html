@@ -1,0 +1,59 @@
+<include file="__THEME__/public_header" />
+<link href="__APP__/account.css" rel="stylesheet" type="text/css" />
+<script>
+function getYear( y ){
+    var d = new Date();
+    var nowyear = d.getFullYear();
+    var yearOption = '<option value="0">入学时间</option>';
+    for(var i = 1950; i<= nowyear; i++){
+        var selected = i == y ? 'selected' : '';
+        yearOption += '<option value="'+i+'" '+selected+'>'+i+'</option>';
+    }
+    return yearOption;
+}
+    
+</script>
+<div id="page-wrap" class="center1">
+  <div id="main-wrap" class="container">
+    <div id="st-index-grid" class="row boxShadow" style="margin:20px 0;">
+      <div id="col4" class="main-left col-md-2">
+        <!--tab菜单-->
+        <include file="_tabs" />
+      </div>
+      <div id="col7" class="main-right col-md-10 person-set">
+        <div class="extend minh">
+          <div class="set-hd"><h3>工作信息</h3></div>
+          <div class="set-item-info">
+            <form action="{:U('public/Account/doWorkInfo')}" method="post">
+                <input type="hidden" name="uwid" value="{$workinfo.uwid}">
+                <div class="row school1">
+                    <div class="col-sm-2 information1">
+                        公司名称：
+                    </div>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control school" name="company_name" value="{$workinfo.company_name}">
+                    </div>
+                </div>
+                <div class="row school1">
+                    <div class="col-sm-2 information1">
+                        公司行业：
+                    </div>
+                    <div class="col-sm-10">
+                        {:W('Industry',array('curPid'=>$industry[industryP],'curChild'=>$industry[industryC]))}
+                    </div>
+                </div>
+                <div class="row" style="margin:20px 0;">
+                    <div class="col-sm-2 information1"></div>
+                    <div class="col-sm-5">
+                        <a class="btn btn-default sub" href="javascript:void(0);" event-node="submit_btn">{:L('PUBLIC_SAVE')}</a>
+                    </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="__THEME__/js/module.form.js"></script>
+<include file="__THEME__/public_footer" />

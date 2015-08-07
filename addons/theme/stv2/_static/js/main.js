@@ -12,19 +12,19 @@ $(function(){
           modal.find('.modal-title').text('感谢您的注册');
         } else if(type == 'middle_school') {
           $('.modal-dialog').addClass('modal-lg');
-          $.post('{:U("public/Register/ajaxSchool")}',{t:'middle', id: '110000'},function(data){
+          $.post(U("public/Register/ajaxSchool"),{t:'middle', id: '110000'},function(data){
             modal.find('.modal-body').html(data);
           },'html');
           modal.find('.modal-title').text('选择学校');
       } else if(type == 'high_school') {
           $('.modal-dialog').addClass('modal-lg');
-          $.post('{:U("public/Register/ajaxSchool")}',{t:'high', id: '110000'},function(data){
+          $.post(U("public/Register/ajaxSchool"),{t:'high', id: '110000'},function(data){
             modal.find('.modal-body').html(data);
           },'html');
           modal.find('.modal-title').text('选择高中');
       } else if(type == 'university_school') {
           $('.modal-dialog').addClass('modal-lg');
-          $.post('{:U("public/Register/ajaxSchool")}',{t:'university', id:1},function(data){
+          $.post(U("public/Register/ajaxSchool"),{t:'university', id:1},function(data){
             modal.find('.modal-body').html(data);
           },'html');
           modal.find('.modal-title').text('选择大学');

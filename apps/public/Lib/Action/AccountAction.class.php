@@ -17,25 +17,38 @@ class AccountAction extends Action
 		$this->_profile_model = model('UserProfile');
 		// 从数据库读取
 		$profile_category_list = $this->_profile_model->getCategoryList();
-		
-		$tab_list[] = array('field_key'=>'index','field_name'=>L('PUBLIC_PROFILESET_INDEX'));				// 基本资料
+
+		// 基本资料
+		$tab_list[] = array('field_key'=>'index','field_name'=>L('PUBLIC_PROFILESET_INDEX'));				
 		// $tab_list[] = array('field_key'=>'tag','field_name'=>L('PUBLIC_PROFILE_TAG'));				// 基本资料
 		// $tab_lists = $profile_category_list;
 
 		// foreach($tab_lists as $v) {
 		// 	$tab_list[] = $v;			// 后台添加的资料配置分类
 		// }
-		$tab_list[] = array('field_key'=>'avatar','field_name'=>L('PUBLIC_IMAGE_SETTING'));				// 头像设置
-		//$tab_list[] = array('field_key'=>'domain','field_name'=>L('PUBLIC_DOMAIN_NAME'));				// 个性域名
-		//$tab_list[] = array('field_key'=>'authenticate','field_name'=>'申请认证');	// 申请认证
-		//$tab_list_preference[] = array('field_key'=>'privacy','field_name'=>L('PUBLIC_PRIVACY'));					// 隐私设置
-		//$tab_list_preference[] = array('field_key'=>'notify','field_name'=>'通知设置');					// 通知设置
-		//$tab_list_preference[] = array('field_key'=>'blacklist','field_name'=>'黑名单');					// 黑名单
-		$tab_list_security[] = array('field_key'=>'security','field_name'=>L('PUBLIC_ACCOUNT_SECURITY'));		// 帐号安全	
+		// 头像设置
+		$tab_list[] = array('field_key'=>'avatar','field_name'=>L('PUBLIC_IMAGE_SETTING'));	
+		// 教育信息
+		$tab_list[] = array('field_key'=>'edu','field_name'=>'教育信息');
+		// 工作信息
+		$tab_list[] = array('field_key'=>'workinfo','field_name'=>'工作信息');
+		/*				
+		$tab_list[] = array('field_key'=>'domain','field_name'=>L('PUBLIC_DOMAIN_NAME'));				
+		个性域名
+		$tab_list[] = array('field_key'=>'authenticate','field_name'=>'申请认证');	// 申请认证
+		$tab_list_preference[] = array('field_key'=>'privacy','field_name'=>L('PUBLIC_PRIVACY'));				// 隐私设置
+		$tab_list_preference[] = array('field_key'=>'notify','field_name'=>'通知设置');					
+		通知设置
+		$tab_list_preference[] = array('field_key'=>'blacklist','field_name'=>'黑名单');					
+		黑名单
 		
-		//插件增加菜单
-		//$tab_list_security[] = array('field_key'=>'bind','field_name'=>'帐号绑定');		// 帐号绑定
+		插件增加菜单
+		$tab_list_security[] = array('field_key'=>'bind','field_name'=>'帐号绑定');		// 帐号绑定
+		*/
 		
+		// 帐号安全
+		$tab_list_security[] = array('field_key'=>'security','field_name'=>L('PUBLIC_ACCOUNT_SECURITY'));		
+
 		$this->assign('tab_list',$tab_list);
 		//$this->assign('tab_list_preference',$tab_list_preference);
 		$this->assign('tab_list_security',$tab_list_security);
@@ -203,6 +216,62 @@ class AccountAction extends Action
     	$this->ajaxReturn($result['data'], $result['info'], $result['status']);
 	}
 
+	/**
+	 * [ 设置教育信息 ]
+	 * @return [type] [description]
+	 */
+	public function edu() {
+		$primary = D('UserEduinfo') -> where('school_type = 1 and uid='.$this->mid) -> find();
+		$middle = D('UserEduinfo') -> where('school_type = 2 and uid='.$this->mid) -> find();
+		$high = D('UserEduinfo') -> where('school_type = 3 and uid='.$this->mid) -> find();
+		$university = D('UserEduinfo') -> where('school_type = 4 and uid='.$this->mid) -> find();
+		$this->assign(array('primary'=>$primary, 'middle'=>$middle, 'high'=>$high, 'university'=>$university));
+		$this->display();
+	}
+
+	/**
+	 * [ 保存教育信息 ]
+	 * @return [type] [description]
+	 */
+	public function doEdu() {
+		$map = t_Arr($_POST);
+		D('UserEduinfo')->where('uid='.$this->mid)->delete();
+		$res = D('UserEduinfo')->save_Eduinfo($map);
+		return $this->ajaxReturn(null, '保存成功', $res);
+	}
+
+	/**
+	 * [ 工作信息 ]
+	 * @return [type] [description]
+	 */
+	public function workinfo() {
+		$workinfo = D('UserWorkinfo')->where('uid='.$this->mid)->find();
+		$industry = D('User')->field('industryP,industryC')->where('uid='.$this->mid)->find();
+		$this->assign(array('workinfo'=>$workinfo,'industry'=>$industry));
+		$this->display();
+	}
+
+	/**
+	 * [ 保存工作信息 ]
+	 * @return [type] [description]
+	 */
+	public function doWorkInfo() {
+		$map = t_Arr($_POST);
+		$map['uid'] = $this->mid;
+		$flag1 = D('User')->save($map);
+		if($flag1){
+			if($map['uwid']){
+				$flag2 = D('UserWorkinfo')->save($map);
+			}else{
+				$flag2 = D('UserWorkinfo')->save_workinfo($map);
+			}
+			if($flag2){
+				return $this->ajaxReturn(null, '操作成功', 1);
+				die();
+			}			
+		}
+		return $this->ajaxReturn(null, '操作失败', 0);
+	}
 	/**
 	 * 保存登录用户的头像设置操作，Flash上传
 	 * @return string 操作后的反馈信息

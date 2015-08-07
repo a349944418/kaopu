@@ -546,7 +546,8 @@ class RegisterAction extends Action
 		$map['location'] = $map['city_names'];
 		$map['birthday'] = strtotime($map['birthY'].'-'.$map['birthM'].'-'.$map['birthD']);
 		$map['uid'] = $_SESSION['mid'];
-		dump($this->_user_model->getLastSql());
+		$this->_user_model->save($map);
+		//dump($this->_user_model->getLastSql());
 		//保存教育信息
 		D('UserEduinfo')->save_Eduinfo($map);
 		//保存工作信息
