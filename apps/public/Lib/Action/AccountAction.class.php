@@ -213,7 +213,7 @@ class AccountAction extends Action
 			$feed_ids = getSubByKey($user_feeds, 'feed_id');
 			model('Feed')->cleanCache($feed_ids,$this->mid);
 		}
-    	$this->ajaxReturn($result['data'], $result['info'], $result['status']);
+    	$this->ajaxReturn($result['data'], '设置成功', $result['status']);
 	}
 
 	/**
