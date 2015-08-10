@@ -87,7 +87,15 @@ dl {margin-bottom: 0px}
 .page {margin: 15px auto;}
 .page a {margin: 0 4px;  padding: 2px 9px; display: inline-block; border: 1px solid #ccc;}
 .page .current {color:red; padding: 0; border: none;}
-
+.dropdown-menu > li > span {
+    clear: both;
+    color: #333;
+    display: inline-block;
+    font-weight: normal;
+    line-height: 1.42857;
+    padding: 3px 0 3px 20px;
+    white-space: nowrap;
+}
 
 .homepage1{ background:url(../image/homepage.png) no-repeat;}
 .homepage1 img{ padding:12px;}
