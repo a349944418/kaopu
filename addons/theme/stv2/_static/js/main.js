@@ -87,10 +87,11 @@ $(function(){
  * @param  {[type]} URL [description]
  * @return {[type]}     [description]
  */
-function showquiz(URL){
+function showquiz(type){
   $('#comModal .modal-header').css({'background':'#FC5241','padding':'8px 15px'});
-  $('#comModal .modal-title').html('提问').css({'text-align':'center','color':'white'});
-  $.post(URL,{}, function(data){
+  var title = type == 1 ? '提问' : '分享';
+  $('#comModal .modal-title').html(title).css({'text-align':'center','color':'white'});
+  $.post(U('weiba/Index/quickPost'),{t:type}, function(data){
     $('#comModal .modal-body').html(data);
     $('#comModal').modal({'backdrop':'static'});
   },'html');

@@ -1,8 +1,10 @@
 @charset "utf-8";
 /* CSS Document */
 li{list-style:none;}
-ul {padding: 0;}
-dl {margin-bottom: 0px}
+ul, p {padding: 0;}
+dl, p {margin-bottom: 0px}
+.left {float: left;}
+.tx-right {text-align: right;}
 .ts_confirm {background: rgba(0, 0, 0, 0) url("../image/pagedarkbg.png") repeat scroll 0 0; clear: left; margin-top: 20px; position: absolute; text-align: center; z-index: 9; }
 .ico-error, .ico-ok, .ico-wait, .ico-no, .ico-ok-big, .ico-error-big {background: rgba(0, 0, 0, 0) url("../image/ico-tips.png") no-repeat scroll 0 0; display: inline-block; }
 .ts_confirm .ico-close {position: absolute; right: 5px; top: 5px; }

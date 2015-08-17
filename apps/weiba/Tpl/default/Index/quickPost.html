@@ -19,13 +19,9 @@
 
     .title_changes li.active, .flag_chenges li.active{ background:#CEE7FF;}
 </style>
-<ul class="nav nav-tabs nav-justified" style="margin-bottom: 15px;">
-    <li role="presentation" class="active"><a href="javascript:;" data-id="1">问题</a></li>
-    <li role="presentation"><a href="javascript:;" data-id="2">分享</a></li>
-</ul>
 <form method="post" action="{:U('weiba/Index/doPost')}" onkeydown="if(event.keyCode==13){return false;}" name="weibaPost" id="weibaPost">
     <input type="hidden" value="{$weiba_id}" name="weiba_id" id="weiba_id">
-    <input type="hidden" value="1" name="post_type" id="post_type">
+    <input type="hidden" value="{$post_type}" name="post_type" id="post_type">
     <div class="form-group">
         <label for="title">标题：</label>
         <input class="form-control" type="text" name="title" id="title" autocomplete="off">
@@ -35,10 +31,12 @@
         <label for="exampleInputPassword1">详情：</label>
         {:W('Editor',array('contentName'=>'content','value'=>''))}
     </div>
-    <div class="form-group post_reason" style="display:none;">
-        <label for="title">分享理由：</label>
-        <textarea name="post_reason" id="post_reason" class="form-control" rows="3" style="resize:none;"></textarea>
-    </div>
+    <eq name='post_type' value='2'>
+        <div class="form-group post_reason">
+            <label for="title">分享理由：</label>
+            <textarea name="post_reason" id="post_reason" class="form-control" rows="3" style="resize:none;"></textarea>
+        </div>
+    </eq>
     <div class="form-group">
         <label for="weiba_flag" class="weiba_flag">选择话题：</label>
         <input type="text" class="form-control" id="weiba_flag" autocomplete="off">
@@ -47,18 +45,6 @@
     <div style="text-align:right"><a href="javascript:;" onclick="close_Modal()">取消</a> &nbsp;&nbsp; <button type="submit" class="btn btn-danger" style="background-color:#FC5241;color:white;" onclick="return weibaPost_submit_check()">发布</button></div>
 </form>
 <script>
-    $(function(){
-        $('.nav-justified a').click(function(){
-            $(this).parent('li').addClass('active').siblings().removeClass('active');
-            var type = $(this).attr('data-id');
-            $('#post_type').val(type);
-            if(type == 1){
-                $('#weibaPost .post_reason').css('display', 'none');
-            }else{
-                $('#weibaPost .post_reason').css('display', 'block');
-            }
-        })
-    })
 
     function choose_weiba_flag(id,name){
       var con = $('#weiba_id').val();

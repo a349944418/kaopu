@@ -12,9 +12,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  <a class="navbar-brand" href="#"></a>
+                  <a class="navbar-brand" href="__ROOT__"><img src="__THEME__/images/logo.jpg"></a>
                 </div>
+                
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <form name="search_weiba" id="search_weiba" class="navbar-form navbar-left" method="post" action="{:U('weiba/Index/search')}">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input autocomplete="off" id="searchweiba_input" class="form-control left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>搜索靠谱的人、知识、方法和经验<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜索靠谱的人、知识、方法和经验';" event-node="searchKey" name='k' style="min-width:280px;">
+                                <div class="input-group-addon"><a href="javascript:void(0)" class="ico-search left" onclick="if(getLength($('#searchweiba_input').val()) && $('#searchweiba_input').val()!=='搜索靠谱的人、知识、方法和经验'){ $('#search_weiba').submit(); return false;}" ><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></div>
+                            </div>
+                        </div>
+                    </form>
                     <ul class="nav navbar-nav">
                         <volist name='site_top_nav' id='st'>
                           <li class="<php> if(APP_NAME == $st['app_name'] || $_GET['page'] == $st['app_name']):</php>current active<php>endif;</php><php>if(isset($st[child])):</php>dropdown<php>endif;</php>"  ><a href="{$st.url}" target="{$st.target}" <php>if(isset($st[child])):</php>class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"<php>endif;</php> >{$st.navi_name}<php>if(isset($st[child])):</php><span class="caret"></span><php>endif;</php></a>
@@ -28,28 +37,6 @@
                           </li>                           
                         </volist>    
                     </ul>
-                    <form name="search_weiba" id="search_weiba" class="navbar-form navbar-left" method="post" action="{:U('weiba/Index/search')}">
-                        <!-- <input name="app" value="public" type="hidden"/>
-                        <input name="mod" value="Search" type="hidden"/>
-                        <input type="hidden" name="t" value="2"/>
-                        <input type="hidden" name="a" value="public"/> -->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input autocomplete="off" id="searchweiba_input" class="form-control left"  type="text" value="<php>if(!empty($searchkey)){</php>{$searchkey}<php>}else{</php>搜微吧 / 帖子<php>}</php>" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微吧 / 帖子';" event-node="searchKey" name='k'>
-                                <div class="input-group-addon"><a href="javascript:void(0)" class="ico-search left" onclick="if(getLength($('#searchweiba_input').val()) && $('#searchweiba_input').val()!=='搜微吧 / 帖子'){ $('#search_weiba').submit(); return false;}"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></div>
-                            </div>
-                        </div>
-                    </form>
-                    <!-- <form name="search_feed" role="search" class="navbar-form navbar-left" id="search_feed" method="get" action="{:U('public/Search/index')}" >
-                        <div class="form-group">
-                        <input name="app" value="public" type="hidden"/>
-                        <input name="mod" value="Search" type="hidden"/>
-                        <input type="hidden" name="t" value="2"/>
-                        <input type="hidden" name="a" value="public"/>
-                        <div class="input-group">
-                            <input id="search_input" class="form-control left"  type="text" value="搜微博 / 昵称 / 标签" onfocus="this.value=''" onblur="setTimeout(function(){ $('#search-box').remove();} , 200);if(this.value=='') this.value='搜微博 / 昵称 / 标签';" event-node="searchKey" name='k'  autocomplete="off"><div class="input-group-addon"><a href="javascript:void(0)" class="ico-search left" onclick="if(getLength($('#search_input').val()) && $('#search_input').val()!=='搜微博 / 昵称 / 标签'){ $('#search_feed').submit(); return false;}"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></a></div>
-                        </div></div>
-                    </form> -->
                     <ul class="nav navbar-nav navbar-right">
                         <nosession name="mid">
                             <li model-node="person" class="dorp-right">
@@ -61,10 +48,7 @@
                         </nosession>
 
                         {* 登录后 *}
-                        <session name="mid">
-                            <li model-node="person" class="dorp-right">
-                                <a href="{$user['space_url']}" class="username">{$user['uname']|getShort=6}</a>
-                            </li>                       
+                        <session name="mid">                      
                             <li model-node="notice" class="dorp-right dropdown"><a href="javascript:void(0);"class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{:L('PUBLIC_MESSAGE')}<span class="caret"></span></a>
                                 <ul class="dropdown-menu message_list_container message_list_new" >
                                     <li rel="new_folower_count" style="display:none">
@@ -86,8 +70,9 @@
                                 <php>}</php>
                                 </ul>
                             </li>
-                            <li model-node="account" class="dropdown dorp-right"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{:L('PUBLIC_ACCOUNT')}<span class="caret"></span></a>
+                            <li model-node="account" class="dropdown dorp-right"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{$user_info[$uid]['avatar_small']}" style="height:27px;border-radius:27px;margin-right:5px;top:-3px;position:relative;" alt="">{$user['uname']|getShort=6}<span class="caret"></span></a>
                                 <ul class="dropdown-menu acc-list">
+                                    <li><a href="{$user['space_url']}">我的主页</a></li>
                                     <li><a href="{:U('public/Account/index')}">{:L('PUBLIC_SETTING')}</a></li>
                                     <!--
                                     <php>if(CheckTaskSwitch()):</php>
@@ -113,6 +98,8 @@
                                     <li class="border"><a href="{:U('public/Passport/logout')}">{:L('PUBLIC_LOGOUT')}&raquo;</a></li>
                                 </ul>
                             </li>
+                            <li><a href="javascript:;" onclick="showquiz(1)" id="quiz">提问</a></li>
+                            <li><a href="javascript:;" onclick="showquiz(2)" >分享</a></li>
                         </session>
                     </ul>   
                 </div>  

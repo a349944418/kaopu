@@ -10,8 +10,26 @@
         <div class="reply_content">
           {$vo.content}
         </div>
-        <div class="problem clearfix problem2">
-            <span>({$vo.ctime|friendlyDate})</span><span class="pinglun"><a href="javascript:void(0)" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$vo.reply_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&feed_id={$feed_id}&comment_id={$vo.comment_id}&addtoend={$addtoend}' >101条评论</a></span><span class="zan"><a href="#">赞</a></span><span class="fenxiang"><a href="#">分享</a></span><span class="shou"><a href="#">收藏</a></span>
+        <div class="problem clearfix problem2 row">
+            <p class="info col-md-8">
+                <span>({$vo.ctime|friendlyDate})</span><span class="pinglun"><a href="javascript:void(0)" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$vo.reply_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&feed_id={$feed_id}&comment_id={$vo.comment_id}&addtoend={$addtoend}' >101条评论</a></span><span class="zan"><a href="#">赞</a></span>
+            </p>
+            <p class="info right col-md-4 tx-right">
+                <php>
+                    $isdel=0;
+                    if( ($vo['user_info']['uid'] == $GLOBALS['ts']['mid'] && CheckPermission('weiba_normal','weiba_del_reply')) || in_array($GLOBALS['ts']['mid'],$weiba_admin) || CheckPermission('core_admin','comment_del')){</php>
+                        <php>$isdel=1;</php>
+                        <a href="javascript:void(0);" event-node="reply_del" event-args="reply_id={$vo.reply_id}">{:L('PUBLIC_STREAM_DELETE')}</a> 
+                    <php>}</php>
+                    <php>if(CheckPermission('weiba_normal','weiba_reply')){</php>
+                        <eq name='cancomment' value="1">
+                            <php>if($isdel){</php>
+                                <i class="vline">|</i>
+                            <php>}</php>
+                            <a href="javascript:void(0)" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$vo.reply_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&feed_id={$feed_id}&comment_id={$vo.comment_id}&addtoend={$addtoend}' event-node="reply_reply">{:L('PUBLIC_STREAM_REPLY')}</a>
+                        </eq>
+                <php>}</php>
+            </p>
         </div>
       </div>   
 		</volist> 

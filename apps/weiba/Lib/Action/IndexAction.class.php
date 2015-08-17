@@ -321,9 +321,13 @@ class IndexAction extends Action {
 	}
 	//发布帖子
 	public function quickPost(){
-		$con = $this->fetch();
+		$post_type = intval($_POST['t']);
+		$post_type = $post_type == 1 ? 1 : 2;
+		$this->assign('post_type', $post_type);
+		$con = $this->fetch();		
 		echo $con;
 	}
+
 	/**
 	 * 检查微吧 权限
 	 */

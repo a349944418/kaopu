@@ -6,21 +6,10 @@
 		<div class="input_before" model-node="mini_editor">
 			<textarea class="input_tips" id="mini_editor_textarea" event-node="mini_editor_textarea" hidefocus="true" style="height: 60px;width:97.5%;word-break:break-all;" model-args='t=comment'></textarea>
 		</div>
-		<div class="acts" id="demo">
-		    <a class="face-block" href="javascript:;" event-node="comment_insert_face"><i class="face"></i>表情</a>
-		</div>
 		<div class="clear"></div>
 		<div model-node="faceDiv"></div>
-		<div class="mt5 clearfix">
-			<ul class="commoned_list">    
-				<eq name='canrepost' value="1">    
-				<li><label><input type="checkbox" class="checkbox" name="shareFeed" value="1">{:L('PUBLIC_SHARETO_STREAM')}</label></li>     
-				</eq>
-				<php>if($feedtype == 'repost' && $cancomment == 1):</php> 
-				<li><label><input type="checkbox" class="checkbox" name="comment" value="1">同时评论给原文作者&nbsp;{$user_info.space_link_no}</label></li>
-			<php>endif;</php>
-		</ul>           
-		<a href="javascript:replycomment();" class="btn-green-small right"><span>{:L('PUBLIC_STREAM_REPLY')}</span></a>
+		<div class="mt5 clearfix">        
+			<a href="javascript:replycomment();" class="btn-green-small right"><span>{:L('PUBLIC_STREAM_REPLY')}</span></a>
 		</div>
 	</div>
 </div>
@@ -74,8 +63,8 @@ function replycomment(){
 	},'json');
 }
 $(function (){
-	shortcut('ctrl+return', replycomment , {target:'mini_editor_textarea'});
-	atWho($('#mini_editor_textarea'));
+	//shortcut('ctrl+return', replycomment , {target:'mini_editor_textarea'});
+	//atWho($('#mini_editor_textarea'));
 	setTimeout(function (){
 		$('#mini_editor_textarea').inputToEnd('{$initHtml}');
 	},300);

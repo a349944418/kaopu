@@ -601,7 +601,6 @@ var ui = {
 			}
 			setTimeout(show, 200);
 			
-			$('#tsbox').draggable({ handle: '.hd' });
 
 			$('.hd').mousedown(function(){
 				$('.mod-at-wrap').remove();
