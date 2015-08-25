@@ -40,7 +40,21 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">详情：</label>
-                            {:W('Editor',array('contentName'=>'content','value'=>$post_detail['content']))}
+                            <script type="text/javascript" charset="utf-8" src="__THEME__/js/editor/ueditor.all.min.js"></script>
+                            <script type="text/javascript" src="__THEME__/js/editor/lang/zh-cn/zh-cn.js"></script>
+                            <script type="text/javascript" charset="utf-8" src="__THEME__/js/editor/kityformula-plugin/addKityFormulaDialog.js"></script>
+                            <script type="text/javascript" charset="utf-8" src="__THEME__/js/editor/kityformula-plugin/getKfContent.js"></script>
+                            <script type="text/javascript" charset="utf-8" src="__THEME__/js/editor/kityformula-plugin/defaultFilterFix.js"></script>
+                            <div class="wbreply_contents" model-node='mini_editor'>
+                                <script type="text/plain" id="wbreply_contents_input" style="height:140px;" name="wbreply_contents_input">
+                                    <p>{$post_detail.content}</p>
+                                </script>
+                            </div>
+                            <script>
+                                var reply = UE.getEditor('wbreply_contents_input',{
+                                    initialFrameWidth: '100%'
+                                  });
+                            </script>
                         </div>
                         <div class="form-group post_reason" <eq name="post_detail.post_type" value="1">style="display:none;"</eq> >
                             <label for="title">分享理由：</label>
@@ -56,7 +70,7 @@
                             <ul class="flag_changes"></ul>
                         </div>
                         <div style="text-align:right"><a href="javascript:;" onclick="">取消</a> &nbsp;&nbsp; <button type="submit" class="btn btn-danger" style="background-color:#FC5241;color:white;" onclick="return weibaPost_submit_check()">发布</button></div>
-                    </form>                
+                    </form>            
                 </div>
            	</div>
         </div>
@@ -89,30 +103,6 @@
         $('#weiba_id').val(txt.substr(0,txt.length-1));
     }
 
-    function weibaPost_submit_check() {
-        var txt = UE.getEditor('content').getContentTxt();
-        txt = txt.replace(/\s+/g,"");
-        if(txt.length < 1 || txt == '请填写详情') {         
-            UE.getEditor('content').focus();
-            UE.getEditor('content').setContent('请填写详情');
-            return false;
-        }
-        
-        var weiba_id = $('#weiba_id').val();
-        if(weiba_id.length < 1) {
-            $('#weiba_flag').attr('placeholder', '请选择标签').focus();
-            return false;
-        }
 
-        var title = $('#title').val();
-        if(title.length < 1) {
-            $('#title').attr('placeholder', '请填写标题').focus();
-            return false;
-        }
-
-        UE.getEditor('content').getKfContent(function(content){
-            $('#weibaPost').submit();
-        })
-    }
 </script>
 <include file="__THEME__/public_footer" />

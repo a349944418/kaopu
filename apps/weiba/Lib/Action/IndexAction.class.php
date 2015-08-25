@@ -323,8 +323,10 @@ class IndexAction extends Action {
 	//发布帖子
 	public function quickPost(){
 		$post_type = intval($_POST['t']);
+		$p = intval($_POST['p']);
 		$post_type = $post_type == 1 ? 1 : 2;
 		$this->assign('post_type', $post_type);
+		$this->assign('p', $p);
 		$con = $this->fetch();		
 		echo $con;
 	}
@@ -395,7 +397,6 @@ class IndexAction extends Action {
 			$this->error('请选择话题！',true);
 		}
 		$weibaId_Arr = explode(',', $weibaid_str);
-		
 		/* 权限验证，暂时不用
 		if ( !CheckPermission('core_admin','admin_login') ) {
 			switch ( $weiba['who_can_post'] ){
@@ -426,8 +427,6 @@ class IndexAction extends Action {
 			}
 		}
 		*/
-		
-		$_POST['content'] = $_POST['editorValue'];
 		$checkContent = str_replace('&nbsp;', '', $_POST['content']);
 		$checkContent = str_replace('<br />', '', $checkContent);
 		$checkContent = str_replace('<p>', '', $checkContent);
@@ -557,6 +556,9 @@ class IndexAction extends Action {
 	 * @return void
 	 */
 	public function postDetail(){
+		//避免重复加载富文本框js,导致失效
+		$this->assign('p',1);
+
 		$post_id = intval($_GET['post_id']);
 		$post_detail = D('weiba_post')->where('post_id='.$post_id)->find();
 		$is_del = D('weiba')->where('weiba_id='.$post_detail['weiba_id'])->getField('is_del');
@@ -682,7 +684,7 @@ class IndexAction extends Action {
 	 * @return void
 	 */
 	public function postEdit(){
-		
+		$this->assign('p', 1);
 		$post_id = intval($_GET['post_id']);
 		
 		$post_detail = D('weiba_post')->where('post_id='.$post_id)->find();

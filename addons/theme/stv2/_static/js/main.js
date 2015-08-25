@@ -117,11 +117,15 @@ $(function(){
  * @param  {[type]} URL [description]
  * @return {[type]}     [description]
  */
-function showquiz(type){
+function showquiz(type, p){
+  $('#comModal .modal-body').html('');
   $('#comModal .modal-header').css({'background':'#FC5241','padding':'8px 15px'});
   var title = type == 1 ? '提问' : '分享';
   $('#comModal .modal-title').html(title).css({'text-align':'center','color':'white'});
-  $.post(U('weiba/Index/quickPost'),{t:type}, function(data){
+  if($('.edui-editor').length){
+    $('.edui-editor').css('z-index', 1);
+  }
+  $.post(U('weiba/Index/quickPost'),{t:type, p: p}, function(data){
     $('#comModal .modal-body').html(data);
     $('#comModal').modal({'backdrop':'static'});
   },'html');
@@ -203,3 +207,40 @@ function click_zan(reply_id){
     }
   },'json');
 }
+
+/**
+ * [弹窗发布问题和分享]
+ * @param  {[type]} ue [description]
+ * @return {[type]}    [description]
+ */
+function weibaPost_submit_check(ue) {
+        var txt = ue.getContent();
+        txt = txt.replace(/\s+/g,"");
+        if(txt.length < 1 || txt == '请填写详情') {         
+            ue.focus();
+            ue.setContent('请填写详情');
+            return false;
+        }
+
+        var weiba_id = $('#weiba_id').val();
+        if(weiba_id.length < 1) {
+            $('#weiba_flag').attr('placeholder', '请选择标签').focus();
+            return false;
+        }
+
+        var title = $('#title').val();
+        if(title.length < 1) {
+            $('#title').attr('placeholder', '请填写标题').focus();
+            return false;
+        }
+
+        var type = $('#post_type').val();
+        if(type == 2 && $('#post_reason').val().length<1){
+            $('#post_reason').attr('placeholder', '请填写分享原因').focus();
+            return false;
+        }
+
+        ue.getKfContent(function(content){
+            $('#weibaPost').submit();
+        })
+    }

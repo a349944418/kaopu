@@ -99,8 +99,8 @@
                                     <li class="border"><a href="{:U('public/Passport/logout')}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> &nbsp;{:L('PUBLIC_LOGOUT')}&raquo;</a></li>
                                 </ul>
                             </li>
-                            <li><button onclick="showquiz(1)" class="btn nav_button ">提问 ?</button></li>
-                            <li><button onclick="showquiz(2)" class="btn nav_button ">分享 !</button></li>
+                            <li><button onclick="showquiz(1, '{$p|default=0}')" class="btn nav_button ">提问 ?</button></li>
+                            <li><button onclick="showquiz(2, '{$p|default=0}')" class="btn nav_button ">分享 !</button></li>
                         </session>
                     </ul>   
                 </div>  

@@ -75,13 +75,7 @@ class WeibaReplyWidget extends Widget{
         $data['to_uid'] = intval($_POST['to_uid']);
         $data['uid'] = $this->mid;
         $data['ctime'] = time();
-        if($type == 1){
-          $data['content'] = h($_POST['content']);
-        }else{
-          $data['content'] = preg_html(h($_POST['content']));
-        }
-        
-
+        $data['content'] = h($_POST['content']);
         if(isSubmitLocked()){
           $return['status'] = 0;
           $return['data'] = '发布内容过于频繁，请稍后再试！';

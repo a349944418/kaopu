@@ -29,7 +29,7 @@
     </div>
     <div class="form-group">
         <label for="exampleInputPassword1">详情：</label>
-        {:W('Editor',array('contentName'=>'content','value'=>''))}
+        {:W('Editor',array('contentName'=>'content','value'=>'','p'=>$p))}
     </div>
     <eq name='post_type' value='2'>
         <div class="form-group post_reason">
@@ -42,7 +42,7 @@
         <input type="text" class="form-control" id="weiba_flag" autocomplete="off">
         <ul class="flag_changes"></ul>
     </div>
-    <div style="text-align:right"><a href="javascript:;" onclick="close_Modal()">取消</a> &nbsp;&nbsp; <button type="submit" class="btn btn-danger" style="background-color:#FC5241;color:white;" onclick="return weibaPost_submit_check()">发布</button></div>
+    <div style="text-align:right"><a href="javascript:;" onclick="close_Modal()">取消</a> &nbsp;&nbsp; <a href="javascript:;" class="btn btn-danger" style="background-color:#FC5241;color:white;" onclick="return weibaPost_submit_check(ue)">发布</a></div>
 </form>
 <script>
 
@@ -72,35 +72,4 @@
         $('#weiba_id').val(txt.substr(0,txt.length-1));
     }
 
-    function weibaPost_submit_check() {
-        var txt = UE.getEditor('content').getContentTxt();
-        txt = txt.replace(/\s+/g,"");
-        if(txt.length < 1 || txt == '请填写详情') {         
-            UE.getEditor('content').focus();
-            UE.getEditor('content').setContent('请填写详情');
-            return false;
-        }
-
-        var weiba_id = $('#weiba_id').val();
-        if(weiba_id.length < 1) {
-            $('#weiba_flag').attr('placeholder', '请选择标签').focus();
-            return false;
-        }
-
-        var title = $('#title').val();
-        if(title.length < 1) {
-            $('#title').attr('placeholder', '请填写标题').focus();
-            return false;
-        }
-
-        var type = $('#post_type').val();
-        if(type == 2 && $('#post_reason').val().length<1){
-            $('#post_reason').attr('placeholder', '请填写分享原因').focus();
-            return false;
-        }
-
-        UE.getEditor('content').getKfContent(function(content){
-            $('#weibaPost').submit();
-        })
-    }
 </script>

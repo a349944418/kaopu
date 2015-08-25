@@ -58,7 +58,7 @@ UE.Editor.prototype.getKfContent = function(callback){
 
     function execCallback(){
         if (count >= base64Imgs.length) {
-            ue.sync();
+            me.sync();
             callback(me.getContent());
         }
     }

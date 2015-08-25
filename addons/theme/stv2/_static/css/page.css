@@ -175,8 +175,8 @@ a:hover{ text-decoration:none;}
 .ascension dl dd.people{ color:#727272; font-size:13px; line-height:18px;}
 .ascension dl dd.guan{ width:100%; text-align:center; border:1px solid #FC5241; margin-top:10px; line-height:220%; border-radius: 5px;-webkit-box-shadow: 0px 3px 0px #DA593D; -moz-box-shadow: 0px 3px 0px #DA593D; box-shadow: 0px 3px 0px #DA593D;background: #fc5241;}
 .ascension dl dd.guan a{ color:#fff; font-family: 微软雅黑}
-.ascension dl dd.guan:hover{ border:1px solid #FC5241;background:#fff; -webkit-box-shadow: 0px 0px 0px #DA593D; -moz-box-shadow: 0px 0px 0px #DA593D; box-shadow: 0px 0px 0px #DA593D;}
-.ascension dl dd.guan:hover a{ color:black;}
+.ascension dl dd.guan:hover{ border:1px solid #d3d3d3;background:#d3d3d3; -webkit-box-shadow: 0px 0px 0px #fff; -moz-box-shadow: 0px 0px 0px #fff; box-shadow: 0px 0px 0px #fff;}
+.ascension dl dd.guan:hover a{ color:#fff;}
 .confused-right{ margin-top:9px;  }
 .Interest-right, .confused-right {padding: 0;}
 .confused-right p{line-height:26px; margin:0px; padding-left:20px; font-size:12px; color:#aaa;background:#F4F4F4; border:1px solid #E5E5E5;}

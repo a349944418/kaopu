@@ -48,7 +48,7 @@
         <div class="wangyou">
           <p class="wang">网友评论</p>
           <div class="wbreply_contents" model-node='mini_editor'>
-            <script type="text/plain" id="wbreply_contents_input" style="height:140px;">
+            <script type="text/plain" id="wbreply_contents_input" style="height:140px;" name="wbreply_contents_input">
                 <p>{$value}</p>
             </script>
           </div>
@@ -57,7 +57,7 @@
                 <dt><img src="{$user['avatar_tiny']}" width="20"/></dt>
                 <dd><span>{$user['uname']}</span>|<a href="{:U('public/Passport/logout')}">注销</a></dd>
             </dl>
-            <button class="btn set-sub"  event-args=' weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&feed_id={$feed_id}&addtoend={$addtoend}&to_reply_id=0&to_uid=0' style="float:right;" id="wb_reply_submit" >发布</button>
+            <button class="btn set-sub"  event-args=' weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&feed_id={$feed_id}&addtoend=1&to_reply_id=0&to_uid=0' style="float:right;" id="wb_reply_submit" >发布</button>
           </div>
         </div>
     </div>
@@ -66,15 +66,16 @@
       var noreply = 0;
       var start_content = '';
       //实例化编辑器
-      var reply = UE.getEditor('wbreply_contents_input');
+      var reply;
       $(function(){
-          $(".edui-body-container").css("width", "100%");
-          $('.edui-editor').css('width','100%');
-      })
+        reply = UE.getEditor('wbreply_contents_input',{
+          initialFrameWidth: '100%'
+        });
+      })      
       //提交评论
       $('#wb_reply_submit').click(function(){
         if ( noreply == 1 ){
-          return;
+          //return;
         }else{
           noreply = 1;
         }
@@ -84,7 +85,6 @@
         var attrs = M.getEventArgs(this);
         attrs.ifShareFeed = 0;
         attrs.widget_appname = 'weiba';
-        var comment_list = $('.comment_lists');
 
         var content = reply.getContent();
         var strlen = content.length;
@@ -96,28 +96,37 @@
           return false; //不要重复评论
         }
         start_content = content;
-        attrs.content = content;
-        $.post(U('widget/WeibaReply/addReply'),attrs,function(msg){
 
-          if(msg.status == "0"){
-            ui.error(msg.data);
-          }else{
-            if("undefined" != typeof(comment_list.children('.comment_list')) ){
-              ui.success('评论成功');
-              if(attrs.addtoend = 1){
-                comment_list.eq(0).append(msg.data);
-              }else{
-                $(msg.data).insertBefore(comment_list.find('.comment_list').get(0));
-              }
-            }else{
-              ui.success('评论成功');
-              comment_list.eq(0).html(msg.data);
-            }
-            //重置
-            reply.setContent('');
-          }
-          $('#wb_reply_submit').html('发布');
-        },'json');
+        submit_comment(reply, attrs);        
+        
       })
+
+      function submit_comment(ue, attrs) {
+        ue.getKfContent(function(content){
+          attrs.content = ue.getContent();
+          var comment_list = $('.comment_lists');
+          $.post(U('widget/WeibaReply/addReply'),attrs,function(msg){
+
+            if(msg.status == "0"){
+              ui.error(msg.data);
+            }else{
+              if("undefined" != typeof(comment_list.children('.comment_list')) ){
+                ui.success('评论成功');
+                if(attrs.addtoend = 1){
+                  comment_list.eq(0).append(msg.data);
+                }else{
+                  $(msg.data).insertBefore(comment_list.find('.comment_list').get(0));
+                }
+              }else{
+                ui.success('评论成功');
+                comment_list.eq(0).html(msg.data);
+              }
+              //重置
+              ue.setContent('');
+            }
+            $('#wb_reply_submit').html('发布');
+          },'json');
+        })
+      }
   </script>
 <php>}</php>

@@ -6,13 +6,15 @@
     <div class="reply_content">
         {$content}
     </div>
-    <div class="problem clearfix problem2 row">
-        <span>刚刚</span><span class="pinglun"><a href="javascript:void(0)" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$reply_id}&to_uid={$uid}&to_comment_uname={$user_info.uname}&app_name={$app_name}&table={$table}&feed_id={$feed_id}&comment_id={$comment_id}&addtoend={$addtoend}&flag=1' event-node="reply_replylist"> &nbsp;&nbsp;0条评论</a></span><span class="zan"><a href="#">赞</a></span>
-        <p class="info right">
-            <span>
-                <a href="javascript:void(0);" event-node="reply_del" event-args="reply_id=16">删除</a>
-            </span>
-        </p>
+    <div class="problem clearfix problem2">
+        <div class="row">
+            <p class="info col-md-8">
+                <span>刚刚</span><span class="pinglun"><a href="javascript:void(0)" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$vo.reply_id}&to_uid={$vo.uid}&to_comment_uname={$vo.userInfo.uname}&feed_id={$feed_id}&comment_id={$vo.comment_id}&addtoend={$addtoend}&flag=1' event-node="reply_replylist"> &nbsp;&nbsp;{$vo.C_reply_count}条评论</a></span><span class="zan"><a href="javascript:click_zan('{$vo.reply_id}');" id="reply_id{$vo.reply_id}">赞<span>{$vo.zan}</span></a></span>
+            </p>
+            <p class="info right col-md-4 tx-right">
+                <a href="javascript:void(0);" event-node="reply_del" event-args="reply_id={$reply_id}">{:L('PUBLIC_STREAM_DELETE')}</a> 
+            </p>
+        </div>
     </div>
     
 </div> 
