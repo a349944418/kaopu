@@ -330,12 +330,13 @@ M.addEventFns({
 				var attrs = M.getEventArgs(this);
 				$.post(U('weiba/Comment/reply_commentList'), attrs, function(res){
 					$('.rightComment .review3-right').html(res);	
-					var top = 24+parseInt($('.content p.title').height());
+					var top = 44+parseInt($('.content p.title').height());
 					var dh = $(window).height();
 					var lh = $('.center1 .col-md-9').eq(0).height()-60;
 					dh = dh > lh ? lh : dh;
 					$('.rightComment').css({'left':'1260px', 'top': top+'px'});
 					$('.rightComment .review2').css({'height':dh+'px'});
+					$('.rightComment .review3-right').css({'min-height':(dh-42)+'px'})
 					$('.rightComment').animate({left:'600px'}).animate({left:'759.6px'});
 				})
 			}else{
