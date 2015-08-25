@@ -10,7 +10,7 @@ class WeibaReplyModel extends Model {
 	protected $error = '';
 	protected $fields = array(
 							0 =>'reply_id',1=>'weiba_id',2=>'post_id',3=>'post_uid',4=>'uid',5=>'ctime',
-							6=>'content',7=>'is_del',8=>'comment_id',9=>'storey','_autoinc'=>true,'_pk'=>'post_id'
+							6=>'content',7=>'is_del',8=>'comment_id',9=>'storey',10=>'zan','_autoinc'=>true,'_pk'=>'post_id'
 						);
 
 	/**
@@ -22,12 +22,14 @@ class WeibaReplyModel extends Model {
      */
     public function getReplyList($map = null, $order = 'reply_id desc', $limit = 10) {
         !isset($map['is_del']) && ($map['is_del'] = 0);
+        $map['to_reply_id'] = 0;
         $data = $this->where($map)->order($order)->findPage($limit);
         // // TODO:后续优化
         foreach($data['data'] as &$v) {
             $v['user_info'] = model('User')->getUserInfo($v['uid']);
             $v['user_info']['groupData'] = model('UserGroupLink')->getUserGroupData($v['uid']);   //获取用户组信息
             $v['content'] = parse_html(h(htmlspecialchars($v['content'])));
+            $v['C_reply_count'] = $this->where('to_reply_id='.$v['reply_id'].' and is_del = 0')->count();
             //$v['sourceInfo'] = model('Source')->getSourceInfo($v['table'], $v['row_id'], false, $v['app']);
         }
         return $data;

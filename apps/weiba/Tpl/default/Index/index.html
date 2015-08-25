@@ -6,7 +6,7 @@
 <div class="center">
     <div class="container">
         <div class="row">
-            <div class="col-md-11 col-md-offset-1">
+            <div class="col-md-12">
               <div class="row">
                   <div class="col-sm-9">
                       <php> if ($weiba_recommend) { </php>
@@ -25,7 +25,7 @@
                                     <div class="col-sm-11"><div class="row">
                                     <volist name="weiba_recommend" id="vo" offset="0" length='4'>
                                       <dl class="col-sm-3">
-                                          <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" ><img src="{$vo.logo}" width="124px"/></dt>
+                                          <dt><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" ><img src="{$vo.logo}" style="width:100%"/></dt>
                                           <dd class="rebellious"><a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}" >{$vo.weiba_name}</a></dd>
                                           <dd class="people">{$vo.follower_count}人关注</dd>
                                           <dd class="guan">{:W('FollowWeiba',array('weiba_id'=>$vo['weiba_id'],'follow_state'=>array('following'=>0),'isrefresh'=>1))}</dd>
@@ -79,6 +79,5 @@
         </div>
     </div>
 </div>
-
 
 <include file="__THEME__/public_footer" />

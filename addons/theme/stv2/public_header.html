@@ -37,7 +37,7 @@
                           </li>                           
                         </volist>    
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav ">
                         <nosession name="mid">
                             <li model-node="person" class="dorp-right">
                                 <a href="javascript:;" class="username" data-toggle="modal" data-target="#comModal" data-whatever="register">注册</a>
@@ -48,7 +48,8 @@
                         </nosession>
 
                         {* 登录后 *}
-                        <session name="mid">                      
+                        <session name="mid">
+                            <li><a href="javascript:void(0);" style="padding: 9px 0;">|</a></li>                 
                             <li model-node="notice" class="dorp-right dropdown"><a href="javascript:void(0);"class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{:L('PUBLIC_MESSAGE')}<span class="caret"></span></a>
                                 <ul class="dropdown-menu message_list_container message_list_new" >
                                     <li rel="new_folower_count" style="display:none">
@@ -70,10 +71,10 @@
                                 <php>}</php>
                                 </ul>
                             </li>
-                            <li model-node="account" class="dropdown dorp-right"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{$user_info[$uid]['avatar_small']}" style="height:27px;border-radius:27px;margin-right:5px;top:-3px;position:relative;" alt="">{$user['uname']|getShort=6}<span class="caret"></span></a>
+                            <li model-node="account" class="dropdown dorp-right"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{$user['avatar_tiny']}" style="height:27px;border-radius:5px;margin-right:8px;top:-1px;position:relative;" alt="">{$user['uname']|getShort=6}<span class="caret"></span></a>
                                 <ul class="dropdown-menu acc-list">
-                                    <li><a href="{$user['space_url']}">我的主页</a></li>
-                                    <li><a href="{:U('public/Account/index')}">{:L('PUBLIC_SETTING')}</a></li>
+                                    <li><a href="{$user['space_url']}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> &nbsp;我的主页</a></li>
+                                    <li><a href="{:U('public/Account/index')}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp;{:L('PUBLIC_SETTING')}</a></li>
                                     <!--
                                     <php>if(CheckTaskSwitch()):</php>
                                     <li><a href="{:U('public/Task/index')}">任务中心</a></li>
@@ -95,11 +96,11 @@
                                     <li><a href="{:U('admin')}">{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></li>
                                     <php>}</php>
 
-                                    <li class="border"><a href="{:U('public/Passport/logout')}">{:L('PUBLIC_LOGOUT')}&raquo;</a></li>
+                                    <li class="border"><a href="{:U('public/Passport/logout')}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span> &nbsp;{:L('PUBLIC_LOGOUT')}&raquo;</a></li>
                                 </ul>
                             </li>
-                            <li><a href="javascript:;" onclick="showquiz(1)" id="quiz">提问</a></li>
-                            <li><a href="javascript:;" onclick="showquiz(2)" >分享</a></li>
+                            <li><button onclick="showquiz(1)" class="btn nav_button ">提问 ?</button></li>
+                            <li><button onclick="showquiz(2)" class="btn nav_button ">分享 !</button></li>
                         </session>
                     </ul>   
                 </div>  
@@ -164,4 +165,4 @@ $show_register_tips = array('public/Profile','public/Topic','weiba/Index');
 if(!$mid && in_array(APP_NAME.'/'.MODULE_NAME,$show_register_tips)){
 </php>
 <php>$registerConf = model('Xdata')->get('admin_Config:register');</php>
-<php>}</php>
+<php>}</php> 

@@ -262,6 +262,7 @@ class IndexAction extends Action {
 		$reply_uids = getSubByKey($list['data'], 'last_reply_uid');
 		!$weiba_admin_uids && $weiba_admin_uids = array();
 		$uids = array_unique(array_filter(array_merge($post_uids,$reply_uids,$weiba_admin_uids)));
+		$uids[] = $this->mid;
 		$this->_assignUserInfo($uids);
 
 		$this->_assignFollowState($weiba_id);
@@ -619,7 +620,9 @@ class IndexAction extends Action {
 		}
 		$this->assign('otherPost',$otherPost);
 		*/
-		$this->_assignUserInfo($post_detail['post_uid']);
+		$uids = $post_detail['post_uid'] .','.$this->mid;
+		$this->_assignUserInfo($uids);
+		
 		//回复最高5条
 		$replyH_Post = D('weiba_post')->where('is_del=0')->order('reply_count desc')->limit(5)->select();
 		// $weiba_ids = getSubByKey($replyH_Post, 'weiba_id');

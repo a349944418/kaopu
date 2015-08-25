@@ -10,7 +10,8 @@
 <form id='noflashUpload' model-node="avatar_upload_form" enctype="multipart/form-data" action="{:U('public/Account/doSaveAvatar', array('step'=>'upload'))}" method="post" style='display:none'>
     <dl class="form-avatar">
         <dd>
-            <input event-node="select_file" type="file" name="Filedata" class="" />
+            <input type="file" event-node="select_file" name="Filedata" style="display:none" id="avatar_upload">
+                <a href="javascript:;" onclick="$('#avatar_upload').click();" class="btn set-sub">选择图片</a>
             <span event-node="loading" style="display:none;"><img src="__THEME__/image/load.gif" />{:L('Uploading')}</span>
             <p>{:L('PUBLIC_UPLOAD_PHOTO_TIPS')}</p>
         </dd>

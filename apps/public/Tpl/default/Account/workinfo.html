@@ -16,15 +16,19 @@ function getYear( y ){
 <div id="page-wrap" class="center1">
   <div id="main-wrap" class="container">
     <div id="st-index-grid" class="row boxShadow" style="margin:20px 0;">
-      <div id="col4" class="main-left col-md-2">
-        <!--tab菜单-->
-        <include file="_tabs" />
+      <div id="col4" class="main-left col-md-3">
+        <div class="row">
+          <div class="col-sm-10">
+            <!--tab菜单-->
+            <include file="_tabs" />
+          </div>
+        </div>
       </div>
-      <div id="col7" class="main-right col-md-10 person-set">
+      <div id="col7" class="main-right col-md-9 person-set">
         <div class="extend minh">
-          <div class="set-hd"><h3>工作信息</h3></div>
+          <div class="set-hd"><h3>工作信息<div class="info_wcd">资料完善度<div><span style="width:{$info_wcd}%"> </span></div>{$info_wcd}%</div></h3></h3></div>
           <div class="set-item-info">
-            <form action="{:U('public/Account/doWorkInfo')}" method="post">
+            <form action="{:U('public/Account/doWorkInfo')}" method="post" style="color:#7F7C7C">
                 <input type="hidden" name="uwid" value="{$workinfo.uwid}">
                 <div class="row school1">
                     <div class="col-sm-2 information1">
@@ -42,10 +46,10 @@ function getYear( y ){
                         {:W('Industry',array('curPid'=>$industry[industryP],'curChild'=>$industry[industryC]))}
                     </div>
                 </div>
-                <div class="row" style="margin:20px 0;">
+                <div class="row">
                     <div class="col-sm-2 information1"></div>
                     <div class="col-sm-5">
-                        <a class="btn btn-default sub" href="javascript:void(0);" event-node="submit_btn">{:L('PUBLIC_SAVE')}</a>
+                        <a class="btn set-sub" href="javascript:void(0);" event-node="submit_btn">{:L('PUBLIC_SAVE')}</a>
                     </div>
                 </div>
             </form>

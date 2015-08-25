@@ -1,5 +1,5 @@
 <form id='noflashUpload' model-node="avatar_upload_form" enctype="multipart/form-data" action="{:U('public/Account/doSaveAvatar', array('step'=>'upload'))}" method="post" style="display:block">
-    <dl class="col-md-4 col-md-offset-4">
+    <dl class="col-md-4 col-md-offset-4" style="margin-top:15px;">
         <dd >
             <div model-node="avatar_scan" class="mod-avatar">
                 <div class="cut-1"><img event-node="avatar_big" src="{$avatar.avatar_big}" /></div>
@@ -7,14 +7,15 @@
         </dd>
         <dd class="portrait1">
             <div class="form-group">
-                <input type="file" event-node="select_file" name="Filedata" class="">
+                <input type="file" event-node="select_file" name="Filedata" style="display:none" id="avatar_upload">
+                <a href="javascript:;" onclick="$('#avatar_upload').click();" class="btn set-sub">选择图片</a>
             </div>
             <span event-node="loading" style="display:none;"><img src="__THEME__/image/load.gif" />加载中...</span>
         </dd>
     </dl>
 </form>
 <form model-node="avatar_setting_form" enctype="multipart/form-data" action="{:U('public/Account/doSaveAvatar', array('step'=>'save'))}" method="post" style="display:none;">
-    <dl class="form-avatar">
+    <dl class="form-avatar" style="margin-top:15px;">
         <dd >
             <div model-node="avatar_area" class="mod-avatar col-md-6 col-md-offset-1" style="margin-bottom:10px; border-right:1px solid #E5E5E5;"></div>
             <div class="mod-avatar col-md-4" >
@@ -55,7 +56,8 @@ var avatar_success = function(msg){
             eval(upload_callback+'()');
         },2000);
     }else{
-        ui.success('头像保存成功，请按 ctrl + R 刷新头像。');
+        ui.success('头像保存成功。');
+        $('#avatar_upload').css('dispaly':'none');
     }
 };
 

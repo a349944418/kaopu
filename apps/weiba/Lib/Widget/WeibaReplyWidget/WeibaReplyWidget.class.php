@@ -32,7 +32,6 @@ class WeibaReplyWidget extends Widget{
         $var['limit']    = 10;
         $var['order']    = 'ASC';
         $var['initNums'] = model('Xdata')->getConfig('weibo_nums','feed');
-        $map['weiba_id'] = $data['weiba_id'];
         $map['level'] = array('gt',1);
         $var['weiba_admin'] = getSubByKey(D('weiba_follow')->where($map)->findAll(),'follower_uid');
         $var['user'] = D( 'User' )->getUserInfo( $_SESSION['mid'] );
@@ -68,6 +67,7 @@ class WeibaReplyWidget extends Widget{
      		return;
      	}
         $return = array('status'=>0,'data'=>L('PUBLIC_CONCENT_IS_ERROR'));
+        $type = intval($_POST['type']);
         $data['weiba_id'] = intval($_POST['weiba_id']);
         $data['post_id'] = intval($_POST['post_id']);
         $data['post_uid'] = intval($_POST['post_uid']);
@@ -75,7 +75,12 @@ class WeibaReplyWidget extends Widget{
         $data['to_uid'] = intval($_POST['to_uid']);
         $data['uid'] = $this->mid;
         $data['ctime'] = time();
-        $data['content'] = h($_POST['content']);
+        if($type == 1){
+          $data['content'] = h($_POST['content']);
+        }else{
+          $data['content'] = preg_html(h($_POST['content']));
+        }
+        
 
         if(isSubmitLocked()){
           $return['status'] = 0;
@@ -93,10 +98,12 @@ class WeibaReplyWidget extends Widget{
 
             $map['last_reply_uid'] = $this->mid;
             $map['last_reply_time'] = $data['ctime'];
-            $map ['reply_count'] = array (
-            		'exp',
-            		"reply_count+1"
-            );
+            if($data['to_reply_id'] == 0){
+              $map ['reply_count'] = array (
+                'exp',
+                "reply_count+1"
+              );
+            }
             $map ['reply_all_count'] = array (
             		'exp',
             		"reply_all_count+1"
@@ -156,10 +163,15 @@ class WeibaReplyWidget extends Widget{
             $data['comment_id'] = $comment_id;
             $data['storey'] = $data1['storey'];
             $return['status'] = 1 ;
-            $return['data'] = $this->parseReply($data);
+            if($type == 2) {
+              $return['data'] = $this->parseRightReply($data);
+            }else{
+              $return['data'] = $this->parseReply($data);
+            }         
         }
     	echo json_encode($return);exit();
     }	
+
 
     /**
      * 删除回复(在微博评论删除中同步删除微吧回复)
@@ -167,9 +179,9 @@ class WeibaReplyWidget extends Widget{
      */
     public function delReply(){
     	if ( !CheckPermission('core_admin','comment_del') ){
-			if ( !CheckPermission('weiba_normal','weiba_del_reply') ){
-				return false;
-			}
+    			if ( !CheckPermission('weiba_normal','weiba_del_reply') ){
+    				return false;
+    			}
     	}
     	$reply_id = intval($_POST['reply_id']);
       $app_name = t($_POST['widget_appname']);
@@ -191,6 +203,17 @@ class WeibaReplyWidget extends Widget{
     	$data['content'] = $data['content'];
  	   	return $this->renderFile(dirname(__FILE__)."/_parseComment.html",$data);
 	  }
+
+    /**
+     * 渲染评论页面 在addcomment方法中调用 ,右侧画出评论
+     */
+    public function parseRightReply($data){
+      $data['userInfo'] = model('User')->getUserInfo($GLOBALS['ts']['uid']);
+        $data['userInfo']['groupData'] = model('UserGroupLink')->getUserGroupData($GLOBALS['ts']['uid']);   //获取用户组信息
+      $data['content'] = preg_html($data['content']);
+      $data['content'] = parse_html($data['content']);
+      return $this->renderFile(dirname(__FILE__)."/_parseRightComment.html",$data);
+    }
 
     /**
      * 评论帖子回复

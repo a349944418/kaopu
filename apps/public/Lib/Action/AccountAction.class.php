@@ -19,7 +19,7 @@ class AccountAction extends Action
 		$profile_category_list = $this->_profile_model->getCategoryList();
 
 		// 基本资料
-		$tab_list[] = array('field_key'=>'index','field_name'=>L('PUBLIC_PROFILESET_INDEX'));				
+		$tab_list[] = array('field_key'=>'index','field_name'=>'<span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp;'.L('PUBLIC_PROFILESET_INDEX'));				
 		// $tab_list[] = array('field_key'=>'tag','field_name'=>L('PUBLIC_PROFILE_TAG'));				// 基本资料
 		// $tab_lists = $profile_category_list;
 
@@ -27,11 +27,12 @@ class AccountAction extends Action
 		// 	$tab_list[] = $v;			// 后台添加的资料配置分类
 		// }
 		// 头像设置
-		$tab_list[] = array('field_key'=>'avatar','field_name'=>L('PUBLIC_IMAGE_SETTING'));	
+		$tab_list[] = array('field_key'=>'avatar','field_name'=>'<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> &nbsp;'.L('PUBLIC_IMAGE_SETTING'));	
 		// 教育信息
-		$tab_list[] = array('field_key'=>'edu','field_name'=>'教育信息');
+		$tab_list[] = array('field_key'=>'edu','field_name'=>'<span class="glyphicon glyphicon-education" aria-hidden="true"></span> &nbsp;教育信息');
 		// 工作信息
-		$tab_list[] = array('field_key'=>'workinfo','field_name'=>'工作信息');
+		$tab_list[] = array('field_key'=>'workinfo','field_name'=>'<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> &nbsp;工作信息');
+		$tab_list[] = array('field_key'=>'security','field_name'=>'<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> &nbsp;'.L('PUBLIC_ACCOUNT_SECURITY'));
 		/*				
 		$tab_list[] = array('field_key'=>'domain','field_name'=>L('PUBLIC_DOMAIN_NAME'));				
 		个性域名
@@ -44,14 +45,15 @@ class AccountAction extends Action
 		
 		插件增加菜单
 		$tab_list_security[] = array('field_key'=>'bind','field_name'=>'帐号绑定');		// 帐号绑定
-		*/
+		
 		
 		// 帐号安全
-		$tab_list_security[] = array('field_key'=>'security','field_name'=>L('PUBLIC_ACCOUNT_SECURITY'));		
+		$tab_list_security[] = array('field_key'=>'security','field_name'=>L('PUBLIC_ACCOUNT_SECURITY'));	
+		*/	
 
 		$this->assign('tab_list',$tab_list);
 		//$this->assign('tab_list_preference',$tab_list_preference);
-		$this->assign('tab_list_security',$tab_list_security);
+		//$this->assign('tab_list_security',$tab_list_security);
 	}
 
 	/**
@@ -60,7 +62,7 @@ class AccountAction extends Action
 	public function index()
 	{
 		$this->appCssList[] = 'account.css';
-		$user_info = model('User')->getUserInfo($this->mid);
+		$user_info = model('User')->getUserInfoByUids($this->mid);
 		$data = $this->_getUserProfile();
 		$data['langType'] = model('Lang')->getLangType();
 		// 获取用户职业信息
@@ -68,22 +70,28 @@ class AccountAction extends Action
 		$userCateArray = array();
 		if(!empty($userCategory)) {
 			foreach($userCategory as $value) {
-				$user_info['category'] .= '<a href="#" class="link btn-cancel"><span>'.$value['title'].'</span></a>&nbsp;&nbsp;';
+				$user_info[$this->mid]['category'] .= '<a href="#" class="link btn-cancel"><span>'.$value['title'].'</span></a>&nbsp;&nbsp;';
 			}
 		}
-
-		$user_info['birthY'] = date('Y', $user_info['birthday']);
-		$user_info['birthM'] = ltrim(date('m', $user_info['birthday']),0);
-		$user_info['birthD'] = ltrim(date('d', $user_info['birthday']),0);
+		$user_info[$this->mid]['birthY'] = date('Y', $user_info[$this->mid]['birthday']);
+		$user_info[$this->mid]['birthM'] = ltrim(date('m', $user_info[$this->mid]['birthday']),0);
+		$user_info[$this->mid]['birthD'] = ltrim(date('d', $user_info[$this->mid]['birthday']),0);
 		$this->assign('user_info', $user_info);
 		$this->assign($data);
-		$this->setTitle( L('PUBLIC_PROFILESET_INDEX') );			// 个人设置
+		$this->setTitle( L('PUBLIC_PROFILESET_INDEX') );			
+		// 个人设置
 		$this->setKeywords( L('PUBLIC_PROFILESET_INDEX') );
 		$user_tag = model('Tag')->setAppName('User')->setAppTable('user')->getAppTags(array($this->mid));
-		$this->setDescription(t($user_info['category'].$user_info['location'].','.implode(',', $user_tag[$this->mid]).','.$user_info['intro']));
+
+		// 个人信息完成度
+		
+		$selfInfo = array($user_info[$this->mid]['uname'], $user_info[$this->mid]['sex'], $user_info[$this->mid]['birthday'], $user_info[$this->mid]['area'], $user_info[$this->mid]['intro'], $user_info[$this->mid]['truename'], $user_info[$this->mid]['mobile']);
+		$info_wcd = $this->info_wcd($selfInfo);
+		$this->assign('info_wcd', $info_wcd);
+
+		$this->setDescription(t($user_info[$this->mid]['category'].$user_info[$this->mid]['location'].','.implode(',', $user_tag[$this->mid]).','.$user_info[$this->mid]['intro']));
 		$this->display();
 	}
-
 	/**
 	 * 扩展信息设置页面
 	 * @param string $extend 扩展类目名称(为插件准备)
@@ -226,6 +234,11 @@ class AccountAction extends Action
 		$high = D('UserEduinfo') -> where('school_type = 3 and uid='.$this->mid) -> find();
 		$university = D('UserEduinfo') -> where('school_type = 4 and uid='.$this->mid) -> find();
 		$this->assign(array('primary'=>$primary, 'middle'=>$middle, 'high'=>$high, 'university'=>$university));
+
+		// 个人信息完成度
+		$selfInfo = array($primary['school_name'], $primary['school_time'], $middle['school_time'], $middle['school_name'], $high['school_name'], $high['school_time'], $university['school_time'], $university['school_name']);
+		$info_wcd = $this->info_wcd($selfInfo);
+		$this->assign('info_wcd', $info_wcd);
 		$this->display();
 	}
 
@@ -248,6 +261,9 @@ class AccountAction extends Action
 		$workinfo = D('UserWorkinfo')->where('uid='.$this->mid)->find();
 		$industry = D('User')->field('industryP,industryC')->where('uid='.$this->mid)->find();
 		$this->assign(array('workinfo'=>$workinfo,'industry'=>$industry));
+		$selfInfo = array($workinfo['company_name'], $industry['industryP'], $industry['industryC']);
+		$info_wcd = $this->info_wcd($selfInfo);
+		$this->assign('info_wcd', $info_wcd);
 		$this->display();
 	}
 
@@ -794,4 +810,22 @@ class AccountAction extends Action
 		$this->setDescription(t(implode(',', getSubByKey($data['bind'],'name'))));
    	    $this->display();
     }
+
+
+	/**
+	 * [个人信息完成度]
+	 * @param  [type] $arr [description]
+	 * @return [type]      [description]
+	 */
+	private function info_wcd ($arr) {
+		$i = 0;
+		$count = count($arr);
+		foreach($arr as $v){
+			if (!$v){
+				$i++;
+			}
+		}
+		$return =  ($count-$i)/$count * 100;
+		return intval($return);
+	}
 }

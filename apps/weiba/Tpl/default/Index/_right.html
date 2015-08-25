@@ -2,7 +2,7 @@
     <php>if($userinfo) {</php>
         <div class="visual1-top clearfix">
             <div class="visual1-left">
-              <img src="{$userinfo.avatar_big}" width="100%"/>
+              <img src="{$userinfo.avatar_middle}" width="68px"/>
             </div>
             <div class="visual1-right">
               <p class="shi"><a href="{$user['space_url']}">{$userinfo['uname']}</a></p>
@@ -26,6 +26,19 @@
             </div>
         </div>
     <php>}</php>
+    <!-- 签到 -->
+    {:W('CheckIn')}
+    <div class="draft">
+        <p class="draft1"><a href="{:U('public/Profile/share',array('uid'=>$uid))}">我的分享</a></p>
+        <p class="draft2"><a href="{:U('public/Profile/question',array('uid'=>$uid))}">我的提问</a></p>
+        <p class="draft3"><a href="{:U('public/Profile/collection',array('uid'=>$uid))}">我的关注</a></p>
+        <p class="draft4"><a href="{:U('public/Profile/index',array('uid'=>$uid))}">我的回答</a></p>
+        <!-- <p class="draft4">我的分享</p>
+        <p class="draft5">所有问题</p>
+        <p class="draft6">话题广场</p>
+        <p class="draft7">公共编辑动态</p>
+        <p class="draft8">社区服务中心</p> -->
+    </div>
     <div class="maybe">
       {:Addons::hook('show_ad_space', array('place'=>'weiba_right'))}
     </div>

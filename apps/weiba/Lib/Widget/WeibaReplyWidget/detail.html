@@ -10,26 +10,20 @@
         <div class="reply_content">
           {$vo.content}
         </div>
-        <div class="problem clearfix problem2 row">
+        <div class="problem clearfix problem2">
+          <div class="row">
             <p class="info col-md-8">
-                <span>({$vo.ctime|friendlyDate})</span><span class="pinglun"><a href="javascript:void(0)" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$vo.reply_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&feed_id={$feed_id}&comment_id={$vo.comment_id}&addtoend={$addtoend}' >101条评论</a></span><span class="zan"><a href="#">赞</a></span>
+                <span>{$vo.ctime|friendlyDate}</span><span class="pinglun"><a href="javascript:void(0)" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$vo.reply_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&feed_id={$feed_id}&comment_id={$vo.comment_id}&addtoend={$addtoend}&flag=1' event-node="reply_replylist"> &nbsp;&nbsp;{$vo.C_reply_count}条评论</a></span><span class="zan"><a href="javascript:click_zan('{$vo.reply_id}');" id="reply_id{$vo.reply_id}">赞<span>{$vo.zan}</span></a></span>
             </p>
             <p class="info right col-md-4 tx-right">
                 <php>
-                    $isdel=0;
-                    if( ($vo['user_info']['uid'] == $GLOBALS['ts']['mid'] && CheckPermission('weiba_normal','weiba_del_reply')) || in_array($GLOBALS['ts']['mid'],$weiba_admin) || CheckPermission('core_admin','comment_del')){</php>
-                        <php>$isdel=1;</php>
-                        <a href="javascript:void(0);" event-node="reply_del" event-args="reply_id={$vo.reply_id}">{:L('PUBLIC_STREAM_DELETE')}</a> 
-                    <php>}</php>
-                    <php>if(CheckPermission('weiba_normal','weiba_reply')){</php>
-                        <eq name='cancomment' value="1">
-                            <php>if($isdel){</php>
-                                <i class="vline">|</i>
-                            <php>}</php>
-                            <a href="javascript:void(0)" event-args='weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&to_reply_id={$vo.reply_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&feed_id={$feed_id}&comment_id={$vo.comment_id}&addtoend={$addtoend}' event-node="reply_reply">{:L('PUBLIC_STREAM_REPLY')}</a>
-                        </eq>
+                $isdel=0;
+                if( ($vo['user_info']['uid'] == $GLOBALS['ts']['mid'] && CheckPermission('weiba_normal','weiba_del_reply')) || in_array($GLOBALS['ts']['mid'],$weiba_admin) || CheckPermission('core_admin','comment_del')){</php>
+                    <php>$isdel=1;</php>
+                    <a href="javascript:void(0);" event-node="reply_del" event-args="reply_id={$vo.reply_id}">{:L('PUBLIC_STREAM_DELETE')}</a> 
                 <php>}</php>
             </p>
+          </div>
         </div>
       </div>   
 		</volist> 
@@ -63,7 +57,7 @@
                 <dt><img src="{$user['avatar_tiny']}" width="20"/></dt>
                 <dd><span>{$user['uname']}</span>|<a href="{:U('public/Passport/logout')}">注销</a></dd>
             </dl>
-            <button class="btn btn-default"  event-args=' weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&feed_id={$feed_id}&addtoend={$addtoend}&to_reply_id=0&to_uid=0' style="background:#000; color:#fff; float:right;" id="wb_reply_submit">发布</button>
+            <button class="btn set-sub"  event-args=' weiba_id={$weiba_id}&post_id={$post_id}&post_uid={$post_uid}&feed_id={$feed_id}&addtoend={$addtoend}&to_reply_id=0&to_uid=0' style="float:right;" id="wb_reply_submit" >发布</button>
           </div>
         </div>
     </div>

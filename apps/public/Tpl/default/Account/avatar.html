@@ -3,11 +3,15 @@
     <div id="page-wrap" class="center1">
         <div id="main-wrap" class="container">
             <div id="st-index-grid" class="row boxShadow" style="margin:20px 0;">
-            	<div id="col4" class="main-left col-md-2">
-                    <!--tab菜单-->
-                    <include file="_tabs" />
+            	<div id="col4" class="main-left col-md-3">
+                    <div class="row">
+                        <div class="col-sm-10">
+                            <!--tab菜单-->
+                            <include file="_tabs" />
+                        </div>
+                    </div>
                 </div>
-                <div id="col7" class="main-right col-md-10 person-set">
+                <div id="col7" class="main-right col-md-9 person-set">
                     <div class="extend minh" style="position:relative">
                     	<div class="set-hd"><h3>{$tabName}</h3></div>
                         {:W('Avatar',array('avatar'=>$user_info,'defaultImg'=>$user_info['avatar_big']))}

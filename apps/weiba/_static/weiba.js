@@ -234,9 +234,6 @@ M.addEventFns({
 					_textarea.value = '';
 					this.to_reply_id = 0;
 					this.to_uid = 0;
-					// if("function" == typeof(afterComment)){
-					// 	afterComment();
-					// }
 				}
 				$(_this).html('<span>回复</span>');
 				addComment = false;
@@ -252,10 +249,6 @@ M.addEventFns({
 					// 获取微博ID
 					var wid = parseInt($commentList.attr('id').split('_')[1]);
 					var $commentListVisible = $commentList.find('dl:visible');
-					var len = $commentListVisible.length;
-					$commentListVisible.each(function (i, n) {
-						$(this).find('span.floor').html((len - i)+'楼');
-					});
 				}
 			});
 			$.post(U('widget/WeibaReply/delReply'),{widget_appname:'weiba',reply_id:attrs.reply_id},function(msg){
@@ -326,6 +319,33 @@ M.addEventFns({
 				}
 			});
 		}	
+	},
+	reply_replylist:{
+		click:function(){
+			if(!$('.rightComment').length){
+				$('.center1 .container').eq(0).animate({'min-width':'1260px'});
+				$('.center1 .container').eq(0).css({'overflow':'hidden','position':'relative'});
+				$('.center1 .container').eq(0).append('<div class="rightComment review"><div class="review2 clearfix"> <div class="review4 clearfix"> <div class="review2-left"> <span><img src="'+THEME_URL+'/image/review2.jpg" onclick="close_rightComment()" style="cursor:point"></span> </div> <div class="review2-right"> <h6><!-- <span><b>75</b>条评论&nbsp;|&nbsp;<b>943</b>人参与</span> --><img src="'+THEME_URL+'/image/review.png"></h6> </div> </div> <div class="review3"> <div class="review3-right"><img src="'+THEME_URL+'/image/loading1.gif" style="margin-top:30px;margin-left:217px;"></div></div></div>');
+				$('.center1 .col-md-3').eq(0).css({'display':'none'});
+				var attrs = M.getEventArgs(this);
+				$.post(U('weiba/Comment/reply_commentList'), attrs, function(res){
+					$('.rightComment .review3-right').html(res);	
+					var top = 24+parseInt($('.content p.title').height());
+					var dh = $(window).height();
+					var lh = $('.center1 .col-md-9').eq(0).height()-60;
+					dh = dh > lh ? lh : dh;
+					$('.rightComment').css({'left':'1260px', 'top': top+'px'});
+					$('.rightComment .review2').css({'height':dh+'px'});
+					$('.rightComment').animate({left:'600px'}).animate({left:'759.6px'});
+				})
+			}else{
+				$('.rightComment .review3-right').html('<img src="'+THEME_URL+'/image/loading1.gif" style="margin-top:30px;margin-left:217px;"></div>');
+				var attrs = M.getEventArgs(this);
+				$.post(U('weiba/Comment/reply_commentList'), attrs, function(res){
+					$('.rightComment .review3-right').html(res);
+				})
+			}			
+        }
 	}
 });
 	/**

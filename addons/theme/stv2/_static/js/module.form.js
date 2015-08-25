@@ -35,18 +35,11 @@ var isSubmit = 0;
 M.addModelFns({
 	account_save:{
 		callback:function(){
-			ui.success(L('PUBLIC_ADMIN_OPRETING_SUCCESS'));
-			setTimeout(function() {
-				location.href = location.href;
-			}, 1500);
-		}
+			ui.success(L('PUBLIC_ADMIN_OPRETING_SUCCESS'));		}
 	},
 	verify_apply:{
 		callback:function(){
 			ui.success('申请成功，请等待审核');
-			setTimeout(function() {
-				location.href = U('public/Account/authenticate');
-			}, 1500);
 		}
 	},
 	// 普通表单发送验证

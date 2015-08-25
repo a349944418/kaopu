@@ -1,3 +1,33 @@
+// 智能浮动
+$.fn.smartFloat = function() {
+    var position = function(element) {
+        var top = element.position().top, pos = element.css("position");
+        $(window).scroll(function() {
+            var scrolls = $(this).scrollTop();
+            if (scrolls > top) {
+                if (window.XMLHttpRequest) {
+                    element.css({
+                        position: "fixed",
+                        top: 0
+                    });
+                } else {
+                    element.css({
+                        top: scrolls
+                    });
+                }
+            }else {
+                element.css({
+                    position: "absolute",
+                    top: top
+                });
+            }
+        });
+    };
+    return $(this).each(function() {
+        position($(this));
+    });
+};
+
 $(function(){
   //选择学校
   $('#comModal').on('show.bs.modal', function (e) {
@@ -143,6 +173,33 @@ function followWeibas(weiba_id, type) {
       $('#follow'+weiba_id).bind('click',function(){
         followWeibas(weiba_id, untype);
       })
+    }
+  },'json');
+}
+
+/**
+ * [关闭右滑评论框]
+ * @return {[type]} [description]
+ */
+function close_rightComment(){
+  $('.rightComment').animate({'left':'1260px'});
+  $('.rightComment').remove();
+  $('.center1 .container').eq(0).animate({'min-width':'0px'});
+  $('.center1 .col-md-3').eq(0).css({'display':'block'});
+}
+
+/**
+ * [微吧评论点赞]
+ * @return {[type]} [description]
+ */
+function click_zan(reply_id){
+  $.post(U('weiba/Comment/click_zan'), {rid:reply_id}, function(data){
+    if(data.status == 1){
+      var zan_num = $('#reply_id'+reply_id+' span').html();
+      zan_num = parseInt(zan_num) + 1;
+      $('#reply_id'+reply_id+' span').html(zan_num);
+    }else{
+      ui.error(data.info);
     }
   },'json');
 }

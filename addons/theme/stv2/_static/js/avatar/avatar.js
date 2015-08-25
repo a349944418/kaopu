@@ -153,7 +153,7 @@ var avatar = function( args ) {
                 	} else {
                 		ui.error(txt.info);
                 	}
-                	uploadBtn.style.display = "block";
+                	uploadBtn.style.display = "none";
                 	loading.style.display = "none";
 					uploadForm.reset();
                 }

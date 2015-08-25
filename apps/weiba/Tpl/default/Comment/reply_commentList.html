@@ -1,0 +1,106 @@
+<div class="import clearfix" model-node="weiba_reply_reply" id="reply_box">    
+	<div class="import-left">
+    	<dl>
+        	<dt><img src="{$user['avatar_middle']}" width="74px"></dt>
+            <dd><a href="{$user['space_url']}">{$user['uname']|getShort=6}</a></dd>
+        </dl>
+    </div>
+    <div class="input send_weibo repeat import-right" model-node="comment_textarea">
+        <div class="input_before" model-node="mini_editor">
+            <textarea class="input_tips form-control import1" id="mini_editor_textarea" rows="3" event-node="mini_editor_textarea" hidefocus="true" style="height: 120px;word-break:break-all;" model-args='t=comment'></textarea>
+        </div><!-- 
+        <div class="acts" id="demo">
+            <a class="face-block" href="javascript:;" event-node="comment_insert_face"><i class="face"></i>表情</a>
+        </div> -->
+        <div class="clear"></div>
+        <div class="acts" id="demo" style="display:inline-block;margin-top:15px;">
+            <a class="face-block" href="javascript:;" event-node="comment_insert_face"><i class="face"></i>表情</a>
+        </div>
+        <a href="javascript:replycomment();" class="btn btn-primary import2" style="float:right" id="reply_comment_sub" to_uid="{$var.to_uid}"><span>发布</span></a>
+        <div model-node="faceDiv"></div>          
+    </div>
+</div>
+<div class="new clearfix">
+	<h6>最热评论</h6><!-- <p><a href="#"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> 刷新</a></p> -->
+</div>
+<div class="newlist">
+    <volist name="commentList" id="vo">
+        <div class="new1 clearfix">
+            <div class="new1-left">
+            	<img src="{$user_info[$vo[uid]][avatar_small]}">
+            </div>
+            <div class="new1-right">
+            	<p class="manjusri">{$user_info[$vo[uid]]['space_link']}<span>[{$user_info[$vo[uid]]['location']}]</span></p>
+                <p class="represent">{$vo.content}</p>
+                <div class="minute">{$vo.ctime|friendlyDate} <!-- |<a href="#">举报</a> --><p><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><a href="javascript:click_zan('{$vo.reply_id}');" id="reply_id{$vo.reply_id}">赞<span>{$vo.zan}</span></a> <b>|</b> <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><a href="javascript:reply_comment2('{$vo[uid]}','{$user_info[$vo[uid]][uname]}');">回复</a></p></div>
+            </div>
+        </div>
+    </volist>
+</div>
+<script>
+//回复评论
+function reply_comment2(uid, uname){
+    $('#reply_comment_sub').attr('to_uid', uid);
+    $('#mini_editor_textarea').val('回复@'+uname+'：');
+}
+
+//回复评论提交
+function replycomment(){
+    if ( this.noreply == 1 ){
+        return;
+    }else{
+        this.noreply = 1;
+    }
+    var _this = this;
+    setTimeout(function (){
+        _this.noreply = 0;
+    },5000);
+    var y_to_uid = '{$var.to_uid}';
+    var addtoend = '{$var.addtoend}';
+    var weiba_id = '{$var.weiba_id}';
+    var post_id = '{$var.post_id}';
+    var post_uid= '{$var.post_uid}';
+    var to_reply_id = '{$var.to_reply_id}';
+    var to_uid = $('#reply_comment_sub').attr('to_uid');
+    var feed_id = '{$var.feed_id}';
+    var content = document.getElementById('mini_editor_textarea').value;
+
+    if(content.length < 1){
+        return;
+    }
+
+    var ifShareFeed = document.getElementsByName('shareFeed')[0] == undefined ? 0 : Number(document.getElementsByName('shareFeed')[0].checked);
+
+    $(_this).html('<span>回复中...</span>');
+    //alert($('.comment_lists').eq(0).html());exit;
+    $.post(U('widget/WeibaReply/addReply'),{widget_appname:'weiba',weiba_id:weiba_id,post_id:post_id,post_uid:post_uid,to_reply_id:to_reply_id,to_uid:to_uid,feed_id:feed_id,content:content,ifShareFeed:ifShareFeed,type:2},function(msg){
+                if(msg.status == "0"){
+                    ui.error(msg.data);
+                }else{
+                    if(addtoend == 1){
+                        $('.rightComment .newlist').eq(0).append(msg.data);
+                    }else{
+                        $('.rightComment .newlist').eq(0).prepend(msg.data);
+                    }
+                    $('#reply_comment_sub').attr('to_uid', y_to_uid);
+                    $('#mini_editor_textarea').val('');
+                }
+                addComment = false;
+    },'json');
+}
+/*
+$(function (){
+    //shortcut('ctrl+return', replycomment , {target:'mini_editor_textarea'});
+    //atWho($('#mini_editor_textarea'));
+    setTimeout(function (){
+        $('#mini_editor_textarea').inputToEnd('{$var.initHtml}');
+    },300);
+});
+*/
+M.addModelFns({
+    weiba_reply_reply: {
+
+    }
+});
+M(document.getElementById('reply_box'));
+</script>
