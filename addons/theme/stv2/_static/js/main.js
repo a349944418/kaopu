@@ -119,6 +119,9 @@ $(function(){
  */
 function showquiz(type, p){
   $('#comModal .modal-body').html('');
+  if (typeof(ue) != 'undefined'){
+      ue.destroy();
+  }
   $('#comModal .modal-header').css({'background':'#FC5241','padding':'8px 15px'});
   var title = type == 1 ? '提问' : '分享';
   $('#comModal .modal-title').html(title).css({'text-align':'center','color':'white'});

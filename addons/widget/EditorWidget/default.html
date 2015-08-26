@@ -7,13 +7,15 @@
 <php>}</php>
 <!--发布样式 begin-->
 <div class="contents">
-	<script type="text/plain" id="{$contentName}" name="{$contentName}" style="height:240px;">
+	<script type="text/plain" id="content" name="content" style="height:240px;">
 	    <p>{$value}</p>
 	</script>
 	<script type="text/javascript">	
+
 		//实例化编辑器
-	    var ue = UE.getEditor('{$contentName}', {
+	    var ue = UE.getEditor('content', {
 	    	initialFrameWidth: '100%'
 		}); 
+
 	</script>
 </div>
