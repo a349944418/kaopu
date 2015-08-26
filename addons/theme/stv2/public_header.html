@@ -49,7 +49,7 @@
 
                         {* 登录后 *}
                         <session name="mid">
-                            <li><a href="javascript:void(0);" style="padding: 9px 0;">|</a></li>                 
+                            <li style="padding:0;"><a href="javascript:void(0);" style="padding: 9px 0;">|</a></li>                 
                             <li model-node="notice" class="dorp-right dropdown"><a href="javascript:void(0);"class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{:L('PUBLIC_MESSAGE')}<span class="caret"></span></a>
                                 <ul class="dropdown-menu message_list_container message_list_new" >
                                     <li rel="new_folower_count" style="display:none">
@@ -71,7 +71,7 @@
                                 <php>}</php>
                                 </ul>
                             </li>
-                            <li model-node="account" class="dropdown dorp-right"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{$user['avatar_tiny']}" style="height:27px;border-radius:5px;margin-right:8px;top:-1px;position:relative;" alt="">{$user['uname']|getShort=6}<span class="caret"></span></a>
+                            <li model-node="account" class="dropdown dorp-right"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="{$user['avatar_tiny']}" style="height:27px;border-radius:5px;margin-right:8px;top:-1px;position:relative;" alt="">{$user['uname']|getShort=3}<span class="caret"></span></a>
                                 <ul class="dropdown-menu acc-list">
                                     <li><a href="{$user['space_url']}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> &nbsp;我的主页</a></li>
                                     <li><a href="{:U('public/Account/index')}"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> &nbsp;{:L('PUBLIC_SETTING')}</a></li>

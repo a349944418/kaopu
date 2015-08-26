@@ -143,7 +143,7 @@ class AccountAction extends Action
 			$save['uname'] = filter_keyword($uname);
 			$res = model('Register')->isValidName($uname, $oldName);
 			if(!$res) {
-				$error = model('Register')->getLastError();
+				//$error = model('Register')->getLastError();
 				return $this->ajaxReturn(null, model('Register')->getLastError(), $res);		
 			}
 			//如果包含中文将中文翻译成拼音
@@ -154,7 +154,13 @@ class AccountAction extends Action
 				$save['search_key'] = $save['uname'];
 			}
 			$res = model('User')->where("`uid`={$this->mid}")->save($save);
-			$res && model('User')->cleanCache($this->mid);	
+			$res && model('User')->cleanCache($this->mid);
+			if ($res) {
+				$this->addInfoCredit($save);
+				if($save['intro']) {
+					model('Credit')->setUserCredit($this->mid, 'intro_info');
+				}
+			}
 			$user_feeds = model('Feed')->where('uid='.$this->mid)->field('feed_id')->findAll();
 			if($user_feeds){
 				$feed_ids = getSubByKey($user_feeds, 'feed_id');
@@ -164,6 +170,7 @@ class AccountAction extends Action
 		// 保存用户资料配置字段
 		(false !== $res) && $res = $this->_profile_model->saveUserProfile($this->mid, $_POST);
 		// 保存用户标签信息
+		/*
 		$tagIds = t($_REQUEST['user_tags']);
 		!empty($tagIds) && $tagIds = explode(',', $tagIds);
 		$rowId = intval($this->mid);
@@ -175,6 +182,7 @@ class AccountAction extends Action
 			model('Tag')->setAppName('public')->setAppTable('user')->updateTagData($rowId, $tagIds);
 		}
 		$result = $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
+		*/
 		return $this->ajaxReturn(null, $this->_profile_model->getError(), $res);
 	}
 
@@ -221,6 +229,7 @@ class AccountAction extends Action
 			$feed_ids = getSubByKey($user_feeds, 'feed_id');
 			model('Feed')->cleanCache($feed_ids,$this->mid);
 		}
+		model('Credit')->setUserCredit($this->mid, 'avatar_info');
     	$this->ajaxReturn($result['data'], '设置成功', $result['status']);
 	}
 
@@ -250,6 +259,9 @@ class AccountAction extends Action
 		$map = t_Arr($_POST);
 		D('UserEduinfo')->where('uid='.$this->mid)->delete();
 		$res = D('UserEduinfo')->save_Eduinfo($map);
+		if(D('UserEduinfo')->where('uid='.$this->mid)->getField('ueid')){
+			model('Credit')->setUserCredit($this->mid, 'edu_info');
+		}
 		return $this->ajaxReturn(null, '保存成功', $res);
 	}
 
@@ -282,6 +294,9 @@ class AccountAction extends Action
 				$flag2 = D('UserWorkinfo')->save_workinfo($map);
 			}
 			if($flag2){
+				if($map['company_name'] && $map['industryP'] && $map['industryC']){
+					model('Credit')->setUserCredit($this->mid, 'work_info');
+				}
 				return $this->ajaxReturn(null, '操作成功', 1);
 				die();
 			}			
@@ -827,5 +842,20 @@ class AccountAction extends Action
 		}
 		$return =  ($count-$i)/$count * 100;
 		return intval($return);
+	}
+
+	/**
+	 * [完善用户基本资料加积分]
+	 * @param [type] $arr [description]
+	 */
+	private function addInfoCredit($arr) {
+		$tmp = array('sex', 'birthday', 'mobile', 'location');
+		$i = 0;
+		foreach($arr as $k=>$v){
+			if(in_array($k, $tmp) && $v!=''){
+				$i++;
+			}
+		}
+		model('Credit')->setUserCredit($this->mid, 'base_info', $i);
 	}
 }

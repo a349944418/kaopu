@@ -133,7 +133,7 @@ class AdminAction extends AdministratorAction {
 		$this->pageTab[] = array('title'=>'帖子列表','tabHash'=>'postList','url'=>U('weiba/Admin/postList'));
 		$this->pageTab[] = array('title'=>'帖子回收站','tabHash'=>'postRecycle','url'=>U('weiba/Admin/postRecycle'));
         // 列表key值 DOACTION表示操作
-		$this->pageKeyList = array('weiba_id','weiba_name','cid','logo','intro', 'notify','who_can_post','admin_uid','recommend');
+		$this->pageKeyList = array('weiba_id','weiba_name','logo','intro', 'notify','who_can_post','admin_uid','recommend');
 		$list = D('WeibaCategory')->getAllWeibaCate();
 		$this->opt['cid'] = $list;
 		$this->opt['who_can_post'] = array('0'=>'所有人','1'=>'吧内成员',2=>'微吧管理员',3=>'微吧吧主');
@@ -161,14 +161,14 @@ class AdminAction extends AdministratorAction {
 		$map['weiba_id'] = array('neq',$weiba_id);
 		$map['weiba_name'] = $data['weiba_name'];
 		$map['is_del'] = 0;
-		if(D('weiba')->where($map)->find()){
-			$this->error('此微吧已存在');
-		}
+		// if(D('weiba')->where($map)->find()){
+		// 	$this->error('此微吧已存在');
+		// }
 		//$data['uid'] = $this->mid;
 		$data['cid'] = intval( $_POST['cid'] );
-		if (empty($data['cid'])) {
-			$this->error('微吧分类不能为空');
-		}
+		// if (empty($data['cid'])) {
+		// 	$this->error('微吧分类不能为空');
+		// }
 		$data['logo'] = t($_POST['logo']);
 		$data['intro'] = $_POST['intro'];
 		$data['notify'] = t($_POST['notify']);

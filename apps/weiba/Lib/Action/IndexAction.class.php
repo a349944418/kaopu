@@ -469,7 +469,16 @@ class IndexAction extends Action {
 			//$this->success('发布成功');
 
 			//添加积分
-			model('Credit')->setUserCredit($this->mid,'publish_topic');
+			if($data['post_type'] == 2) {
+				//分享，有原因加分
+				if($data['post_reason'] != '') {
+					model('Credit')->setUserCredit($this->mid, 'publish_shareReason');
+				}
+				model('Credit')->setUserCredit($this->mid,'publish_share');
+			}else {
+				model('Credit')->setUserCredit($this->mid,'publish_topic');
+			}
+			
 			//进入帖子详情页
 			$this->redirect('weiba/Index/postDetail',array('post_id'=>$res));
 			//仿知乎，进入帖子单项编辑页
