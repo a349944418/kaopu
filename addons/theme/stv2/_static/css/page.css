@@ -39,16 +39,14 @@ a.top_stick:hover{background-position:-51px 0;text-decoration:none}
 .yw-topic1{ display:block; width:80%; margin-left:15%; text-align:center; margin-top:6px; margin-bottom:6px; background:#253A4B; border-radius:3px;}
 .yw-topic2{ margin-top:6px; line-height:24px; margin-bottom:6px; color:#04223A;}
 .yw-box{ background:url(../image/yw-box.png) repeat-x; padding-bottom:33px; position:fixed; bottom:0px; z-index:9999; width:100%;background-size:cover;-moz-background-size:cover;-webkit-background-size:cover;}
-.yw-bottom{ background:url(../image/bj-bottom.png) 0 2px repeat-x;position:fixed; bottom:0px; z-index:9999; width:100%; font-family: 微软雅黑;}
+.yw-bottom{ background:url(../image/bj-bottom.png) 0 2px repeat-x;position:fixed; bottom:0px; z-index:5; width:100%; font-family: 微软雅黑;}
 .popover {max-width: 5000px; position: static; z-index: 0; background:url(../image/yw-topic1.png) repeat; } 
 .popover.bottom>.arrow {top: 0; } .data-content {display:none;} 
 #login-bg .popover.bottom>.arrow:after {border-bottom-color: transparent; } 
 .toggle {display: block; position: absolute; top: -26px; left: 47.5%; width: 76px; height: 26px; filter:alpha(opacity=30); -moz-opacity:0.3; -khtml-opacity: 0.3; opacity: 0.3; } 
 .kp_top {background: url(../image/bottom.png) no-repeat #000; } 
 .kp_bottom {background: url(../image/top.png) no-repeat #000; }
-.login_text {position: absolute; bottom: 38.5%; left: -100%; }
-.yw-bottom span{ line-height: 86px; color: white; font-size: 24px; margin-top: 174px; display: inline-block;margin-right: 20px;}
-.yw-bottom span b {color: #fb5240; font-weight: normal;}
+
 
 .yw-hot{ background:url(../image/yw-hot.jpg) no-repeat top center; height:63px;}
 .yw-submit{ background:#F7F7F7; color:#676767; margin-left:3px;}
@@ -484,6 +482,17 @@ a:hover{ text-decoration:none;}
 /* 头部导航 */
 button.nav_button {background: #fc5241;font-size: 14px; color: white; margin-top: 10px; font-family: 微软雅黑; padding: 4px 10px;}
 button.nav_button:hover {color: white;}
+
+/*登录页*/
+.login_text {position: absolute; bottom: 38.5%; left: -100%; }
+.yw-bottom .login-bottom-message{ line-height: 86px; color: white; font-size: 24px; margin-top: 174px; display: inline-block;}
+.yw-bottom .login-bottom-message span {margin-right: 20px;}
+.yw-bottom span b {color: #fb5240; font-weight: normal;}
+.weibo-login, .qq-login {width:46px; height: 46px; display: inline-block; margin-right: 10px;position:relative;top:13px;}
+.weibo-login {background: url(../image/weibo.png);}
+.qq-login {background: url(../image/qq.png);}
+.weibo-login:hover {background: url(../image/weibo-1.png);}
+.qq-login:hover {background: url(../image/qq-1.png);}
 
 @media (min-width: 768px){ .toggle {display: none; } .information1{ text-align:right;}} 
 @media (max-width: 768px){ .birthday,.school,.birthday1 {width:  100%;height: 34px;margin-bottom: 10px;} .nan,.nv {width: 30%;} .Interest-left,.confused-left{display: none;},}

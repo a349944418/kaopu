@@ -204,10 +204,14 @@
 <div class="yw-bottom">
 	<div class="container">
 		<div class="row">
-			<img src="__THEME__/image/login-erweima.jpg" style="margin-left: 1.8%;margin-right: 30px;float:left">	
-			<span><b>分享</b>你靠谱的知识、方法和经验</span>
-			<button type="submit" class="btn set-sub btn-login" style="margin-right:10px;" onclick="javascript:;" >登录</button>
-            <button type="button" class="btn set-sub" data-toggle="modal" data-target="#comModal" data-whatever="register" >注册</button>
+			<img src="__THEME__/image/login-erweima.jpg" style="margin-left: 1.8%;margin-right: 100px;float:left">
+			<div class="login-bottom-message">	
+				<span><b>分享</b>你靠谱的知识、方法和经验</span>
+				<button type="submit" class="btn set-sub btn-login" style="margin-right:10px;" onclick="javascript:;" >登录</button>
+	            <button type="button" class="btn set-sub" data-toggle="modal" data-target="#comModal" data-whatever="register" style="margin-right:20px">注册</button>
+	            <a href="javascript:;" class="weibo-login"></a>
+	            <a href="javascript:;" class="qq-login"></a>
+            </div>
 		</div>			
 	</div>
 </div>
@@ -226,12 +230,20 @@
 	$(function(){
 		var wh = $(window).height();
 		var ww = $(window).width();
+		var cw = $('.container').width();
 		var bw = $('.login-container').width();
 		var bh = wh*0.23 > 255 ? 255 : wh*0.23;
 		$('.carousel').css({'height':(wh-50)+'px','overflow':'hidden'});
 		$('.login-container').css('height', (wh-160)+'px');
 		$('.login-container').css('left', (ww-bw)/2 + 'px');
 		$('.login_text').css('height',bh+'px');
+		var tw = $('.login_text').width();
+		if (bw-tw > 780) {
+			var x = bw-tw-100;
+			$('#history').css('width', x+'px');
+			$('#history #content').css('width', x+'px');
+			$('.liright').css('width', (x-180)+'px' );
+		}
 		setTimeout(function(){
 		 	$('.login_text').animate({'left':'0%'}, 1000);
 		}, 1000);
