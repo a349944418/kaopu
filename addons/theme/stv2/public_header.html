@@ -38,14 +38,16 @@
                         </volist>    
                     </ul>
                     <ul class="nav navbar-nav ">
-                        <nosession name="mid">
-                            <li model-node="person" class="dorp-right">
-                                <a href="javascript:;" class="username" data-toggle="modal" data-target="#comModal" data-whatever="register">注册</a>
-                            </li>
-                            <li model-node="person" class="dorp-right">
-                                <a href="{:U('public/Passport/login')}" class="username">登陆</a>
-                            </li>
-                        </nosession>
+                        <php>if($login != 1){</php>
+                            <nosession name="mid">
+                                <li model-node="person" class="dorp-right">
+                                    <a href="javascript:;" class="username" data-toggle="modal" data-target="#comModal" data-whatever="register">注册</a>
+                                </li>
+                                <li model-node="person" class="dorp-right">
+                                    <a href="{:U('public/Passport/login')}" class="username">登陆</a>
+                                </li>
+                            </nosession>
+                        <php>}</php>
 
                         {* 登录后 *}
                         <session name="mid">

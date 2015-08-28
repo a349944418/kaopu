@@ -1,127 +1,238 @@
-<include file="__THEME__/_header" />
-<div id="login-bg" style="background:url({$login_bg}) top center">
-  <div class="container" style="padding-top:52px; padding-bottom:194px;">
-    <div class="row" style="color:#fff;">
-          <div class="col-md-6 col-md-offset-3">
-            <a href="#"><img src="{:APP_PUBLIC_URL}/image/yw-spectrum10.png" width="100%"/></a>
-          </div>
+<include file="__THEME__/public_header" />
+<style>
+	.set-sub {    top: -3px; position: relative; font-size: 18px; padding: 4px 20px;}
+</style>
+<link rel="stylesheet" type="text/css" href="__THEME__/css/history.css">
+<script type="text/javascript" src="__THEME__/js/jquery.js"></script>
+<script type="text/javascript" src="__THEME__/js/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="__THEME__/js/jquery.easing.js"></script>
+<script type="text/javascript" src="__THEME__/js/history.js"></script>
+<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+      <img src="__THEME__/image/login_bj1.jpg" >
+      <div class="carousel-caption">
       </div>
-      <div class="row" style="color:#fff; padding-top:27px;">
-          <div class="col-md-6 col-md-offset-3" style="padding:0 10%;">
-            <a href="#"><img src="{:APP_PUBLIC_URL}/image/yw-spectrum11.png" width="100%"/></a>
-          </div>
-      </div>
-    <div class="row" style="color:#fff;">
-          <div class="col-md-6 col-md-offset-3">
-              {:W('UserList', array('widget_appname'=>'people','cid'=>0,'uids'=>'','type'=>'indexOfficial','verify'=>0,'pid'=>0))}           
-          </div>
-      </div>
-  </div>
-  <div class="yw-box">
-      <div class="toggle kp_top"></div>
-    <div class="container" style="color:#fff;">
-        <div class="row" style="margin-top:32px;">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1">
-                          <form class="form-inline" id="ajax_login_form" method="POST" action="{:U('public/Passport/doLogin')}">
-                              <div class="form-group" style="">
-                                  <label class="sr-only" for="account_input">账号</label>
-                                  <input type="email" class="form-control s-txt1" id="account_input" name="login_email" autocomplete="off" placeholder="账号" style=" min-width:190px;">
-                              </div>
-                              <div class="form-group" style="margin-right:10px;">
-                                  <label class="sr-only" for="exampleInputPassword3 pwd_input">Password</label>
-                                  <input type="password" class="form-control s-txt1" id="pwd_input" name="login_password" autocomplete="off" placeholder="密码">
-                              </div>
-                              <div class="checkbox" style="margin-right:10px; font-size:12px;">
-                                  <label>
-                                  <input type="checkbox" style="float:left;"> <span style=" float:left; margin-left:8px;">记住密码</span>
-                                  </label>
-                              </div>
-                              <button type="submit" class="btn btn-default btn-login" style="margin-right:10px;" onclick="$('#ajax_login_form').submit();" >登录</button>
-                              <button type="button" class="btn btn-default" data-toggle="modal" data-target="#comModal" data-whatever="register" >注册</button>
-                          </form>                         
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-<div class="modal fade " id="comModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="exampleModalLabel"></h4>
-      </div>
-      <div class="modal-body">       
+    </div>
+    <div class="item">
+      <img src="__THEME__/image/login_bj2.jpg" >
+      <div class="carousel-caption">
       </div>
     </div>
   </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="display:none;">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="display:none;">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
 </div>
-<style>
-  body {background: #000;}
-  #comModal .modal-title {font-family: 微软雅黑}
-  #comModal .modal-body .input-group-addon {background: #fff;}
-  #comModal .modal-body .form-group input {border-left: 0; font-size: 12px; padding-left: 2px;}
-  #comModal .modal-body .form-group .radio-inline {margin-right: 5px;}
-</style>
-<script src=""></script>
+<div class="container login-container" style="position:fixed; top: 50px;">
+	<div class="row">
+		<img src="__THEME__/image/login-text.png" class="login_text">
+		<div id="arrow">
+			<ul>
+				<li class="arrowup"></li>
+				<li class="arrowdown"></li>
+			</ul>
+		</div>
+		<div id="history">
+			<div class="title">
+				<div id="circle">
+					<div class="cmsk"></div>
+					<a href="#" class="clock"></a>
+				</div>
+			</div>
+			
+			<div id="content">
+				<ul class="list">
+					<li style="margin-top:-110px;">
+						<div class="liwrap">
+							<div class="lileft">
+								<div class="date">
+									<span class="year">2013</span>
+									<span class="md">0905</span>
+								</div>
+							</div>
+							
+							<div class="point"><b></b></div>
+							
+							<div class="liright">
+								<div class="histt"><a href="#">HTML5 CSS3 发展历程 发布</a></div>
+								<div class="hisct">修正了上一版本中的错误，欢迎大家测试，如果发现问题请联系我们,谢谢。</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="liwrap">
+							<div class="lileft">
+								<div class="date">
+									<span class="year">2013</span>
+									<span class="md">0807</span>
+								</div>
+							</div>
+							
+							<div class="point"><b></b></div>
+							
+							<div class="liright">
+								<div class="histt"><a href="#">HTML5 CSS3 发展历程 发布</a></div>
+								<div class="hisct">随着用户的访问量增大,功能不能满足需求，我们进行了重大更新，对设计和功能都进行大幅度的升级,增加了原创，欣赏版块</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="liwrap">
+							<div class="lileft">
+								<div class="date">
+									<span class="year">2013</span>
+									<span class="md">0528</span>
+								</div>
+							</div>
+							
+							<div class="point"><b></b></div>
+							
+							<div class="liright">
+								<div class="histt"><a href="#">官方微博</a></div>
+								<div class="hisct">推出了HTML5 CSS3 官方微博</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="liwrap">
+						
+							<div class="lileft">
+								<div class="date">
+									<span class="year">2013</span>
+									<span class="md">0524</span>
+								</div>
+							</div>
+							
+							<div class="point"><b></b></div>
+							
+							<div class="liright">
+								<div class="histt"><a href="#">HTML5 CSS3 发展历程 上线</a></div>
+								<div class="hisct">虽然功能还未健全，但是我们已迫不及待的让它去接受广大用户的火眼金睛</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="liwrap">
+							<div class="lileft">
+								<div class="date">
+									<span class="year">2013</span>
+									<span class="md">0508</span>
+								</div>
+							</div>
+							
+							<div class="point"><b></b></div>
+							
+							<div class="liright">
+								<div class="histt"><a href="#">初期讨论</a></div>
+								<div class="hisct">在集体探讨下，发现目前的HTML5 CSS3 发展历程已经不能满足需求，集体讨论=，这时候，韩老师之前的设计稿被端上了会议桌。</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="liwrap">
+							<div class="lileft">
+								<div class="date">
+									<span class="year">2012</span>
+									<span class="md">0701</span>
+								</div>
+							</div>
+							
+							<div class="point"><b></b></div>
+							
+							<div class="liright">
+								<div class="histt"><a href="#">灵感迸发</a></div>
+								<div class="hisct">某天晚上的凌晨三点一刻，预想建立这样一个功能的网站，专为网页设计师。</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="liwrap">
+						
+							<div class="lileft">
+								<div class="date">
+									<span class="year">2012</span>
+									<span class="md">0524</span>
+								</div>
+							</div>
+							
+							<div class="point"><b></b></div>
+							
+							<div class="liright">
+								<div class="histt"><a href="#">HTML5 CSS3 发展历程 上线</a></div>
+								<div class="hisct">虽然功能还未健全，但是我们已迫不及待的让它去接受广大用户的火眼金睛</div>
+							</div>
+						</div>
+					</li>
+					<li>
+						<div class="liwrap">
+							<div class="lileft">
+								<div class="date">
+									<span class="year">2013</span>
+									<span class="md">3月1日</span>
+								</div>
+							</div>
+							
+							<div class="point"><b></b></div>
+							
+							<div class="liright">
+								<div class="histt"><a href="#">初见成效</a></div>
+								<div class="hisct">代码笔记第一版上线</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="yw-bottom">
+	<div class="container">
+		<div class="row">
+			<img src="__THEME__/image/login-erweima.jpg" style="margin-left: 1.8%;margin-right: 30px;float:left">	
+			<span><b>分享</b>你靠谱的知识、方法和经验</span>
+			<button type="submit" class="btn set-sub btn-login" style="margin-right:10px;" onclick="javascript:;" >登录</button>
+            <button type="button" class="btn set-sub" data-toggle="modal" data-target="#comModal" data-whatever="register" >注册</button>
+		</div>			
+	</div>
+</div>
+<div class="modal fade " id="comModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  	<div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      	<div class="modal-header">
+	        	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        	<h4 class="modal-title" id="exampleModalLabel"></h4>
+	      	</div>
+	      	<div class="modal-body"></div>
+	    </div>
+  	</div>
+</div>
 <script>
-    $(function(){
-        $('#comModal').on('show.bs.modal', function (e) {
-          var button = $(e.relatedTarget);
-          var type = button.data('whatever');
-          var modal = $(this);
-          if(type == 'register'){
-            $('.modal-dialog').addClass('modal-sm');
-            $.post('{:U("public/Register/ajaxReg")}',{},function(data){
-              modal.find('.modal-body').html(data);
-            },'html');
-            modal.find('.modal-title').text('欢迎您的注册');
-          } 
-        })
-        
-
-        // 推荐人，切换
-        var dw = $(document).width();
-        if(dw < 768) {
-            $('.toggle').css('left', (dw-76)/2);
-        }
-        var pw = $('.test-container').width();
-        $('.popover .arrow').css('left', pw/8);
-        $('.test-container a').mouseover(function(){
-            var x = $(this).parent().index() ;
-            var L = parseInt(x * (pw/4)) + parseInt(pw / 8); 
-            $('.popover .arrow').css('left', L);
-            $('.popover .popover-content').html($(this).children('.data-content').html());
-            
-        })
-
-        // 手机端 登录框可下拉隐藏
-        var yw_box_height = 0; 
-        $('.toggle').click(function(){
-            var yw_box_h = $('.yw-box').height();
-            yw_box_h += 33;
-            if(yw_box_h > 33) {
-                yw_box_height = yw_box_h > yw_box_height ? yw_box_h : yw_box_height;
-                $(".yw-box").animate({height: 0});
-                $('.yw-box').css('padding-bottom', 0);
-                $(this).addClass('kp_bottom');
-                $(this).removeClass('kp_top');
-                $(this).parent().css('overflow', 'visible');
-            }else{
-                $(".yw-box").animate({height:yw_box_height+"px"});
-                $('.yw-box').css('padding-bottom', 33+'px');
-                $(this).addClass('kp_top');
-                $(this).removeClass('kp_bottom');
-                $(this).parent().css('overflow', 'visible');
-            }
-        })
-
-
-    })
+	$(function(){
+		var wh = $(window).height();
+		var ww = $(window).width();
+		var bw = $('.login-container').width();
+		$('.carousel').css({'height':(wh-50)+'px','overflow':'hidden'});
+		$('.login-container').css('height', (wh-160)+'px');
+		$('.login-container').css('left', (ww-bw)/2 + 'px');
+		setTimeout(function(){
+		 	$('.login_text').animate({'left':'0%'}, 1000);
+		}, 1000);
+		
+	})
 </script>
-</body>
-</html>
