@@ -227,10 +227,11 @@
 		var wh = $(window).height();
 		var ww = $(window).width();
 		var bw = $('.login-container').width();
+		var bh = wh*0.23 > 255 ? 255 : wh*0.23;
 		$('.carousel').css({'height':(wh-50)+'px','overflow':'hidden'});
 		$('.login-container').css('height', (wh-160)+'px');
 		$('.login-container').css('left', (ww-bw)/2 + 'px');
-		$('.login_text').css('height',wh*0.23+'px');
+		$('.login_text').css('height',bh+'px');
 		setTimeout(function(){
 		 	$('.login_text').animate({'left':'0%'}, 1000);
 		}, 1000);
