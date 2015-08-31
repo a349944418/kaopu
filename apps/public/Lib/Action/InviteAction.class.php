@@ -22,6 +22,19 @@ class InviteAction extends Action {
 			}
 		}
 		$this->_invite_model = model('Invite');
+
+		// 基本资料
+		$tab_list[] = array('field_key'=>'index','field_name'=>'<span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp;'.L('PUBLIC_PROFILESET_INDEX'));				
+		// 头像设置
+		$tab_list[] = array('field_key'=>'avatar','field_name'=>'<span class="glyphicon glyphicon-camera" aria-hidden="true"></span> &nbsp;'.L('PUBLIC_IMAGE_SETTING'));	
+		// 教育信息
+		$tab_list[] = array('field_key'=>'edu','field_name'=>'<span class="glyphicon glyphicon-education" aria-hidden="true"></span> &nbsp;教育信息');
+		// 工作信息
+		$tab_list[] = array('field_key'=>'workinfo','field_name'=>'<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> &nbsp;工作信息');
+		$tab_list[] = array('field_key'=>'invite','field_name'=> '<span class="sui-icon icon-tb-friendaddfill"></span> &nbsp;好友邀请','url'=>U('public/Invite/invite'));
+		$tab_list[] = array('field_key'=>'security','field_name'=>'<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> &nbsp;'.L('PUBLIC_ACCOUNT_SECURITY'));
+
+		$this->assign('tab_list',$tab_list);
 	}
 
 	/**
@@ -34,7 +47,7 @@ class InviteAction extends Action {
 			$this->error('对不起，您没有权限进行该操作！');
 		}
 		// 获取选中类型
-		$type = isset($_GET['type']) ? t($_GET['type']) : 'email';
+		$type = isset($_GET['type']) ? t($_GET['type']) : 'link';
 		$this->assign('type', $type);
 		// 获取不同列表的相关数据
 		switch($type) {

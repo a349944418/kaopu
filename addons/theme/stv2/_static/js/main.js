@@ -34,13 +34,7 @@ $(function(){
       var button = $(e.relatedTarget);
       var type = button.data('whatever');
       var modal = $(this);
-      if(type == 'register'){
-          $('.modal-dialog').addClass('modal-sm');
-          $.post(U("public/Register/ajaxReg"),{},function(data){
-            modal.find('.modal-body').html(data);
-          },'html');
-          modal.find('.modal-title').text('感谢您的注册');
-        } else if(type == 'middle_school') {
+      if(type == 'middle_school') {
           $('.modal-dialog').addClass('modal-lg');
           $.post(U("public/Register/ajaxSchool"),{t:'middle', id: '110000'},function(data){
             modal.find('.modal-body').html(data);

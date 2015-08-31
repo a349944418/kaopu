@@ -32,6 +32,7 @@ class AccountAction extends Action
 		$tab_list[] = array('field_key'=>'edu','field_name'=>'<span class="glyphicon glyphicon-education" aria-hidden="true"></span> &nbsp;教育信息');
 		// 工作信息
 		$tab_list[] = array('field_key'=>'workinfo','field_name'=>'<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> &nbsp;工作信息');
+		$tab_list[] = array('field_key'=>'invite','field_name'=> '<span class="sui-icon icon-tb-friendaddfill" style="font-size:17px;"></span> &nbsp;好友邀请','url'=>U('public/Invite/invite'));
 		$tab_list[] = array('field_key'=>'security','field_name'=>'<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> &nbsp;'.L('PUBLIC_ACCOUNT_SECURITY'));
 		/*				
 		$tab_list[] = array('field_key'=>'domain','field_name'=>L('PUBLIC_DOMAIN_NAME'));				

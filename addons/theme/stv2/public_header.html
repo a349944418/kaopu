@@ -88,11 +88,12 @@
                                     <php>if(!isVerified($user['uid'])):</php>
                                     <li><a href="{:U('public/Account/authenticate')}">申请认证</a></li>
                                     <php>endif;</php>
-
-                                    <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
-                                    <li><a href="{:U('public/Invite/invite')}">{:L('PUBLIC_INVITE_COLLEAGUE')}</a></li>
-                                    <php>endif;</php> -->
+                                    -->
+                                    
                                     <!-- 个人设置菜单钩子 -->
+                                    <php>if(isInvite() && CheckPermission('core_normal','invite_user')):</php>
+                                    <li><a href="{:U('public/Invite/invite')}"><i class="sui-icon icon-tb-friendaddfill"></i> &nbsp;{:L('PUBLIC_INVITE_COLLEAGUE')}</a></li>
+                                    <php>endif;</php> 
                                     {:Addons::hook('header_account_dropmenu')}
                                     <php>if(CheckPermission('core_admin','admin_login')){</php>
                                     <li><a href="{:U('admin')}">{:L('PUBLIC_SYSTEM_MANAGEMENT')}</a></li>

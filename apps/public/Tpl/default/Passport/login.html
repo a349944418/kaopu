@@ -1,9 +1,9 @@
 <include file="__THEME__/public_header" />
 <style>
 	.set-sub { top: -3px; position: relative; font-size: 18px; padding: 4px 20px;}
+	.modal-body {font-family: 微软雅黑;}
 </style>
 <link rel="stylesheet" type="text/css" href="__THEME__/css/history.css">
-<script type="text/javascript" src="__THEME__/js/jquery.js"></script>
 <script type="text/javascript" src="__THEME__/js/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="__THEME__/js/jquery.easing.js"></script>
 <script type="text/javascript" src="__THEME__/js/history.js"></script>
@@ -207,8 +207,8 @@
 			<img src="__THEME__/image/login-erweima.jpg" style="margin-left: 1.8%;margin-right: 100px;float:left">
 			<div class="login-bottom-message">	
 				<span><b>分享</b>你靠谱的知识、方法和经验</span>
-				<button type="submit" class="btn set-sub btn-login" style="margin-right:10px;" onclick="javascript:;" >登录</button>
-	            <button type="button" class="btn set-sub" data-toggle="modal" data-target="#comModal" data-whatever="register" style="margin-right:20px">注册</button>
+				<a class="btn set-sub btn-login" style="margin-right:10px;" data-toggle="modal" data-target="#comModal" data-whatever="login" data-backdrop="static" >登录</a>
+	            <a class="btn set-sub btn-regist" data-toggle="modal" data-target="#comModal" data-whatever="register" data-backdrop="static" style="margin-right:20px">注册</a>
 	            <a href="javascript:;" class="weibo-login"></a>
 	            <a href="javascript:;" class="qq-login"></a>
             </div>
@@ -246,6 +246,33 @@
 		setTimeout(function(){
 		 	$('.login_text').animate({'left':'0%'}, 1000);
 		}, 1000);
+
+		$('#comModal').on('show.bs.modal', function (e) {
+	        var button = $(e.relatedTarget);
+	        var type = button.data('whatever');
+	        var modal = $(this);
+	        if(type == 'register') {
+	        	modal.find('.modal-title').text('欢迎您的注册');
+	        	modal.find('.modal-content').css({'background':'#000', 'color':'#fff'})
+	        	modal.find('.modal-body').html('<img src="'+THEME_URL+'/image/loading1.gif" style="display:inline-block;width:75px;margin:30px auto;">');
+	        	$('.close').css({'color':'#fff', 'opacity':'1', 'font-weight':'normal', 'font-size': '30px'});
+	        	$('.close:hover').css({'color':'#fff'})
+	            $('.modal-dialog').addClass('modal-sm');
+	            $.post('{:U("public/Register/ajaxReg")}',{},function(data){
+	              	modal.find('.modal-body').html(data);
+	            },'html');
+	        } else if (type == 'login') {
+	        	modal.find('.modal-title').text('登陆社区');
+	        	modal.find('.modal-content').css({'background':'#000', 'color':'#fff'})
+	        	modal.find('.modal-body').html('<img src="'+THEME_URL+'/image/loading1.gif" style="display:inline-block;width:75px;margin:30px auto;">');
+	        	$('.close').css({'color':'#fff', 'opacity':'1', 'font-weight':'normal', 'font-size': '30px'});
+	        	$('.close:hover').css({'color':'#fff'})
+	            $('.modal-dialog').addClass('modal-sm');
+	            $.post('{:U("public/Passport/ajaxlogin")}',{},function(data){
+	              	modal.find('.modal-body').html(data);
+	            },'html');
+	        }
+        })
 		
 	})
 </script>

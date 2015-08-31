@@ -29,12 +29,21 @@ class PassportAction extends Action
 	}
 
 	/**
+	 * [ajax 登陆 zbq]
+	 * @return [type] [description]
+	 */
+	public function ajaxlogin() {
+		$con = $this->fetch();
+		echo $con;
+	}
+
+	/**
 	 * 默认登录页
 	 * @return void
 	 */
 	public function login(){
 		if(model('Passport')->isLogged()){
-			U('public/Index/index','',true);
+			U('weiba/Index/index','',true);
 		}
 
 		// 获取邮箱后缀
@@ -72,7 +81,7 @@ class PassportAction extends Action
 	public function doLogin() {
 		$login 		= addslashes($_POST['login_email']);
 		$password 	= trim($_POST['login_password']);
-		$remember	= intval($_POST['login_remember']);
+		$remember	= 1;
 		$result 	= $this->passport->loginLocal($login,$password,$remember);
 		if(!$result){
 			$status = 0; 
