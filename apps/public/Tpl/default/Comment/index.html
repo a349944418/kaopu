@@ -6,9 +6,9 @@
     <div id="st-index-grid" class="row">
     <!--左边 -->
       <div id="col8" class="content-bg clearfix boxShadow" style="margin:20px 0;">
-        <div id="col4" class="main-left col-md-2 ">
-          <div id="aside" class="pad">
-            <dl class="nav-left mt10 border-no">
+        <div id="col4" class="main-left col-md-3 ">
+          <div id="aside" class="pad row">
+            <dl class="nav-left mt10 border-no col-xs-10">
               <!-- <dd><a href="{:U('public/Mention')}">@提到我的</a></dd> -->
               <dd <neq name='_GET.type' value='send'>class="current"</neq>>
                 <a href="{:U('public/Comment/index',array('app_name'=>t($_GET['app_name']),'type'=>'receive'))}">收到的评论</a>
@@ -21,7 +21,7 @@
             </dl>
           </div>
         </div>
-        <div id="col7" class="main-right col-md-10  person-set">
+        <div id="col7" class="main-right col-md-9  person-set">
           <div class="extend minh">
             <div class="feed-nav">
               <div class="set-hd">

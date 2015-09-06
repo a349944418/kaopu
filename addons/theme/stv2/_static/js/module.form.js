@@ -30,22 +30,28 @@ var ajaxSubmit = function(form) {
 
 (function(){
 // 是否点击了发送按钮
-var isSubmit = 0;
 // 块状模型监听
 M.addModelFns({
 	account_save:{
 		callback:function(){
-			ui.success(L('PUBLIC_ADMIN_OPRETING_SUCCESS'));		}
+			ui.success(L('PUBLIC_ADMIN_OPRETING_SUCCESS'));
+			setTimeout(function() {
+				location.href = location.href;
+			}, 1500);
+		}
 	},
 	verify_apply:{
 		callback:function(){
 			ui.success('申请成功，请等待审核');
+			setTimeout(function() {
+				location.href = U('public/Account/authenticate');
+			}, 1500);
 		}
 	},
 	// 普通表单发送验证
 	normal_form: {
 		submit: function() {
-			isSubmit = 1;
+			window.tips.setSubmit(1);
 			var oCollection = this.elements;
 			var nL = oCollection.length;
 			var bValid = true;
@@ -70,9 +76,6 @@ M.addModelFns({
 			}
 
 			dFirstError && dFirstError.focus();
-			setTimeout(function() {
-				isSubmit = 0;
-			}, 1500);
 
 			return bValid;
 		}
@@ -255,11 +258,12 @@ M.addEventFns({
 			// 获取数据
 			var sValue = $.trim(this.value);
 			var sValueArr = sValue.split(",");
+			sValueArr[0] == 0 && sValueArr[1] == 0 && sValueArr[2] == 0 && (sValue = '');
 			// 验证数据正确性
 			if(sValue == "" || sValueArr[0] == 0) {
 				tips.error(this, "请选择地区");
 				this.bIsValid = false;
-				this.value = '0,0,0';
+				// this.value = '0,0,0';
 			} else if(sValueArr[1] == 0 || sValueArr[2] == 0) {
 				tips.error(this, "请选择完整地区信息");
 				this.bIsValid = false;
@@ -276,12 +280,65 @@ M.addEventFns({
 				// 获取数据
 				var sValue = $.trim(_this.value);
 				var sValueArr = sValue.split(",");
+				sValueArr[0] == 0 && sValueArr[1] == 0 && sValueArr[2] == 0 && (sValue = '');
 				// 验证数据正确性
 				if(sValue == "" || sValueArr[0] == 0) {
 					tips.error(_this, "请选择地区");
 					_this.bIsValid = false;
 				} else if(sValueArr[1] == 0 || sValueArr[2] == 0) {
 					tips.error(_this, "请选择完整地区信息");
+					_this.bIsValid = false;
+				} else {
+					tips.success(_this);
+					_this.bIsValid = true;
+				}
+			}, 200);
+		}
+	},
+	input_user_tag: {
+		blur: function() {
+			var sValue = $.trim(this.value);
+			if (sValue == '') {
+				tips.error(this, '请选择标签信息');
+				this.bIsValid = false;
+			} else {
+				tips.success(this);
+				this.bIsValid = true;
+			}
+		},
+		load: function() {
+			var _this = this;
+			setInterval(function() {
+				var sValue = $.trim(_this.value);
+				if (sValue == '') {
+ 					tips.error(_this, '请选择标签信息');
+ 					_this.bIsValid = false;
+				} else {
+					tips.success(_this);
+					_this.bIsValid = true;
+				}
+			}, 200);
+		}
+	},
+	input_face: {
+		blur: function() {
+			var sValue = $(this).attr('src');
+			var name = sValue.split('/').pop();
+			if (name == 'small.jpg') {
+				tips.error(this, '用户头像必须上传');
+				this.bIsValid = false;
+			} else {
+				tips.success(this);
+				this.bIsValid = true;
+			}
+		},
+		load: function() {
+			var _this = this;
+			setInterval(function() {
+				var sValue = $(_this).attr('src');
+				var name = sValue.split('/').pop();
+				if (name == 'small.jpg') {
+					tips.error(_this, '用户头像必须上传');
 					_this.bIsValid = false;
 				} else {
 					tips.success(_this);
@@ -469,7 +526,11 @@ M.addEventFns({
 	},
 	// 密码验证
 	password: {
+		focus: function() {
+			this.className = 's-txt-focus';
+		},
 		blur: function() {
+			this.className = 's-txt';
 			var dWeight = this.parentModel.childModels["password_weight"][0];
 			var sValue = this.value + "";
 			var nL = sValue.length;
@@ -487,7 +548,11 @@ M.addEventFns({
 				tips.clear( this );
 				dWeight.style.display = "";
 				this.bIsValid = true;
-				this.parentModel.childEvents["repassword"][0].onblur();
+				var args = M.getEventArgs(this);
+				if (typeof args.repeat === 'undefined') {
+					args.repeat = 1;
+				}
+				args.repeat === 1 && this.parentModel.childEvents["repassword"][0].onblur();
 			}
 		},
 		keyup:function(){
@@ -495,6 +560,7 @@ M.addEventFns({
 		},
 		load: function() {
 			this.value = '';
+			this.className='s-txt';
 
 			var dPwd = this,
 				dWeight = this.parentModel.childModels["password_weight"][0],
@@ -537,10 +603,14 @@ M.addEventFns({
 		}
 	},
 	repassword: {
+		focus: function() {
+			this.className='s-txt-focus';
+		},
 		keyup:function(){
 			this.value = this.value.replace(/^\s+|\s+$/g,""); 
 		},
 		blur: function() {
+			this.className='s-txt';
 
 			var sPwd = this.parentModel.childEvents["password"][0].value,
 				sRePwd = this.value;
@@ -556,6 +626,9 @@ M.addEventFns({
 				this.bIsValid = true;
 			}
 		},
+		load: function() {
+			this.className='s-txt';
+		}
 	},
 	// 昵称验证
 	uname: {
@@ -582,35 +655,67 @@ M.addEventFns({
 			$(this.dTips).hide();
 		},
 	},
-	//用户类型
-	utype: {
-		click: function() {
-			this.onblur();
+	phone: {
+		focus: function() {
+			this.className = 's-txt-focus';
+			return false;
 		},
 		blur: function() {
-			var sName  = this.name,
-				oUtype = this.parentModel.elements["utype"],
-				oArgs  = M.getEventArgs( oUtype[0] ),
-				dUtype, nL = oUtype.length, bIsValid = false,
-				dLastUtype = oUtype[nL - 1];
+			this.className = 's-txt';
 
-			for ( var i = 0; i < nL; i ++ ) {
-				dUtype = oUtype[i];
-				if ( dUtype.checked ) {
-					bIsValid = true;
-					break;
+			var dPhone = this;
+			var sUrl = dPhone.getAttribute('checkurl');
+			var sValue = dPhone.value;
+			var oArgs = M.getEventArgs(dPhone);
+
+			if (!sUrl || (this.dSuggest && this.dSuggest.isEnter)) return;
+
+			$.post(sUrl, {phone:sValue}, function(oTxt) {
+				if (oTxt.status) {
+					'false' == oArgs.success ? tips.clear(dPhone) : tips.success(dPhone);
+					dPhone.bIsValid = true;
+				} else {
+					'false' == oArgs.error ? tips.clear(dPhone) : tips.error(dPhone, oTxt.info);
+					dPhone.bIsValid = false;
 				}
-			}
+				return true;
+			}, 'json');
+			$(this.dTips).hide();
+		},
+		load: function() {
+			this.className = 's-txt';
+		}
+	},
+	input_reg_code: {
+		load: function() {
+			this.className = 's-txt';
+		},
+		focus: function() {
+			this.className = 's-txt-focus';
+			return false;
+		},
+		blur: function() {
+			this.className = 's-txt';
 
-			if ( bIsValid ) {
-				tips.clear( dLastUtype.parentNode );
-			} else {
-				tips.error( dLastUtype.parentNode, oArgs.error );
-			}
+			var dCode = this;
+			var sUrl = dCode.getAttribute('checkurl');
+			var sValue = dCode.value;
+			var telValue = dCode.getAttribute('tel');
+			var oArgs = M.getEventArgs(dCode);
 
-			for ( var i = 0; i < nL; i ++ ) {
-				oUtype[i].bIsValid = bIsValid;
-			}
+			if (!sUrl || (this.dSuggest && this.dSuggest.isEnter)) return;
+
+			$.post(sUrl, {regCode:sValue, phone:telValue}, function(oTxt) {
+				if (oTxt.status) {
+					'false' == oArgs.success ? tips.clear(dCode) : tips.success(dCode);
+					dCode.bIsValid = true;
+				} else {
+					'false' == oArgs.error ? tips.clear(dCode) : tips.error(dCode, oTxt.info);
+					dCode.bIsValid = false;
+				}
+				return true;
+			}, 'json');
+			$(this.dTips).hide();
 		}
 	},
 	radio: {
@@ -703,6 +808,10 @@ var tips = {
 	init: function(D) {
 		this._initError(D);
 		this._initSuccess(D);
+		this.isSubmit || (this.isSubmit = 0);
+	},
+	setSubmit: function(status) {
+		this.isSubmit = status;
 	},
 	/**
 	 * 调用错误接口
@@ -712,7 +821,7 @@ var tips = {
 	 */
 	error: function(D, txt) {
 		this.init(D);
-		if($(D).val() == '' && isSubmit != 1) {
+		if($(D).val() == '' && !this.isSubmit) {
 			D.dError.style.display = "none";
 			D.dSuccess.style.display = "none";
 		} else {

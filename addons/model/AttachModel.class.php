@@ -149,6 +149,7 @@ class AttachModel extends Model {
 
 		// 定制化设这，覆盖默认设置
 		$options = is_array($input_options) ? array_merge($default_options,$input_options) : $default_options;
+		
         //云图片
         if($data['upload_type']=='image'){
             $cloud = model('CloudImage');

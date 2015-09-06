@@ -4,9 +4,9 @@
   <div id="main-wrap" class="container">
     <div id="st-index-grid" class="row">
       <div id="col" class="content-bg clearfix boxShadow" style="margin:20px 0;">
-          <div id="col4" class="main-left  col-md-2 ">
-              <div id="aside" class="pad">
-                  <dl class="nav-left mt10 border-no">
+          <div id="col4" class="main-left  col-md-3 ">
+              <div id="aside" class="pad row">
+                  <dl class="nav-left mt10 border-no col-xs-10">
                       <!-- <dd><a href="{:U('public/Mention')}">@提到我的</a></dd> -->
                       <dd><a href="{:U('public/Comment/index',array('app_name'=>t($_GET['app_name']),'type'=>'receive'))}">收到的评论</a></dd>
                       <dd><a href="{:U('public/Comment/index',array('app_name'=>t($_GET['app_name']),'type'=>'send'))}">发出的评论</a></dd>
@@ -15,7 +15,7 @@
                   </dl>
               </div>
           </div>
-          <div id="col7" class="main-right col-md-10 person-set">
+          <div id="col7" class="main-right col-md-9 person-set">
               <div class="extend minh ">
                   <!--tab菜单-->
                   <div class="feed-nav">
@@ -29,15 +29,6 @@
                         <dl class="private-list system-list" id='notify_{$notify.id}' >
                           
                            <a class="ico-close hover right" href="javascript:void(0);" onclick="ui.confirm(this,'{:L('PUBLIC_MESSAGE_DELETE_CONFIRM')}')" callback="delnotify({$notify.id})"></a>
-                           <dd class="face">
-                                    <eq name='notify.appname' value='public'>
-                                    <!-- <a href="{:U('public/Index/index')}" class="face"><img src="__THEME__/image/middle_1352347100.jpg" width="30px" height="30px"></a> -->
-                                    <p class="name"><a href="{:U('public/Index/index')}">{:L('PUBLIC_WEIBO')}</a></p>
-                                    <else />
-                                    <!-- <a href="{$notify['app']['app_entry']}" class="face"><img src="{$notify['app']['icon_url']}" width="30px" height="30px"></a> -->
-                                    <p class="name"><a href="{$notify['app']['app_entry']}">{$notify['app']['app_alias']}</a></p> 
-                                    </eq>
-                            </dd>
                             <dd class="info">
                               <p class="hd">
                                   {$notify['body']}

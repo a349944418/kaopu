@@ -1,75 +1,36 @@
-<div class="footer">
+<div class="gc-foot">
     <div class="container">
         <div class="row">
-            <div class="col-md-11 col-md-offset-1">
-                <div class="row">
-                    <div class="col-md-4 col-md-offset-4">
-                        <div class="footer-img">
-                          <img src="__THEME__/image/footer1.jpg"/>
-                          <p>地址/Add：北京市海淀区上地东路颐泉汇一号楼303<br/>电话/Tel：010-60608200<br/>邮箱/Mail：cooperate@17growing.com</p>
-                          <p><a href="#"><img src="__THEME__/image/footer-img1.png"/></a><a href="#"><img src="__THEME__/image/footer-img2.png"/></a><a href="#"><img src="__THEME__/image/footer-img3.png"/></a><a href="#"><img src="__THEME__/image/footer-img4.png"/></a></p>
+          <div class="col-md-10 col-md-offset-1">
+              <div class="row">
+                  <div class="col-sm-9">
+                      <div class="row">
+                          <div class="col-xs-4 col-xs-offset-1" style="padding-right: 0;padding-left: 30px;">
+                                <div class="gc-footlogo">
+                                    <img src="__PUBLIC__/image/foot-logo.png" width="100%"/>
+                                    <p><a href="#">关于我们</a> / <a href="#">联系我们</a> / <a href="#">意见反馈</a></p>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <div class="qing-foot">
+                                    <p>为青少年的学习和成长提供靠谱的知识、方法和经验，成为靠谱人！</p>
+                                    <div class="foot-icon">
+                                      <a href="#" class="foot-icon1"></a>
+                                        <a href="#" class="foot-icon2"></a>
+                                        <a href="#" class="foot-icon3"></a>
+                                        <a href="#" class="foot-icon4"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                              <p class="copy">Copyriht @2014-2015 慧聚成长（北京）教育科技有限公司</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-2">
-                      <div class="guanyu">
-                          <p>关于</p>
-                            <p><a href="#">靠谱人自述</a></p>
-                            <p><a href="#">版权声明</a></p>
-                            <p><a href="#">关于隐私</a></p>
-                            <p><a href="#">申请加入我们</a></p>
+                    <div class="col-sm-3">
+                      <div class="foot-right">
+                          <img src="__PUBLIC__/image/login-erweima.jpg"/>
                         </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="guanyu">
-                            <p>服务专区</p>
-                            <p><a href="#">原创文章</a></p>
-                            <p><a href="#">经典评论</a></p>
-                            <p><a href="#">学习资料</a></p>
-                            <p><a href="#">线下Or线上活动</a></p>
-                            <p><a href="#">朋友圈</a></p>
-                            <p><a href="#">名师解答</a></p>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="guanyu">
-                            <p>知识学院</p>
-                            <p><a href="#">学习方法</a></p>
-                            <p><a href="#">时间管理</a></p>
-                            <p><a href="#">心态调整</a></p>
-                            <p><a href="#">初高中数学</a></p>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="guanyu">
-                            <p>话题广场</p>
-                            <p><a href="#">热门话题</a></p>
-                            <p><a href="#">分类话题</a></p>
-                            <p><a href="#">小组话题</a></p>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="guanyu">
-                            <p>联系</p>
-                            <p><a href="#">在线提问</a></p>
-                            <p><a href="#">联系我们</a></p>
-                            <p><a href="#">和博士微博</a></p>
-                            <p><a href="#">高考帮公众号</a></p>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                      <div class="guanyu">
-                            <p>友链</p>
-                            <p><a href="#">慧聚成长</a></p>
-                            <p><a href="#">阿里巴巴</a></p>
-                            <p><a href="#">腾讯</a></p>
-                            <p><a href="#">好未来教育</a></p>
-                            <p><a href="#">新东方</a></p>
-                        </div>
-                    </div>
-                    <div class="col-md-10">
-                      <p class="copyright">京 ICP 备 13052560 号 京公网安备 11010802010035 号</p>
                     </div>
                 </div>
             </div>
@@ -97,5 +58,11 @@
 
 <script src="{:SITE_URL}/online_check.php?uid={$mid}&uname={$user.uname}&mod={:MODULE_NAME}&app={:APP_NAME}&act={:ACTION_NAME}&action=trace"></script>
 </eq>
+<div id="topcontrol" title="返回顶部" style="position: fixed; bottom: 30px; right: 20px; opacity: 1; cursor: pointer;display:none">
+  <php>if(APP_NAME == 'weiba' && ACTION_NAME == 'postDetail'){</php>
+    <a href="javascript:;" class="to_answer"><i class="sui-icon icon-tb-comment"></i></a>
+  <php>}</php>
+  <a href="javascript:$('html,body').animate({ scrollTop:0});" class="top_stick"><i class="sui-icon icon-tb-top"></i></a>
+</div>
 </body>
 </html>

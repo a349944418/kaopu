@@ -5,9 +5,11 @@ ul, p {padding: 0;}
 dl, p {margin-bottom: 0px}
 .left {float: left;}
 .tx-right {text-align: right;}
-a.top_stick:link, a.top_stick:visited {background: rgba(0, 0, 0, 0) url("../image/ico-back-top.png") no-repeat scroll left top; display: block; height: 42px; width: 42px; text-decoration: none}
-a.top_stick:hover{background-position:-51px 0;text-decoration:none}
+a.top_stick:link, a.top_stick:visited, a.to_answer:link, a.to_answer:visited {color: #ccc;display:block;width:41px; height:41px;text-decoration: none;padding: 4px;}
+a.to_answer:hover, a.top_stick:hover {color: #7cb7d9; text-decoration: none;}
+#topcontrol .sui-icon {font-size: 33px;}
 #page-wrap {min-height: 500px}
+.acc-list .sui-icon {font-size:15px;}
 .ts_confirm {background: rgba(0, 0, 0, 0) url("../image/pagedarkbg.png") repeat scroll 0 0; clear: left; margin-top: 20px; position: absolute; text-align: center; z-index: 9; }
 .ico-error, .ico-ok, .ico-wait, .ico-no, .ico-ok-big, .ico-error-big {background: rgba(0, 0, 0, 0) url("../image/ico-tips.png") no-repeat scroll 0 0; display: inline-block; }
 .ts_confirm .ico-close {position: absolute; right: 5px; top: 5px; }
@@ -365,15 +367,6 @@ a:hover{ text-decoration:none;}
 .rank-box1 dd {margin: 0 0 0 60px; }
 .rank-box1 dd p {line-height: 16px; }
 
-/*网页尾部*/
-.footer{ background:#1F2229;}
-.footer-img{ text-align:center; margin-top:14px;}
-.footer-img p{ color:#393e48; font-size:12px; line-height:22px; margin:0px; padding-top:22px;}
-.footer-img p img{ padding:0 2%;}
-.guanyu{ margin-top:30px;}
-.guanyu p{ line-height:24px; color:#fff; font-size:12px; margin:0px;}
-.guanyu p a{ color:#393e48;}
-.copyright{ font-size:12px; color:#434a58; text-align:center; padding-top:25px; margin-bottom:30px;}
 
 /* 签到 */
 #check {margin-top: 18px;}
@@ -495,6 +488,31 @@ button.nav_button:hover {color: white;}
 .weibo-login:hover {background: url(../image/weibo-1.png);}
 .qq-login:hover {background: url(../image/qq-1.png);}
 .btn-main, .btn-main:hover {background: #fb5240; color: #fff;}
+
+/*个人信息审核*/
+.input-content .weiba-image-list {margin: 10px 0 0 0; overflow: hidden; border-left: #eee solid 1px; } 
+.input-content .weiba-image-list li {background: #fff; border: 1px solid #eee; border-left: none 0; float: left; text-align: center; width: 126px; padding: 13px 0 5px; _width: 125px; } 
+.attach-file .weiba-image-list li a.pic {position: relative; zoom: 1; overflow: hidden; } 
+.attach-file .weiba-image-list li a.delete {text-align: center; display: block; padding: 3px 0 0 0; _padding: 5px 0 0; }
+
+/*尾部*/
+.gc-foot{ background:url(../image/footbg.jpg) repeat-x top center; height:233px;overflow: hidden;}
+.gc-footlogo{ padding-top:40px;}
+.gc-footlogo p a{ color:#fff;}
+.gc-footlogo p{ color:#fff; font-size:12px; line-height:36px;font-family:"微软雅黑"; text-align:center;}
+.qing-foot{ padding-left:20px; background:url(../image/gc-footlogo.png) no-repeat left center; padding-right:5%; padding-top:59px;}
+.copy{ font-size:12px; color:#c7c7c7; line-height:42px; text-align:center;}
+.qing-foot p{ font-family:"微软雅黑"; font-size:20px; color:#fff;}
+.foot-icon{padding-top: 10px;}
+.foot-icon a{ display:inline-block; width:36px; height:36px; margin-right:10px;}
+.foot-icon1{ background:url(../image/foot-icon1.png) no-repeat;}
+.foot-icon1:hover{ background:url(../image/foot-icon1h.png) no-repeat;}
+.foot-icon2{ background:url(../image/foot-icon2.png) no-repeat;}
+.foot-icon2:hover{ background:url(../image/foot-icon2h.png) no-repeat;}
+.foot-icon3{ background:url(../image/foot-icon3.png) no-repeat;}
+.foot-icon3:hover{ background:url(../image/foot-icon3h.png) no-repeat;}
+.foot-icon4{ background:url(../image/foot-icon4.png) no-repeat;}
+.foot-icon4:hover{ background:url(../image/foot-icon4h.png) no-repeat;}
 
 @media (min-width: 768px){ .toggle {display: none; } .information1{ text-align:right;}} 
 @media (max-width: 768px){ .birthday,.school,.birthday1 {width:  100%;height: 34px;margin-bottom: 10px;} .nan,.nv {width: 30%;} .Interest-left,.confused-left{display: none;},}

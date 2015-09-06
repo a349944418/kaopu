@@ -385,7 +385,7 @@ class RegisterAction extends Action
 				}else{
 					D('Passport')->loginLocal($email,$password);
 					$this->assign('jumpUrl', U('public/Passport/login'));
-					$this->success('恭喜您，注册成功');
+					$this->redirect('public/Register/step2', array());
 				}
 			}
 

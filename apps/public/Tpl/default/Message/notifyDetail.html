@@ -25,15 +25,6 @@
                     
                         <dl class="private-list system-list" id='notify_{$notify.id}' >
                            <a class="ico-close hover right" href="javascript:void(0);" onclick="ui.confirm(this,'{:L('PUBLIC_MESSAGE_DELETE_CONFIRM')}')" callback="delnotify({$notify.id})"></a>
-                          <dd class="face">
-                            <eq name='appname' value='public'>
-                            <a href="{:U('public/Index/index')}" class="face"><img src="__THEME__/image/middle_1352347100.jpg" width="30px" height="30px"></a>
-                            <p class="name"><a href="{:U('public/Index/index')}">{:L('PUBLIC_WEIBO')}</a></p>
-                            <else />
-                            <a href="{$appinfo['app_entry']}" class="face"><img src="{$appinfo['icon_url']}" width="30px" height="30px"></a>
-                            <p class="name"><a href="{$appinfo['app_entry']}">{$appinfo['app_alias']}</a></p> 
-                            </eq>
-                          </dd>
                           
                           <dd class="info clearfix">                          
                             <div class="private-news-first">

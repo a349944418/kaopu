@@ -320,14 +320,17 @@ class IndexAction extends Action {
 		$this->assign('weiba_id',$weiba_id);
 		$this->display();
 	}
+
 	//发布帖子
 	public function quickPost(){
 		$post_type = intval($_POST['t']);
-		$p = intval($_POST['p']);
 		$post_type = $post_type == 1 ? 1 : 2;
-		$this->assign('post_type', $post_type);
-		$this->assign('p', $p);
-		$con = $this->fetch();		
+		$con = F('zbq_quickPost'.$post_type);
+		if(!$con) {	
+			$this->assign('post_type', $post_type);
+			$con = $this->fetch();
+			F('zbq_quickPost'.$post_type, $con , TEMP_PATH);
+		}				
 		echo $con;
 	}
 
@@ -373,13 +376,12 @@ class IndexAction extends Action {
 		if( !CheckPermission('weiba_normal','weiba_post') ){
 			$this->error('对不起，您没有权限进行该操作！');
 		}
-		$weiba_id = intval($_GET['weiba_id']);
-		$weiba = D('weiba')->where('weiba_id='.$weiba_id)->find();
-		$this->assign('weiba_id',$weiba_id);
-		$this->assign('weiba_name', $weiba['weiba_name']);
+		$post_type = intval($_GET['pt']);
+		$post_type = $post_type == 1 ? 1 : 2;
+		$this->assign('post_type', $post_type);
 
-		$this->setTitle( '发表帖子 '.$weiba['weiba_name'] );
-		$this->setKeywords( '发表帖子 '.$weiba['weiba_name'] );
+		$this->setTitle( '发布问题 '.$weiba['weiba_name'] );
+		$this->setKeywords( '发布问题 '.$weiba['weiba_name'] );
 		$this->setDescription( $weiba['weiba_name'].','.$weiba['intro'] );
 		$this->display();
 	}

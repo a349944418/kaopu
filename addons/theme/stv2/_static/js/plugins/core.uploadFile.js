@@ -35,7 +35,7 @@ core.uploadFile = {
 			this.stop = false;
 			var limit = $(obj).attr('limit');
 			if (typeof limit === 'undefined' || isNaN(limit) || limit === '') {
-				this.limit = 4;
+				this.limit = 9;
 			} else {
 				this.limit = parseInt(limit);
 			}
@@ -46,7 +46,7 @@ core.uploadFile = {
 			} else {
 				this.addForm = true;
 			}
-				
+
 			if("undefined" == typeof(this.filehash)){
 				this.filehash = new Array();
 			}
@@ -64,7 +64,7 @@ core.uploadFile = {
 					_this.resultDiv = this;
 				}
 			});
-			
+
 			if(!hasCreateDiv){
 				if($(this.parentModel).parent().find('.input-content').length > 0){
 					this.resultDiv = $(this.parentModel).parent().find('.input-content')[0];
@@ -82,7 +82,7 @@ core.uploadFile = {
 			$(this.resultDiv).addClass('input-content attach-file');
 			if(this.type == 'image'){
 				$(this.resultDiv).addClass('attach-file');
-				$(this.resultDiv).html('<ul class="image-list" ></ul>');
+				$(this.resultDiv).html('<ul class="weiba-image-list" ></ul>');
 			}else{
 				$(this.resultDiv).html('<ul class="weibo-file-list"></ul>');
 			}
@@ -129,11 +129,11 @@ core.uploadFile = {
 				if($(_this.resultDiv).find('.loading').size() < 1 ){
 					$(_this.resultDiv).find('ul').eq(0).append('<li class="loading"><div class="loads"><img src="'+THEME_URL+'/image/load.gif" style="width:auto;height:auto"></div><p class="tips upload_tips" style="padding:5px"><a href="javascript:core.uploadFile.stopupload()">'+L('PUBLIC_REMOVE_UPLOAD')+'</a></p></li>');	
 				}
-				
 
 				var uploadTimes = core.uploadFile.updataUploadTimes();
 				
 				_this.parentForm  = _this.getParentFrom();
+
 				/**把其他的上传组件删除 并保存到变量中**/
 				if ( $(obj).attr('rel') ){
 					var filelist = new Array();
@@ -144,6 +144,8 @@ core.uploadFile = {
 				}
 				_this.parentForm.method = "post";
 				_this.parentForm.action =  U('widget/Upload/save')+'&'+_this.urlquery;
+				_this.parentForm.enctype = "multipart/form-data";
+
 				$(_this.parentForm).ajaxSubmit({ 
 					dataType:'json',
 			        success: function (data) {
@@ -178,6 +180,8 @@ core.uploadFile = {
 			if("undefined" != typeof(this.oldAction)){
 				this.parentForm.action = this.oldAction;
 				this.parentForm.method = this.oldMethod;
+				this.parentForm.enctype = "application/x-www-form-urlencoded";
+				this.parentForm.encoding = "application/x-www-form-urlencoded";
 				//$(this.parentForm).attr('id',this.oldId);
 			}
 
@@ -197,6 +201,8 @@ core.uploadFile = {
 			if("undefined" != typeof(this.oldAction)){
 				this.parentForm.action = this.oldAction;
 				this.parentForm.method = this.oldMethod;
+				this.parentForm.enctype = "application/x-www-form-urlencoded";
+				this.parentForm.encoding = "application/x-www-form-urlencoded";
 				//$(this.parentForm).attr('id',this.oldId);
 			}else{
 				var html =  $(this.parentForm).html();
@@ -252,7 +258,7 @@ core.uploadFile = {
 			}else{
 				if(this.type=='image'){
     				var html = '<li><a class="pic" href="javascript:void(0)"><img src="'+data.src+'" width="100" height="100"></a>'
-    						  +'<a class="name" href="javascript:void(0)" onclick="core.uploadFile.removeAttachId(this,\''+this.type+'\','+data.attach_id+')">'+L('PUBLIC_DELETE')+'</a></li>';
+    						  +'<a class="delete" href="javascript:void(0)" onclick="core.uploadFile.removeAttachId(this,\''+this.type+'\','+data.attach_id+')">'+L('PUBLIC_DELETE')+'</a></li>';
     			}else{
     				var html = '<li><i class="ico-'+data.extension+'-small"></i><a class="ico-close right" href="javascript:void(0)" onclick="core.uploadFile.removeAttachId(this,\''+this.type+'\','+data.attach_id+')"></a>'
     						  +'<a class="xxx" href="javascript:void(0)" title="'+data.name+'">'+subStr(data.name, 42)+'</a><span>('+data.size+')</span></li>';
@@ -338,24 +344,13 @@ core.uploadFile = {
 						this.oldAction = parent.action;
 						this.oldMethod = parent.method;
 						//this.oldId = $(parent).attr('id');
-						return parent;				
+						return parent;			
 					}else{
 						return core.uploadFile.getParentFrom(parent);
 					}		
 				}
 			}
-/*			if("object" == typeof(this.parentForm) && this.parentForm.nodeName == 'FORM'){
-				$(this.parentForm).remove();
-			}
-			
-			var offset = $(this.obj).offset();
 
-			var form = toElement('<form method="post" enctype="multipart/form-data"></form>');
-			form.action = U('widget/Upload/save')+'&'+this.urlquery;
-			form.appendChild(this.obj);
-			document.body.appendChild(form);
-			$(form).css({'left':offset.left+'px','top':offset.top+'px'});
-			return form;*/
 		},
 		//private
 		checkFile:function(){

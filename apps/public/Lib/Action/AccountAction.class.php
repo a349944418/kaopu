@@ -32,8 +32,10 @@ class AccountAction extends Action
 		$tab_list[] = array('field_key'=>'edu','field_name'=>'<span class="glyphicon glyphicon-education" aria-hidden="true"></span> &nbsp;教育信息');
 		// 工作信息
 		$tab_list[] = array('field_key'=>'workinfo','field_name'=>'<span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> &nbsp;工作信息');
+		$tab_list[] = array('field_key'=>'authenticate','field_name'=>'<span class="sui-icon icon-tb-selectionfill" style="font-size:17px;"></span> &nbsp;申请认证');	// 申请认证
 		$tab_list[] = array('field_key'=>'invite','field_name'=> '<span class="sui-icon icon-tb-friendaddfill" style="font-size:17px;"></span> &nbsp;好友邀请','url'=>U('public/Invite/invite'));
 		$tab_list[] = array('field_key'=>'security','field_name'=>'<span class="glyphicon glyphicon-lock" aria-hidden="true"></span> &nbsp;'.L('PUBLIC_ACCOUNT_SECURITY'));
+
 		/*				
 		$tab_list[] = array('field_key'=>'domain','field_name'=>L('PUBLIC_DOMAIN_NAME'));				
 		个性域名
@@ -84,9 +86,8 @@ class AccountAction extends Action
 		$this->setKeywords( L('PUBLIC_PROFILESET_INDEX') );
 		$user_tag = model('Tag')->setAppName('User')->setAppTable('user')->getAppTags(array($this->mid));
 
-		// 个人信息完成度
-		
-		$selfInfo = array($user_info[$this->mid]['uname'], $user_info[$this->mid]['sex'], $user_info[$this->mid]['birthday'], $user_info[$this->mid]['area'], $user_info[$this->mid]['intro'], $user_info[$this->mid]['truename'], $user_info[$this->mid]['mobile']);
+		// 个人信息完成度		
+		$selfInfo = array($user_info[$this->mid]['uname'], $user_info[$this->mid]['sex'], $user_info[$this->mid]['birthday'], $user_info[$this->mid]['area'], $user_info[$this->mid]['intro'], $user_info[$this->mid]['mobile']);
 		$info_wcd = $this->info_wcd($selfInfo);
 		$this->assign('info_wcd', $info_wcd);
 
@@ -127,7 +128,6 @@ class AccountAction extends Action
 			$save['sex']  = 1 == intval($_POST['sex']) ? 1 : 2;
 		//	$save['lang'] = t($_POST['lang']);
 			$save['intro'] = t($_POST['intro']);
-			$save['truename'] = t($_POST['truename']);
 			$save['birthday'] = strtotime(intval($_POST['birthY']).'-'.intval($_POST['birthM']).'-'.intval($_POST['birthD']));
 			$save['mobile'] = t($_POST['mobile']);
 			// 添加地区信息
@@ -503,13 +503,13 @@ class AccountAction extends Action
     	$this->assign('auType', $auType);
     	$verifyInfo = D('user_verified')->where('uid='.$this->mid)->find();
     	if($verifyInfo['attach_id']){
-			  $a = explode('|', $verifyInfo['attach_id']);
-			  foreach($a as $key=>$val){
+			$a = explode('|', $verifyInfo['attach_id']);
+			foreach($a as $key=>$val){
 			  	if($val !== "") {
 			  		$attachInfo = D('attach')->where("attach_id=$a[$key]")->find();
-			  		$verifyInfo['attachment'] .= $attachInfo['name'].'&nbsp;<a href="'.getImageUrl($attachInfo['save_path'].$attachInfo['save_name']).'" target="_blank">下载</a><br />';
+			  		$verifyInfo['attachment'] .= $attachInfo['name'].'&nbsp;<a href="'.getImageUrl($attachInfo['save_path'].$attachInfo['save_name']).'" target="_blank">查看</a><br />';
 			  	}
-			  }
+			}
 		}
 		// 获取认证分类信息
 		if(!empty($verifyInfo['user_verified_category_id'])) {
@@ -552,6 +552,7 @@ class AccountAction extends Action
 		$this->assign('attachOption',$attachOption);
 
 		// 获取认证分类
+		/*
 		$category = D('user_verified_category')->findAll();
 		foreach($category as $k=>$v){
 			$option[$v['pid']] .= '<option ';
@@ -560,7 +561,8 @@ class AccountAction extends Action
 			}
 			$option[$v['pid']] .= ' value="'.$v['user_verified_category_id'].'">'.$v['title'].'</option>';
 		}
-		//dump($option);exit;
+		dump($option);
+		*/
 		$this->assign('option', json_encode($option));
 		$this->assign('options', $option);
 		$this->assign('category', $category);

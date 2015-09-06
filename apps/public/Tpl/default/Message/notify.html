@@ -26,15 +26,6 @@
                     <if condition="empty($list['group'])"><div class="note">{:L('PUBLIC_NO_MORE_INFO')}</div></if>
                     <volist name='list.group' id='group'>
                         <dl class="private-list system-list" >
-                          <dd class="face">
-                            <eq name='group.appname' value='public'>
-                            <a href="{:U('public/Index/index')}" class="face"><img src="__THEME__/image/middle_1352347100.jpg" width="30px" height="30px"></a>
-                            <p class="name"><a href="{:U('public/Index/index')}">{:L('PUBLIC_WEIBO')}</a></p>
-                            <else />
-                            <a href="{$list['appInfo'][$group['appname']]['app_entry']}" class="face"><img src="{$list['appInfo'][$group['appname']]['icon_url']}" width="30px" height="30px"></a>
-                            <p class="name"><a href="{$list['appInfo'][$group['appname']]['app_entry']}">{:L('PUBLIC_APPNAME_'.$group['appname'])}</a></p> 
-                            </eq>
-                          </dd>
 
                           <dd class="info">
                             <p class="hd">

@@ -29,6 +29,22 @@ $.fn.smartFloat = function() {
 };
 
 $(function(){
+  //显示回到顶部框
+  $(window).scroll(function(){
+    var scrolls = $(this).scrollTop();
+    if(scrolls > 200) {
+      $('#topcontrol').css('display', 'block');
+    } else {
+      $('#topcontrol').css('display', 'none');
+    }
+  })
+
+  //回复快捷
+  $('.to_answer').click(function(){
+    var h = $('.friend').offset().top;
+    $('html,body').animate({'scrollTop':h+'px'});
+  })
+
   //选择学校
   $('#comModal').on('show.bs.modal', function (e) {
       var button = $(e.relatedTarget);
@@ -87,6 +103,14 @@ $(function(){
     }     
   })
 
+
+  //默认页面高度
+  var windowh = $(window).height();
+  $('.center1').css('min-height', (windowh-283)+'px');
+  $('.center').css('min-height', (windowh-283)+'px'); 
+  $('#main-wrap').css('min-height', (windowh-283)+'px');
+
+
   /**
    * [删除文章]
    */
@@ -111,18 +135,14 @@ $(function(){
  * @param  {[type]} URL [description]
  * @return {[type]}     [description]
  */
-function showquiz(type, p){
-  $('#comModal .modal-body').html('');
-  if (typeof(ue) != 'undefined'){
-      ue.destroy();
-  }
+function showquiz(type){
   $('#comModal .modal-header').css({'background':'#FC5241','padding':'8px 15px'});
   var title = type == 1 ? '提问' : '分享';
   $('#comModal .modal-title').html(title).css({'text-align':'center','color':'white'});
   if($('.edui-editor').length){
     $('.edui-editor').css('z-index', 1);
   }
-  $.post(U('weiba/Index/quickPost'),{t:type, p: p}, function(data){
+  $.post(U('weiba/Index/quickPost'),{t:type}, function(data){
     $('#comModal .modal-body').html(data);
     $('#comModal').modal({'backdrop':'static'});
   },'html');
@@ -211,33 +231,158 @@ function click_zan(reply_id){
  * @return {[type]}    [description]
  */
 function weibaPost_submit_check(ue) {
-        var txt = ue.getContent();
-        txt = txt.replace(/\s+/g,"");
-        if(txt.length < 1 || txt == '请填写详情') {         
-            ue.focus();
-            ue.setContent('请填写详情');
-            return false;
-        }
-
-        var weiba_id = $('#weiba_id').val();
-        if(weiba_id.length < 1) {
-            $('#weiba_flag').attr('placeholder', '请选择标签').focus();
-            return false;
-        }
-
-        var title = $('#title').val();
-        if(title.length < 1) {
-            $('#title').attr('placeholder', '请填写标题').focus();
-            return false;
-        }
-
-        var type = $('#post_type').val();
-        if(type == 2 && $('#post_reason').val().length<1){
-            $('#post_reason').attr('placeholder', '请填写分享原因').focus();
-            return false;
-        }
-
-        ue.getKfContent(function(content){
-            $('#weibaPost').submit();
-        })
+    var txt = ue.getContent();
+    txt = txt.replace(/\s+/g,"");
+    if(txt.length < 1 || txt == '请填写详情') {         
+        ue.focus();
+        ue.setContent('请填写详情');
+        return false;
     }
+
+    var weiba_id = $('#weiba_id').val();
+    if(weiba_id.length < 1) {
+        $('#weiba_flag1').attr('placeholder', '请选择标签').focus();
+        return false;
+    }
+
+    var title = $('#title').val();
+    if(title.length < 1) {
+        $('#weiba_title').attr('placeholder', '请填写标题').focus();
+        return false;
+    }
+
+    var type = $('#post_type').val();
+    if(type == 2 && $('#post_reason').val().length<1){
+        $('#weiba_reason').attr('placeholder', '请填写分享原因').focus();
+        return false;
+    }
+
+    ue.getKfContent(function(content){
+        $('#weibaPost').submit();
+    })
+}
+
+/**
+ * [ 弹窗简单模式发布 ]
+ * @return {[type]} [description]
+ */
+function weibaPost_simple_submit_check(){
+    var txt = $('#wb_content').val();
+    if(txt.length < 1 ) {         
+        $('#wb_content').attr('placeholder', '请填写详情').focus();
+        return false;
+    }
+
+    var weiba_id = $('#weiba_id').val();
+    if(weiba_id.length < 1) {
+        $('#weiba_flag').attr('placeholder', '请选择标签').focus();
+        return false;
+    }
+
+    var title = $('#title').val();
+    if(title.length < 1) {
+        $('#title').attr('placeholder', '请填写标题').focus();
+        return false;
+    }
+
+    var type = $('#post_type').val();
+    if(type == 2 && $('#post_reason').val().length<1){
+        $('#post_reason').attr('placeholder', '请填写分享原因').focus();
+        return false;
+    }
+
+    $('#weibaPost').submit();
+}
+
+// 检查手机号
+function checkMobile(value) {
+    if (!(/^1[3|4|5|7|8][0-9]\d{8}$/.test(value))) {
+        return false;
+    }
+    return true;
+}
+
+// 检查身份证号
+function checkIdcard(value, element, sexE, birthdayE) {
+    value = trim(value);
+    $(element).val(value);
+    var area = {11: "北京", 12: "天津", 13: "河北", 14: "山西", 15: "内蒙古", 21: "辽宁", 22: "吉林", 23: "黑龙江", 31: "上海", 32: "江苏", 33: "浙江", 34: "安徽", 35: "福建", 36: "江西", 37: "山东", 41: "河南", 42: "湖北", 43: "湖南", 44: "广东", 45: "广西", 46: "海南", 50: "重庆", 51: "四川", 52: "贵州", 53: "云南", 54: "西藏", 61: "陕西", 62: "甘肃", 63: "青海", 64: "宁夏", 65: "xinjiang", 71: "台湾", 81: "香港", 82: "澳门", 91: "国外"};
+    var idcard = value;
+    var Y, JYM;
+    var S, M;
+    var sex_val;
+    var idcard_array = new Array();
+    idcard_array = idcard.split("");
+    if (area[parseInt(idcard.substr(0, 2))] == null) {
+        return false;
+    }
+    switch (idcard.length) {
+        case 15:
+            if ((parseInt(idcard.substr(6, 2)) + 1900) % 4 == 0 || ((parseInt(idcard.substr(6, 2)) + 1900) % 100 == 0 && (parseInt(idcard.substr(6, 2)) + 1900) % 4 == 0)) {
+                ereg = /^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}$/;
+            } else {
+                ereg = /^[1-9][0-9]{5}[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}$/;
+            }
+            if (ereg.test(idcard)) {
+                if (parseInt(idcard_array[14]) % 2 == 0) {
+                    sex_val = '女';
+                } else {
+                    sex_val = '男';
+                }
+                if (sexE) {
+                    //sexE.find('#sex_select').text(sex_val);
+                    sexE.find('input[name^=person_sex]').each(function(){
+                        if($(this).val()==sex_val){
+                            $(this).attr('checked','checked');
+                            return false;
+                        }
+                    });
+                }
+                birthdayE && birthdayE.val('19' + idcard.substr(6, 2) + '-' + idcard.substr(8, 2) + '-' + idcard.substr(10, 2));
+                birthdayE && birthdayE.next('b.wrongTips').remove();
+                return true;
+            } else {
+                return false;
+            }
+            break;
+        case 18:
+            if (parseInt(idcard.substr(6, 4)) % 4 == 0 || (parseInt(idcard.substr(6, 4)) % 100 == 0 && parseInt(idcard.substr(6, 4)) % 4 == 0)) {
+                ereg = /^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|[1-2][0-9]))[0-9]{3}[0-9Xx]$/;
+            } else {
+                ereg = /^[1-9][0-9]{5}(19|20)[0-9]{2}((01|03|05|07|08|10|12)(0[1-9]|[1-2][0-9]|3[0-1])|(04|06|09|11)(0[1-9]|[1-2][0-9]|30)|02(0[1-9]|1[0-9]|2[0-8]))[0-9]{3}[0-9Xx]$/;
+            }
+            if (ereg.test(idcard)) {
+                S = (parseInt(idcard_array[0]) + parseInt(idcard_array[10])) * 7 + (parseInt(idcard_array[1]) + parseInt(idcard_array[11])) * 9 + (parseInt(idcard_array[2]) + parseInt(idcard_array[12])) * 10 + (parseInt(idcard_array[3]) + parseInt(idcard_array[13])) * 5 + (parseInt(idcard_array[4]) + parseInt(idcard_array[14])) * 8 + (parseInt(idcard_array[5]) + parseInt(idcard_array[15])) * 4 + (parseInt(idcard_array[6]) + parseInt(idcard_array[16])) * 2 + parseInt(idcard_array[7]) * 1 + parseInt(idcard_array[8]) * 6 + parseInt(idcard_array[9]) * 3;
+                Y = S % 11;
+                M = "F";
+                JYM = "10X98765432";
+                M = JYM.substr(Y, 1);
+                if (M == idcard_array[17]) {
+                    if (parseInt(idcard_array[16]) % 2 == 0) {
+                        sex_val = '女';
+                    } else {
+                        sex_val = '男';
+                    }
+                    if (sexE) {
+                        //sexE.find('#sex_select').text(sex_val);
+                        sexE.find('input[name^=person_sex]').each(function(){
+                            if($(this).val()==sex_val){
+                                $(this).attr('checked','checked');
+                return false;
+                            }
+                        });
+                    }
+                    birthdayE && birthdayE.val(idcard.substr(6, 4) + '-' + idcard.substr(10, 2) + '-' + idcard.substr(12, 2));
+                    birthdayE && birthdayE.next('b.wrongTips').remove();
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        default:
+            return false;
+            break;
+    }
+}

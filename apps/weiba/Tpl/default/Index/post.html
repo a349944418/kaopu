@@ -1,46 +1,93 @@
 <include file="__THEME__/public_header" />
 
-<link href="__APP__/weiba.css" rel="stylesheet" type="text/css" />
-<link href="__THEME__/public/account.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="__APP__/weiba.js"></script>
-<!-- <script type="text/javascript" src="__THEME__/js/module.form.js"></script> -->
+<script src="__THEME__/js/input_extend.js"></script>
+<script >
+    $(function(){
+        $("#weiba_title").changeTips({
+            divTip:".title_changes",
+            url : "{:U('weiba/Search/title')}"
+        }); 
+        $('#weiba_flag1').changeTips({
+            divTip:".flag_changes",
+            url : "{:U('weiba/search/weibaName')}"
+        })
+    })
     
+</script>    
+<style>
+    .form-group {position: relative;}
+    .title_changes, .flag_changes{width:100%; position:absolute; top:57px; list-style:none; background:#FFF; border:1px solid #66afe9; border-top: none; display:none; z-index: 1000; padding: 0px;}
 
-<div id="page-wrap">
-	   <div id="main-wrap">
-           <div class="boxShadow"> 
-	   	   	 <include file="_weiba_header" /> 
+    .title_changes li, .title_changes p, .flag_changes li, .flag_changes p{padding:2px 12px;}
+    .title_changes p, .flag_changes p{ color: #bbb;font-size: 12px;padding-bottom: 0px;}
 
-	   	   	   <div class="mb10 clearfix extend">
-                <p class="pb15"><a href="{:U('weiba/Index/index')}">微吧</a>&nbsp;>&nbsp;<a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_id))}">{$weiba_name}</a>&nbsp;>&nbsp;发新帖</p>
-                 <div class="weiba-manage">                     
-                        <!-- <h3>发新贴</h3> -->
-                        <form method="post" action="{:U('weiba/Index/doPost')}" model-node='weiba_post' onsubmit="return setcontent();" onkeydown="if(event.keyCode==13){return false;}" name="weibaPost">
-                            <input type="hidden" value="{$weiba_id}" name="weiba_id" id="weiba_id">
-                        <dl class="form-set">
-                            <dd>
-                                <div class="form-tt"><font color="red"> * </font>标题</div>
-                                <div class="form-row"><input class="s-txt" type="text" name="title" id="title"></div>
-                            </dd>
-                            <dd>
-                                <div class="form-tt"><font color="red"> * </font>正文</div>
-                                <div class="form-row">{:W('Editor',array('contentName'=>'content','value'=>''))}</div>
-                            </dd>
-                            <dd>
-                                <div class="form-tt">附件</div>
-                                <div class="form-row">{:W('Upload', array('urlquery'=>'attach_type=weiba_attach'))}</div>
-                            </dd>
-                            <dd>
-                                <div class="form-tt"></div>
-                                <div class="form-row"><a href="#" class="btn-green-small mr5" event-node="submit_btn" editor="true"><span>确定</span></a><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_id))}" class="btn-cancel"><span>取消</span></a></div>
-                                <!-- <div class="form-row"><a href="javascript:void(0)" onclick="$('#weiba_post').submit();" class="btn-green-small mr5"><span>确定</span></a><a href="{:U('weiba/Index/detail',array('weiba_id'=>$weiba_id))}" class="btn-cancel"><span>取消</span></a></div> -->
-                            </dd>
-                        </dl> 
-                        </form>                
-                 </div>
-           	 </div>
-          </div>
-	   </div>
+    .title_changes li.active, .flag_chenges li.active{ background:#CEE7FF;}
+</style>
+<div class="center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1 clearfix extend">
+                <h2 style="margin: 15px auto;">发布<eq name="post_type" value="1">问题</eq><eq name="post_type" value="2">分享</eq></h2>
+                <div class="weiba-manage" style="margin: 20px 0;">                     
+                    <form method="post" action="{:U('weiba/Index/doPost')}" onkeydown="if(event.keyCode==13){return false;}" name="weibaPost" id="weibaPost">
+                        <input type="hidden" value="{$post_type}" name="post_type" id="post_type">
+                        <input type="hidden" value="" name="weiba_id" id="weiba_id">
+                        <div class="form-group">
+                            <label for="weiba_title">标题：</label>
+                            <input class="form-control" type="text" name="title" id="weiba_title" autocomplete="off" value="">
+                            <ul class="title_changes"></ul>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">详情：</label>
+                            {:W('Editor',array('contentName'=>'content','value'=>''))}
+                        </div>
+                        <div class="form-group post_reason" <eq name="post_type" value="1">style="display:none;"</eq> >
+                            <label for="weiba_reason">分享理由：</label>
+                            <textarea name="post_reason" id="post_reason" class="form-control" rows="3" style="resize:none;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="weiba_flag" class="weiba_flag">选择话题：
+                                <volist name="weiba_Arr" id="vo">
+                                    <div style="background:#FC5241;color:white;display:inline-block;border-radius:10px;font-weight: normal;padding: 0 10px;">{$vo.weiba_name} <button type="button" class="close" aria-label="Close" onclick="del_weiba_flag('{$vo.weiba_id}',this);"><span aria-hidden="true">&times;</span></button></div>&nbsp;
+                                </volist>
+                            </label>
+                            <input type="text" class="form-control" id="weiba_flag1" autocomplete="off">
+                            <ul class="flag_changes"></ul>
+                        </div>
+                        <div style="text-align:right"><a href="javascript:;" onclick="">取消</a> &nbsp;&nbsp; <a href="javascript:;" class="btn btn-danger" style="background-color:#FC5241;color:white;" onclick="return weibaPost_submit_check(ue)">修改</a></div>
+                    </form>            
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+    function choose_weiba_flag(id,name){
+      var con = $('#weiba_id').val();
+      if(con == ''){
+        con = id;
+      } else {
+        con += ','+id;
+      }
+      name = '<div style="background:#FC5241;color:white;display:inline-block;border-radius:10px;font-weight: normal;padding: 0 10px;">'+name+' <button type="button" class="close" aria-label="Close" onclick="del_weiba_flag('+id+',this);"><span aria-hidden="true">&times;</span></button></div>&nbsp;';
+      $('#weiba_id').val(con);
+      $('.form-group .weiba_flag').append(name);
+      $('#weiba_flag').val('');
+    }
 
+    function del_weiba_flag(id, obj) {
+        $(obj).parent('div').remove();
+        var txt = '';
+        var con = $('#weiba_id').val();
+        var arr = con.split(',');
+        for(var i=0;i<arr.length;i++){
+            if(arr[i] != id){
+                txt += arr[i]+',';
+            }
+        }
+        $('#weiba_id').val(txt.substr(0,txt.length-1));
+    }
+
+
+</script>
 <include file="__THEME__/public_footer" />

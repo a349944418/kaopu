@@ -62,9 +62,15 @@ class UploadWidget extends Widget{
      * @return array 上传的附件的信息
      */
     public function save(){
-
     	$data['attach_type'] = t($_REQUEST['attach_type']);
         $data['upload_type'] = $_REQUEST['upload_type']?t($_REQUEST['upload_type']):'file';
+
+        //针对后台页面同时包含文件和图片上传
+        // if($data['upload_type']=='file'){
+        //     unset($_FILES['attach']);
+        // }else{
+        //     unset($_FILES['upload_file']);
+        // }
 
         $thumb  = intval($_REQUEST['thumb']);
         $width  = intval($_REQUEST['width']);
@@ -90,7 +96,24 @@ class UploadWidget extends Widget{
     	}else{
     		$return = array('status'=>0,'data'=>$info['info']);
     	}
-    	echo json_encode($return);exit();
+
+        $isAjaxUrl = isset($_REQUEST['isAjaxUrl']) ? true : false;
+        if ($isAjaxUrl) {
+            $editorId = t($_REQUEST['editorid']);
+            $ajaxInfo = array();
+            if($thumb == 1){
+                $ajaxInfo['url'] = getImageUrl($return['data']['save_path'].$return['data']['save_name'],$width,$height,$cut);   
+            }else{
+                $ajaxInfo['url'] = getImageUrl($return['data']['save_path'].$return['data']['save_name']);
+            }
+
+            $ajaxInfo['state'] = 'SUCCESS';
+            //echo $ajaxInfo['url'];
+            echo "<script>parent.EditorList['".$editorId."'].getWidgetCallback('image')('" . $ajaxInfo[ "url" ] . "','" . $ajaxInfo[ "state" ] . "')</script>";
+            // exit(getImageUrl($return['data']['save_path'].$return['data']['save_name']));
+        } else {
+            echo json_encode($return);exit();
+        }
     }
     
     /** 
@@ -134,7 +157,12 @@ class UploadWidget extends Widget{
      * 附件下载
      */
     public function down(){
-    
+        $isLogin = model('Passport')->isLogged();
+        if (!$isLogin) {
+            header('Location:'.U('public/Passport/login'));
+            // die('游客不允许下载附加');
+        }
+
    		$aid	=	intval($_GET['attach_id']);
 		
 		$attach	=	model('Attach')->getAttachById($aid);
@@ -164,5 +192,12 @@ class UploadWidget extends Widget{
     		}
         }
     }    
+    public function uploadVideo(){
+        // dump($_FILES);
+        // dump($_REQUEST);exit;
+        $info = model('Video')->upload_by_web();
+        // $return = array('status'=>1,'data'=>$info);
+        echo json_encode($info);exit();
+    }  
 }
 ?>

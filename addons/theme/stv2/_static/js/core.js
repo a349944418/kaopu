@@ -114,7 +114,7 @@ var core = new _core();
  * 核心的插件列表
  */
 
-//微博加载文件，支持回调函数 调用方式core.loadFile(url,callback)
+//分享加载文件，支持回调函数 调用方式core.loadFile(url,callback)
 core.loadFile = core._coreLoadFile();
 core.loadCss = core._loadCss();
 
@@ -365,11 +365,11 @@ var ui = {
 			// TODO:???
     	} else {
     		var height = $('body').height() > $(window).height() ? $('body').height() : $(window).height();
-    		$('<div class ="boxy-modal-blackout" ><iframe style="z-index:-1;position: absolute;visibility:inherit;width:'+$('body').width()+'px;height:'+height+'px;top:0;left:0;filter=\'progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)\'"'+
+    		$('<div class ="boxy-modal-blackout"><iframe id="boxy-modal-blackout-iframe" style="z-index:-1;position: absolute;visibility:inherit;width:'+$('body').width()+'px;height:'+height+'px;top:0;left:0;filter=\'progid:DXImageTransform.Microsoft.Alpha(style=0,opacity=0)\'"'+
 		 'src="about:blank"  border="0" frameborder="0"></iframe></div>')
         	.css({
-        	    height:height+'px',width:$('body').width()+'px',zIndex: 991, opacity: 0.5
-        	}).appendTo(document.body);
+        	    height:height+'px',width:$('body').width()+'px',zIndex: 991, opacity: 0.3
+        	}).animate({opacity: 0.5},100).appendTo(document.body);
     	}
 	},
 	/**
@@ -404,6 +404,12 @@ var ui = {
 	error: function(message, time) {
 		var t = "undefined" == typeof(time) ? 2 : time;
 		ui.showMessage(message, 1, t);
+	},
+	quicklogin: function(u){
+		var url = "undefined" == typeof(u) ? location.href : u;
+		setTimeout(function() {
+			ui.box.load( U('public/Passport/quickLogin') ,"快速登录",null,{url:url},'post');
+		}, '');
 	},
 	/**
 	 * 确认弹框显示API - 浮窗型
@@ -517,7 +523,7 @@ var ui = {
 		this.box.load(U('public/Mention/at')+'&touid='+touid, '@TA');
 	},
 	/**
-	 * 弹窗发布微博
+	 * 弹窗发布分享
 	 * @param string title 弹窗标题
 	 * @param string initHTML 插入内容
 	 * @return void
@@ -553,7 +559,7 @@ var ui = {
 	 */
 	box: {
 		WRAPPER: '<div class="wrap-layer" id="tsbox" style="display:none">\
-     			  <div class="content-layer">\
+     			  <div class="content-layer" style="background-color:#fff;border:none;">\
      			  <div class="layer-content" id="layer-content"></div>\
      			  </div></div>',
 		inited: false,
@@ -573,12 +579,13 @@ var ui = {
 			var url = THEME_URL+'/js/tbox/box.css';
 			core.loadCss(url);
 			// 添加头部
-			if("undefined" != typeof(title)) {
-				$("<div class='hd'>"+title+"<a class='ico-close' href='#'></a></div>").insertBefore($('#tsbox .layer-content'));
+			if("undefined" != typeof(title) && title) {
+				$("<div class='hd' style=\"background-color:#fff;\">"+title+"<a class='ico-close' href='#'></a></div>").insertBefore($('#tsbox .layer-content'));
 			}
 			
+			//遮罩层
 			ui.showblackout();
-			
+				
 			$('#tsbox').stop().css({width: '', height: ''});
 			// 添加键盘事件
 			jQuery(document.body).bind('keypress.tsbox', function(event) {
@@ -589,22 +596,36 @@ var ui = {
 					return false;
 				}
 			});
+
+			//点击弹出层以外的地方，关闭弹出层
+	    	$('#boxy-modal-blackout-iframe').contents().find('html').click(function(){
+	    		ui.box.close(callback);
+				return false;
+	    	});
+	    	
 			// 关闭弹窗，回调函数
 			$('#tsbox').find('.ico-close').click(function() {
 				ui.box.close(callback);
 				return false;
 			});
+			setTimeout(function(){
+				$('#boxy-modal-blackout-iframe').contents().find('html').click(function(){
+		    		ui.box.close(callback);
+					return false;
+		    	});
+			},500);
 			
 			this.center();
 			var show = function(){
-				$('#tsbox').show();
+				$('#tsbox').fadeIn(200);
 			}
 			setTimeout(show, 200);
-			
+			if(title){
+			$('#tsbox').draggable({ handle: '.hd' });
 
 			$('.hd').mousedown(function(){
 				$('.mod-at-wrap').remove();
-			});
+			});}
 		},
 		/**
 		 * 设置弹窗中的内容
@@ -620,8 +641,20 @@ var ui = {
 		 * @return void
 		 */
 		close: function(fn) {
+			// $('body').css({'overflow': ''});
+
 			$('#ui-fs .ui-fs-all .ui-fs-allinner div.list').find("a").die("click");
+
+			// 关闭弹窗，同步弹窗同步消失
+			var $sync = $('#Sync');
+			if (typeof $sync[0] !== 'undefined') {
+				$sync.hide();
+			}
+
 			$('.talkPop').remove();
+			if (core.multimage != undefined) {
+				core.multimage.removeDiv();
+			}
 			$('#tsbox').remove();
 			$('.mod-at-wrap').remove();
 			jQuery('.boxy-modal-blackout').remove();
@@ -657,6 +690,7 @@ var ui = {
 		 * @return void
 		 */
 		show:function(content,title,callback){
+			this.close();
 			this.init(title,callback);
 			this.setcontent(content);
 			this.center();
@@ -671,6 +705,13 @@ var ui = {
 		 * @return void
 		 */
 		load:function(requestUrl,title,callback,requestData,type) {
+			$('#tsbox').remove();
+
+			//加载前图片展示层
+			if($('#show_big_image').length > 0){
+				core.weibo.bigImageClose();
+			}
+
 			this.init(title,callback);
 			if("undefined" != typeof(type)) {
 				var ajaxType = type;
@@ -690,6 +731,7 @@ var ui = {
 				success:function(html){
 					obj.setcontent(html);
 					obj.center();
+					// $('body').css({'overflow': 'hidden'});
 				}
 			});
 		},	
@@ -699,9 +741,13 @@ var ui = {
 		 */
 		_viewport: function() {
 			var d = document.documentElement, b = document.body, w = window;
-			return jQuery.extend(
-				jQuery.support.msie ? { left: b.scrollLeft || d.scrollLeft, top: b.scrollTop || d.scrollTop } : { left: w.pageXOffset, top: w.pageYOffset },
+			var v = jQuery.extend(
+				jQuery.browser.msie ? { left: b.scrollLeft || d.scrollLeft, top: b.scrollTop || d.scrollTop } : { left: w.pageXOffset, top: w.pageYOffset },
 				!ui.box._u(w.innerWidth) ? { width: w.innerWidth, height: w.innerHeight } : (!ui.box._u(d) && !ui.box._u(d.clientWidth) && d.clientWidth != 0 ? { width: d.clientWidth, height: d.clientHeight } : { width: b.clientWidth, height: b.clientHeight }) );
+			if($('#tsbox').css('position')=='fixed'){
+				v.top = 0;
+			}
+			return v;
 		},
 		/**
 		 * 验证参数
@@ -758,8 +804,13 @@ var ui = {
 		},      
 		centerAt: function(x, y) {
 			var s = this.getSize();
-			if (typeof x == 'number') this.moveToX(x - s[0]/2 );
-			if (typeof y == 'number') this.moveToY(y - s[1]/2 );
+			var xval = x - s[0] / 2;
+			var yval = y - s[1] / 2;
+			if (s[1] > $(window).height()) {
+				yval = 50;
+			}
+			if (typeof x == 'number') this.moveToX(xval);
+			if (typeof y == 'number') this.moveToY(yval);
 			return this;
 		},
 		centerAtX: function(x) {
@@ -790,3 +841,56 @@ var ui = {
 		}
 	}
 };
+
+$(function() {
+	// //图片打不开
+	// $('img').live('mouseover',function(){
+	// 	var _this = $(this);
+	// 	var src = $(this).attr('src');
+	// 	var tag='data/upload/avatar/';
+	// 　　if(src.indexOf(tag) != -1){
+	// 		_this.attr('src',THEME_URL+'/avatar/image/noavatar/big.jpg');
+	// 　　}else{
+	// 		_this.attr('src','');
+	// 	}
+	// })
+
+	var $main = $('div.line-b-animate').offset();
+	var $currentChecked = $('div.line-b-animate ul').find('li.current').offset();
+	if ($main && $currentChecked !== null) {
+		var mainLeft = $main.left;
+		// init
+		var $line = $('<div class="line-b"></div>');
+		var $current = $('div.line-b-animate ul').find('li.current');
+		var left = $current.offset().left - mainLeft;
+		var width = $current.width();
+		$line.css({width:width,left:left,overflow:'hidden'});
+		$('div.line-b-animate').append($line);
+		
+		// mouseover event li
+		$('div.line-b-animate').find('li').each(function(i, n) {
+			$(this).bind('mouseover', function() {
+				var left = $(this).offset().left - mainLeft;
+				var width = $(this).width();
+				animateTab(left, width);
+			}); 
+		});
+
+		// mouseout event ul
+		$('div.line-b-animate').find('ul').bind('mouseout', function(i) {
+			var $li = $(this).find('li.current');
+			var left = $li.offset().left - mainLeft;
+			var width = $li.width();
+			animateTab(left, width);
+		});
+
+		// animate method
+		var animateTab = function (left, width) {
+			$line.stop();
+			$line.animate({
+				width: width,
+				left: left
+			}, 'fast');
+		};
+	}
+});
