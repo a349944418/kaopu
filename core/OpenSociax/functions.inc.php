@@ -711,8 +711,11 @@ function U($url,$params=false,$redirect=false) {
         $site_url   .=  '&'.$params;
     }
 
+    
     //开启路由和Rewrite
-    if(C('URL_ROUTER_ON')){
+    //if(C('URL_ROUTER_ON')){
+    $url_router_on = 1;
+    if($url_router_on){
 
         //载入路由
         $router_ruler   =   C('router');
@@ -749,7 +752,6 @@ function U($url,$params=false,$redirect=false) {
             }
         }
     }
-
     //输出地址或跳转
     if($redirect){
         redirect($site_url);

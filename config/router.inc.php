@@ -6,9 +6,10 @@ return array(
 	'router' => array(
 		// 基本
 		'page/Index/index'			=>  SITE_URL.'/page/[page].html',
- 		'public/Index/index'		=> 	SITE_URL.'/home',
+ 		//'public/Index/index'		=> 	SITE_URL.'/home',
 		
 		'public/Passport/login'  	=>  SITE_URL.'/welcome',
+		'public/Passport/logout'	=>  SITE_URL.'/logout',
 		'public/Register/index'  	=>  SITE_URL.'/register',
 		'public/Register/waitForActivation'  =>  SITE_URL.'/activate/[uid]',
 		'public/Register/waitForAudit'  =>  SITE_URL.'/review/[uid]',
@@ -22,6 +23,9 @@ return array(
 		'public/Profile/data'  		=>  SITE_URL.'/space/[uid]/profile',
 		'public/Profile/following'  =>  SITE_URL.'/space/[uid]/following',
 		'public/Profile/follower'  	=>  SITE_URL.'/space/[uid]/follower',
+		'public/Profile/share'		=>	SITE_URL.'/space/[uid]/share',
+		'public/Profile/Collection'	=>	SITE_URL.'/space/[uid]/Collection',
+		'public/Profile/question'	=>	SITE_URL.'/space/[uid]/question',
 		
 		'public/Index/myFeed'  		=>  SITE_URL.'/myFeed',
 		'public/Index/following'  	=>  SITE_URL.'/myFollowing',
@@ -47,6 +51,7 @@ return array(
 		'public/Account/security'  	=>  SITE_URL.'/setting/security',
 		'public/Account/bind'  		=>  SITE_URL.'/setting/bind',
 		'public/Account/tag'  		=>  SITE_URL.'/setting/tag',
+		'public/Account/workinfo'	=>  SITE_URL.'/setting/workinfo',
 		
 		//频道
  		'channel/Index/index'  		=>  SITE_URL.'/channel',
@@ -55,19 +60,21 @@ return array(
  		'people/Index/index'  		=>  SITE_URL.'/people',
 
  		//微吧
-		'weiba/Index/index'  		=>  SITE_URL.'/weiba',
-		'weiba/Index/weibaList'  	=>  SITE_URL.'/weiba/weibalist',
-		'weiba/Index/postList'  	=>  SITE_URL.'/weiba/postlist',
-		'weiba/Index/myWeiba'  		=>  SITE_URL.'/weiba/[type]',
-		'weiba/Index/detail'  		=>  SITE_URL.'/weiba/[weiba_id]',
-		'weiba/Index/post'  		=>  SITE_URL.'/weiba/[weiba_id]/post',
-		'weiba/Index/postDetail'  	=>  SITE_URL.'/weiba/post_[post_id]',
-		'weiba/Index/postEdit'  	=>  SITE_URL.'/weiba/post_[post_id]/edit',
-		'weiba/Index/replyEdit'  	=>  SITE_URL.'/weiba/reply_[reply_id]/edit',
-		'weiba/Manage/index'  		=>  SITE_URL.'/weiba/[weiba_id]/manage',
-		'weiba/Manage/member'  		=>  SITE_URL.'/weiba/[weiba_id]/manage/member',
-		'weiba/Manage/notify'  		=>  SITE_URL.'/weiba/[weiba_id]/manage/notify',
-		'weiba/Manage/log'  		=>  SITE_URL.'/weiba/[weiba_id]/manage/log',
+		'weiba/Index/index'  		=>  SITE_URL.'/home',
+		'weiba/Index/weibaList'  	=>  SITE_URL.'/weibalist',
+		'weiba/Index/postList'  	=>  SITE_URL.'/question/postlist',
+		'weiba/Index/myWeiba'  		=>  SITE_URL.'/question/[type]',
+		'weiba/Index/detail'  		=>  SITE_URL.'/question/c_[weiba_id]',
+		'weiba/Index/post'  		=>  SITE_URL.'/question/[weiba_id]/post',
+		'weiba/Index/postDetail'  	=>  SITE_URL.'/question/post_[post_id]',
+		'weiba/Index/postEdit'  	=>  SITE_URL.'/question/post_[post_id]/edit',
+		'weiba/Index/replyEdit'  	=>  SITE_URL.'/question/reply_[reply_id]/edit',
+		'weiba/Manage/index'  		=>  SITE_URL.'/question/[weiba_id]/manage',
+		'weiba/Manage/member'  		=>  SITE_URL.'/question/[weiba_id]/manage/member',
+		'weiba/Manage/notify'  		=>  SITE_URL.'/question/[weiba_id]/manage/notify',
+		'weiba/Manage/log'  		=>  SITE_URL.'/question/[weiba_id]/manage/log',
+		'weiba/Index/search'		=>  SITE_URL.'/question/search',
+		'weiba/Index/doFollowWeiba' =>  SITE_URL.'/question/c_[weiba_id]/dofollow',
 
 		// 日志
 		'blog/Index/index'			=>	SITE_URL.'/app/blog',

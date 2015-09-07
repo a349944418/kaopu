@@ -1263,6 +1263,7 @@ class IndexAction extends Action {
 			}
 			$postList['data'][$k]['content'] = strip_tags($v[content]);
 			$postList['data'][$k]['favorite'] = $this->_getFavoriteStatus($v['post_id']);
+			$postList['data'][$k]['url'] = U('weiba/Index/postDetail', array('post_id'=>$v['post_id']));
 		}
 		
 		$post_uids = getSubByKey($postList['data'], 'post_uid');

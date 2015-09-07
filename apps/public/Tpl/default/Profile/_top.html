@@ -1,3 +1,8 @@
+<style>
+    .Introduction p {margin-bottom: 10px;}
+    .Introduction span.level{font-size: 12px;display: inline-block;margin-left: 10px;}
+    .Introduction span.level span.score{background: #165fa4;color: #fff; display: inline-block;height: 22px; line-height: 22px; padding: 0 4px;margin-right: 4px;} 
+</style>
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
       <div class="row attention">
@@ -13,8 +18,8 @@
             </div>
             <div class="col-xs-10">
               <div class="Introduction">
-                  <p class="name">{$user_info[$uid]['uname']}</p>
-                    <p><span class="nan1"><if condition="$user_info[$uid]['sex'] eq 2">♀ 女<else />♂ 男</if></span><span class="location">来自{$user_info[$uid]['location']}</span></p>
+                  <p class="name">{$user_info[$uid]['uname']}<span class="level"><span class="score">靠谱分</span>{$credit[credit][experience][value]} <span class="wjg"></span> <span class="score">人品值</span>{$credit[credit][score][value]} <span class="wjg"></span><img src="{$credit[level][src]}" title="距离下一级{$credit[level][nextName]}还差{$credit[level][nextNeed]}靠谱分"> {$credit[level][name]}</span></p>
+                    <p><span class="nan1"><if condition="$user_info[$uid]['sex'] eq 2">♀ 女<else />♂ 男</if></span><span class="location">来自{$user_info[$uid][location]}</span></p>
                     <p class="visual">{$user_info[$uid]['intro']|getShort=100}</p>
                     <p class="planning">
                         <volist name="user_info[$uid]['weibaList']" id="vo" offset="0" length='10'>
@@ -24,7 +29,6 @@
                             ...
                         </if>
                     </p>
-                    <p class="praise">我的赞：89<span><img src="__THEME__/image/praise.png"/></span></p>
                 </div>
             </div>
         </div>

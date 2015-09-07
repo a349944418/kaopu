@@ -21,6 +21,9 @@ class ProfileAction extends Action {
 			$this->uid = model ( 'User' )->where ( $map )->getField ( 'uid' );
 		}
 		$this->assign ( 'uid', $this->uid );
+
+		$credit = model('Credit') -> getUserCredit($this->uid);
+		$this->assign('credit', $credit);
 	}
 	
 	/**
@@ -97,6 +100,7 @@ class ProfileAction extends Action {
 			$ans['data'][$k]['hcontent'] = strip_tags($v[content]);
 			$ans['data'][$k]['title'] = D('weiba_post') -> where('post_id='.$v['post_id']) -> getField('title');
 		}
+
 
 		$this->assign('ans', $ans);
 		$this->display();
