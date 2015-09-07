@@ -24,7 +24,7 @@ return array(
 		'public/Profile/following'  =>  SITE_URL.'/space/[uid]/following',
 		'public/Profile/follower'  	=>  SITE_URL.'/space/[uid]/follower',
 		'public/Profile/share'		=>	SITE_URL.'/space/[uid]/share',
-		'public/Profile/Collection'	=>	SITE_URL.'/space/[uid]/Collection',
+		'public/Profile/collection'	=>	SITE_URL.'/space/[uid]/collection',
 		'public/Profile/question'	=>	SITE_URL.'/space/[uid]/question',
 		
 		'public/Index/myFeed'  		=>  SITE_URL.'/myFeed',
