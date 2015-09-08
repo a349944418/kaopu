@@ -336,7 +336,7 @@ M.addEventFns({
 					dh = dh > lh ? lh : dh;
 					$('.rightComment').css({'left':'1260px', 'top': top+'px'});
 					$('.rightComment .review2').css({'height':dh+'px'});
-					$('.rightComment .review3-right').css({'min-height':(dh-42)+'px'})
+					$('.rightComment .review3-right').css({'min-height':(dh-34)+'px'})
 					$('.rightComment').animate({left:'600px'}).animate({left:'759.6px'});
 				})
 			}else{

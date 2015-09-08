@@ -26,7 +26,7 @@
                     </form>
                     <ul class="nav navbar-nav">
                         <volist name='site_top_nav' id='st'>
-                          <li class="<php> if(APP_NAME == $st['app_name'] || $_GET['page'] == $st['app_name']):</php>current active<php>endif;</php><php>if(isset($st[child])):</php>dropdown<php>endif;</php>"  ><a href="{$st.url}" target="{$st.target}" <php>if(isset($st[child])):</php>class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"<php>endif;</php> >{$st.navi_name}<php>if(isset($st[child])):</php><span class="caret"></span><php>endif;</php></a>
+                          <li class="<php>if(APP_NAME.'/'.ACTION_NAME == $st['app_name'] || $_GET['page'] == $st['app_name']):</php>current active<php>endif;</php><php>if(isset($st[child])):</php>dropdown<php>endif;</php>"  ><a href="{$st.url}" target="{$st.target}" <php>if(isset($st[child])):</php>class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"<php>endif;</php> >{$st.navi_name}<php>if(isset($st[child])):</php><span class="caret"></span><php>endif;</php></a>
                             <if condition="isset($st['child'])">
                                 <ul class="dropdown-menu">
                                     <volist name="st.child" id="stc">

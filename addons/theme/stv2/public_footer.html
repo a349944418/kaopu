@@ -5,9 +5,9 @@
               <div class="row">
                   <div class="col-sm-9">
                       <div class="row">
-                          <div class="col-xs-4 col-xs-offset-1" style="padding-right: 0;padding-left: 30px;">
+                          <div class="col-xs-5" style="padding-right: 0;padding-left: 30px;">
                                 <div class="gc-footlogo">
-                                    <img src="__PUBLIC__/image/foot-logo.png" width="100%"/>
+                                    <img src="__PUBLIC__/image/foot-logo.png"/>
                                     <p><a href="#">关于我们</a> / <a href="#">联系我们</a> / <a href="#">意见反馈</a></p>
                                 </div>
                             </div>
@@ -58,11 +58,11 @@
 
 <script src="{:SITE_URL}/online_check.php?uid={$mid}&uname={$user.uname}&mod={:MODULE_NAME}&app={:APP_NAME}&act={:ACTION_NAME}&action=trace"></script>
 </eq>
-<div id="topcontrol" title="返回顶部" style="position: fixed; bottom: 30px; right: 20px; opacity: 1; cursor: pointer;display:none">
+<div id="topcontrol" style="position: fixed; bottom: 30px; right: 20px; opacity: 1; cursor: pointer;display:none">
   <php>if(APP_NAME == 'weiba' && ACTION_NAME == 'postDetail'){</php>
-    <a href="javascript:;" class="to_answer"><i class="sui-icon icon-tb-comment"></i></a>
+    <a href="javascript:;" class="to_answer"><i class="sui-icon icon-tb-comment"  title="快速回答"></i></a>
   <php>}</php>
-  <a href="javascript:$('html,body').animate({ scrollTop:0});" class="top_stick"><i class="sui-icon icon-tb-top"></i></a>
+  <a href="javascript:$('html,body').animate({ scrollTop:0});" class="top_stick"  title="返回顶部"><i class="sui-icon icon-tb-top"></i></a>
 </div>
 </body>
 </html>

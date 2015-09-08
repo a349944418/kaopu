@@ -27,9 +27,9 @@ class UserAction extends AdministratorAction {
 		$this->pageTitle['addProfileCategory'] = L('PUBLIC_ADD_FIELD_CLASSIFICATION');
 		$this->pageTitle['editProfileCategory'] = L('PUBLIC_EDITCATEOGRY');
 		$this->pageTitle['verify'] = '待认证用户';
-		$this->pageTitle['verifyGroup'] = '待认证企业';
+		//$this->pageTitle['verifyGroup'] = '待认证企业';
 		$this->pageTitle['verified'] = '已认证用户';
-		$this->pageTitle['verifiedGroup'] = '已认证企业';
+		//$this->pageTitle['verifiedGroup'] = '已认证企业';
 		$this->pageTitle['addVerify'] = '添加认证';
 		$this->pageTitle['category'] = '推荐标签';
 		$this->pageTitle['verifyCategory'] = '认证分类';
@@ -968,9 +968,9 @@ class UserAction extends AdministratorAction {
 		$this->pageTab[] = array('title'=>'置顶用户','tabHash'=>'config','url'=>U('admin/User/verifyConfig'));
 		$this->pageTab[] = array('title'=>'添加认证用户','tabHash'=>'addverify','url'=>U('admin/User/addVerify'));
 		$this->pageTab[] = array('title'=>'待认证用户','tabHash'=>'verify','url'=>U('admin/User/verify'));
-		$this->pageTab[] = array('title'=>'待认证企业','tabHash'=>'verifyGroup','url'=>U('admin/User/verifyGroup'));
+		//$this->pageTab[] = array('title'=>'待认证企业','tabHash'=>'verifyGroup','url'=>U('admin/User/verifyGroup'));
 		$this->pageTab[] = array('title'=>'已认证用户','tabHash'=>'verified','url'=>U('admin/User/verified'));
-		$this->pageTab[] = array('title'=>'已认证企业','tabHash'=>'verifiedGroup','url'=>U('admin/User/verifiedGroup'));
+		//$this->pageTab[] = array('title'=>'已认证企业','tabHash'=>'verifiedGroup','url'=>U('admin/User/verifiedGroup'));
 	}
 
     /**

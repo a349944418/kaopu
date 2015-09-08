@@ -1252,6 +1252,7 @@ class IndexAction extends Action {
 		
 		$weiba_ids = getSubByKey($postList['data'], 'weiba_id');
 		$nameArr = $this->_getWeibaName($weiba_ids);
+		$domain = model('User')->getDomain();
 		//dump($postList['data']);
 		foreach($postList['data'] as $k=>$v){
 			$postList['data'][$k]['weiba'] = $nameArr[$v['weiba_id']];
@@ -1263,7 +1264,7 @@ class IndexAction extends Action {
 			}
 			$postList['data'][$k]['content'] = strip_tags($v[content]);
 			$postList['data'][$k]['favorite'] = $this->_getFavoriteStatus($v['post_id']);
-			$postList['data'][$k]['url'] = U('weiba/Index/postDetail', array('post_id'=>$v['post_id']));
+			$postList['data'][$k]['udomain'] = $domain[$v['post_uid']];
 		}
 		
 		$post_uids = getSubByKey($postList['data'], 'post_uid');

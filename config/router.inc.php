@@ -19,7 +19,7 @@ return array(
 		'public/Profile/feed'  		=>  SITE_URL.'/weibo/[feed_id]',
 		'public/Topic/index'  		=>  SITE_URL.'/topic',
 
-		'public/Profile/index'		=>	SITE_URL.'/space/[uid]',
+		'public/Profile/index'		=>	SITE_URL.'/space_[uid]',
 		'public/Profile/data'  		=>  SITE_URL.'/space/[uid]/profile',
 		'public/Profile/following'  =>  SITE_URL.'/space/[uid]/following',
 		'public/Profile/follower'  	=>  SITE_URL.'/space/[uid]/follower',
@@ -65,7 +65,7 @@ return array(
 		'weiba/Index/postList'  	=>  SITE_URL.'/question/postlist',
 		'weiba/Index/myWeiba'  		=>  SITE_URL.'/question/[type]',
 		'weiba/Index/detail'  		=>  SITE_URL.'/question/c_[weiba_id]',
-		'weiba/Index/post'  		=>  SITE_URL.'/question/[weiba_id]/post',
+		'weiba/Index/post'  		=>  SITE_URL.'/question/post',
 		'weiba/Index/postDetail'  	=>  SITE_URL.'/question/post_[post_id]',
 		'weiba/Index/postEdit'  	=>  SITE_URL.'/question/post_[post_id]/edit',
 		'weiba/Index/replyEdit'  	=>  SITE_URL.'/question/reply_[reply_id]/edit',

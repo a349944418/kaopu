@@ -43,7 +43,7 @@ span.wjg {display:inline-block; width: 10px;}
 .yw-topic1{ display:block; width:80%; margin-left:15%; text-align:center; margin-top:6px; margin-bottom:6px; background:#253A4B; border-radius:3px;}
 .yw-topic2{ margin-top:6px; line-height:24px; margin-bottom:6px; color:#04223A;}
 .yw-box{ background:url(../image/yw-box.png) repeat-x; padding-bottom:33px; position:fixed; bottom:0px; z-index:9999; width:100%;background-size:cover;-moz-background-size:cover;-webkit-background-size:cover;}
-.yw-bottom{ background:url(../image/bj-bottom.png) 0 2px repeat-x;position:fixed; bottom:0px; z-index:4; width:100%; font-family: 微软雅黑;}
+.yw-bottom{ background:url(../image/bj-bottom.png) 0 -6px repeat-x;position:fixed; bottom:0px; z-index:4; width:100%; font-family: 微软雅黑;}
 .popover {max-width: 5000px; position: static; z-index: 0; background:url(../image/yw-topic1.png) repeat; } 
 .popover.bottom>.arrow {top: 0; } .data-content {display:none;} 
 #login-bg .popover.bottom>.arrow:after {border-bottom-color: transparent; } 
@@ -215,7 +215,7 @@ a:hover{ text-decoration:none;}
 .xianshi{ width:100%; text-align:center; line-height:38px; font-size:12px;}
 .visual1{ margin-top:36px;}
 .visual1-left{ width:84px; height:85px; float:left; background:url(../image/index_head_bj.png);  padding: 7px 0 0 7px;margin-right: 5px;}
-.visual1-right{ float:left;max-width: 59%;}
+.visual1-right{ float:left;max-width: 64%;}
 .shi{ font-size:14px; color:#3c3c3c; font-weight:bold; line-height:32px;}
 .visual1-right p{ margin:0px;}
 .jue{ font-size:12px; color:#808080; line-height:20px;}
@@ -405,7 +405,7 @@ a:hover{ text-decoration:none;}
 .review2-right h6 span{ float:right; line-height:26px;}
 .review2-right h6 span b{ font-weight:100; color:#CC0001;}
 .review2{ overflow:hidden; overflow-y:scroll; overflow-x:hidden;table-layout: fixed;word-wrap:break-word;word-break:break-all;}
-.review3-right{ margin-left:7%; width:93%; border-left:1px dashed #c3c3c3;background-color: #fff; }
+.review3-right{ margin-left:7%; width:93%; border-left:1px dashed #c3c3c3;background-color: #fff; border-bottom: 1px dashed #c3c3c3;}
 .import-left{ float:left; margin-left:5%; padding-top:25px; width:20%;}
 .import-right{ float:left; width:75%;margin-bottom: 15px;}
 .import-left dl dt img{ padding:2px; border:1px solid #DEDEDE;}
@@ -471,7 +471,7 @@ button.nav_button:hover {color: white;}
 
 /*登录页*/
 .login_text {position: absolute; bottom: 38.5%; left: -100%; }
-.yw-bottom .login-bottom-message{ line-height: 86px; color: white; font-size: 24px; margin-top: 174px; display: inline-block;}
+.yw-bottom .login-bottom-message{ line-height: 54px; color: white; font-size: 24px; margin-top: 165px; display: inline-block;}
 .yw-bottom .login-bottom-message span {margin-right: 20px;}
 .yw-bottom span b {color: #fb5240; font-weight: normal;}
 .weibo-login, .qq-login {width:46px; height: 46px; display: inline-block; margin-right: 10px;position:relative;top:13px;}
@@ -489,11 +489,11 @@ button.nav_button:hover {color: white;}
 
 /*尾部*/
 .gc-foot{ background:url(../image/footbg.jpg) repeat-x top center; height:233px;overflow: hidden;}
-.gc-footlogo{ padding-top:40px;}
+.gc-footlogo{ padding-top:52px;text-align: right;}
 .gc-footlogo p a{ color:#fff;}
-.gc-footlogo p{ color:#fff; font-size:12px; line-height:36px;font-family:"微软雅黑"; text-align:center;}
-.qing-foot{ padding-left:20px; background:url(../image/gc-footlogo.png) no-repeat left center; padding-right:5%; padding-top:59px;}
-.copy{ font-size:12px; color:#c7c7c7; line-height:42px; text-align:center;}
+.gc-footlogo p{ color:#fff; font-size:12px; line-height:36px;font-family:"微软雅黑"; padding-right: 80px;}
+.qing-foot{ padding-left:20px; background:url(../image/gc-footlogo.png) no-repeat left 54px; padding-right:5%; padding-top:59px;}
+.copy{ font-size:12px; color:#c7c7c7; line-height:42px; text-align:center; margin-top: 25px;}
 .qing-foot p{ font-family:"微软雅黑"; font-size:20px; color:#fff;}
 .foot-icon{padding-top: 10px;}
 .foot-icon a{ display:inline-block; width:36px; height:36px; margin-right:10px;}

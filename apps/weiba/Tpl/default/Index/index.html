@@ -50,7 +50,7 @@
                                 <volist name="postList[data]" id="vo">
                                   <div class="higher">
                                     <h5><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><eq name="vo.post_type" value="2">【分享】-- &nbsp;</eq>{$vo.title}</a></h5>
-                                      <p class="from">{:date('Y/m/d',$vo['post_time'])} | 来自：<a href="{:U('public/Profile/index',array('uid'=>$vo['post_uid']))}">{$vo.post_uname}</a> | 阅读：{$vo.read_count}</p>
+                                      <p class="from">{:date('Y/m/d',$vo['post_time'])} | 来自：<a href="{:U('public/Profile/index',array('uid'=>$vo[udomain]))}">{$vo.post_uname}</a> | 阅读：{$vo.read_count}</p>
                                       <div class="trouble"><php>if($vo['content_img']){ echo '<img src="'.$vo[content_img].'" width="25%" style="float:left;margin-right:15px;"/>'; } </php>{$vo[content]|getShort=400}</div>
                                       <div style="clear:both"></div>
                                       <div class="problem clearfix">

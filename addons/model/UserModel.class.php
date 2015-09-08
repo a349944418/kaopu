@@ -980,6 +980,25 @@ class UserModel extends Model {
 	}
 	
 	/**
+	 * [获取用户个性域名]
+	 * @return [type] [description]
+	 */
+	public function getDomain(){
+		$res = F('zbq_domain');
+		if($res) {
+			$return = json_decode($res);
+		} else {
+			$res = $this->where('is_del = 0')->field('uid, domain')->select();
+			foreach($res as $v) {
+				$return[ $v[uid] ] = $v['domain'] ? $v['domain'] : $v['uid'];
+			}
+			F('zbq_domain', json_encode($return) , TEMP_PATH);
+		}
+
+		return $return;;
+	}
+
+	/**
 	 * 彻底删除用户的微博数据
 	 *
 	 * @param int $uid

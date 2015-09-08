@@ -26,7 +26,7 @@ return '<!-- <h3>发新贴</h3> -->
         <input type="text" class="form-control" id="weiba_flag" autocomplete="off">
         <ul class="flag_changes"></ul>
     </div>
-    <div style="text-align:right"><span style="float:left"><a href="http://localhost/kaopu/index.php?app=weiba&mod=Index&act=post&pt=1">高级模式</a></span><a href="javascript:;" onclick="close_Modal()">取消</a> &nbsp;&nbsp; <a href="javascript:;" class="btn btn-danger" style="background-color:#FC5241;color:white;" onclick="return weibaPost_submit_check(ue)">发布</a></div>
+    <div style="text-align:right"><span style="float:left"><a href="http://localhost/kaopu/question/post?pt=1">高级模式</a></span><a href="javascript:;" onclick="close_Modal()">取消</a> &nbsp;&nbsp; <a href="javascript:;" class="btn btn-danger" style="background-color:#FC5241;color:white;" onclick="return weibaPost_submit_check(ue)">发布</a></div>
 </form>
 <script src="http://localhost/kaopu/addons/theme/stv2/_static/js/input_extend.js"></script>
 <script >
