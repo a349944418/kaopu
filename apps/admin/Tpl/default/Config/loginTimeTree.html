@@ -1,0 +1,118 @@
+<include file="__THEME__/admin_header" />
+<div id="container" class="so_main">
+  	<div class="page_tit">登陆页时间轴</div>
+  	<div id="search_form" class="form2" style="display: none;">
+		<form method="post">
+		    <dl id="dl_weiba_id" class="lineD">
+	      		<dt>问题ID：</dt>
+	      		<dd>	      
+	       	       	<input type="text" onfocus="this.className='s-txt-focus'" onblur="check_pid(this);" style="width:200px" class="s-txt" value=""  name="post_id">	
+	       	       	<span id="post_id_check" style="display:none;">0</span>
+	       	       	<span style="color:red" id="post_check_message"></span>
+	       	       	<span style="color:green" id="post_check_success"></span>  
+		        </dd>
+		    </dl>
+	        <dl id="dl_weiba_name" class="lineD">
+		      	<dt>问题排序：</dt>
+		      	<dd>
+			      	<input type="text" onfocus="this.className='s-txt-focus'" onblur="this.className='s-txt'" style="width:200px" class="s-txt" value=""  name="order">
+			      	<span style="color:red" id="order_message"></span>        
+		        </dd>
+		    </dl>	        
+	        <div class="page_btm">
+	      		<input type="submit" class="btn_b" value="确定" onclick="checkForm();return false;"> &nbsp;&nbsp;<input type="button" onclick="admin.fold('search_form')" class="btn_w" value="关闭">
+	    	</div>
+    	</form>
+   	</div>
+  	<div class="Toolbar_inbox">  
+  		<a class="btn_a" onclick="admin.fold('search_form')"><span>添加问题</span></a>
+  	</div>
+	<div id="list" class="list">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0">
+		  	<tbody>
+		  		<tr id="tr0">		        
+		       		<th class="line_l">lt_id</th>    
+		       		<th class="line_l">问题id</th>    
+		       		<th class="line_l">问题发布人</th>
+		       		<th class="line_l">问题标题</th>    
+		       		<th class="line_l">排序</th>
+		       		<th class="line_l">操作</th>  
+		   		</tr>
+		   		<php>if($listData){</php>
+		   			<volist name="listData" id="vo">
+						<tr id="tr{$vo.lt_id}" overstyle="on">
+							<td>{$vo.lt_id}</td>
+							<td>{$vo.post_id}</td>
+							<td>{$vo.post_uname}</td>
+							<td><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}" target="_blank">{$vo.title}</a></td>
+							<td>{$vo.order}</td>
+							<td><a href="javascript:;" onclick="del_pid('{$vo.lt_id}')">删除</a></td>
+						</tr>
+					</volist>
+		   		<php>}else{</php>
+		   	 		<tr id="tr_null"><td align="center" colspan="100">没有需要显示的数据!</td></tr>
+		    	<php>}</php>
+		  	</tbody>
+		</table>
+  	</div>
+</div>
+<script>
+	function check_pid(obj) {
+		var pid = $('input[name=post_id]').val();
+		if(pid){
+			$.post(U('admin/Config/check_timeTreepid'),{'pid':pid},function(data){
+				if(data.error){
+					$('#post_id_check').html(0);
+					$('#post_check_success').html('');
+					$('#post_check_message').html(data.info);
+				}else{
+					$('#post_id_check').html(1);
+					$('#post_check_message').html('');
+					$('#post_check_success').html(data.info);
+				}
+				$(obj).attr('class','s-txt');
+			},'json');
+		}
+		
+	}
+
+	function checkForm() {
+		var pid = $('input[name=post_id]').val();
+		var post_id_check = $('#post_id_check').html();
+		if(!pid || !post_id_check){
+			$('#post_check_message').html('您输入的问题id有误，请检查后重新添加');
+			return false;
+		}
+
+		var order = $('input[name=order]').val();
+		if(!order){
+			$('#order_message').html('请输入该问题的排序');
+			return false;
+		}
+		$.post(U('admin/Config/addLoginTimeTree'),{'pid':pid,'order':order},function(data){
+			if(data.error) {
+				ui.error('您的操作有误，请稍后重试');
+			}else{
+				$('.btn_w').click();
+				var html = '<tr id="tr'+data.lt_id+'" overstyle="on"> <td>'+data.lt_id+'</td> <td>'+pid+'</td> <td>'+data.uname+'</td> <td><a href="'+data.url+'" target="_blank">'+data.title+'</a></td> <td>'+order+'</td> <td><a href="javascript:;" onclick="del_pid('+data.lt_id+')">删除</a></td> </tr> ';
+				if(data.before_id) {
+					$('#tr'+data.before_id).after(html);
+				}else{
+					$('#tr0').after(html);
+				}
+				$('#tr_null').remove();
+			}
+		},'json');
+	}
+
+	function del_pid(pid){
+		$.post(U('admin/Config/del_loginTimeTree'), {pid:pid}, function(data){
+			if(data.error) {
+				ui.error('操作有误，请稍后重试');
+			}else{
+				$('#tr'+pid).remove();
+			}
+		}, 'json');
+	}
+</script>
+<include file="__THEME__/admin_footer" />

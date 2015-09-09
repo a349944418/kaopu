@@ -51,6 +51,7 @@ $menu = array(
 	    		'SEO配置'	=>  U('admin/Config/setSeo'),
 	    		'页面配置同步' => U('admin/Config/updateAdminTab'),
 	    		'UCenter配置' => U('admin/Config/setUcenter'),
+	    		'登陆页时间轴'	=> U('admin/Config/loginTimeTree'),
 			),
 		),
 

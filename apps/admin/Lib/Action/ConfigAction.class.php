@@ -30,12 +30,13 @@ class ConfigAction extends AdministratorAction {
 		$this->pageTitle ['diylist'] = L ( 'PUBLIC_DIYWIDGET' );
 		$this->pageTitle ['notify'] = L ( 'PUBLIC_MAILTITLE_ADMIN' );
 		$this->pageTitle ['invite'] = '邀请配置';
-		$this->pageTitle ['inviteEmail'] = '邮件邀请';
+		//$this->pageTitle ['inviteEmail'] = '邮件邀请';
 		$this->pageTitle ['inviteLink'] = '链接邀请';
 		$this->pageTitle ['getInviteAdminList'] = '已邀请用户列表';
 		$this->pageTitle ['setSeo'] = 'SEO配置';
 		$this->pageTitle ['editSeo'] = '编辑SEO';
 		$this->pageTitle ['setUcenter'] = 'Ucenter配置';
+		$this->pageTitle ['loginTimeTree'] = '首页时间轴设置';
 		parent::_initialize ();
 	}
 	
@@ -2157,5 +2158,85 @@ define('UC_SYNC', {$ucopen});
 		$data ['ucenter_config'] = $config;
 		$this->savePostUrl = U ( 'admin/Config/setUcenter' );
 		$this->displayConfig ( $data );
+	}
+
+	/**
+	 * 登录页时间轴文章设置
+	 * @return [type] [description]
+	 */
+	public function loginTimeTree() {
+		$listData = D('login_time_tree')->order('`order`')->select();
+		if($listData) {
+			foreach ($listData as $k=>$v){
+				$res = D('weiba_post')->where('post_id='.$v['post_id'])->field('post_uid,title')->find();
+				$res['post_uname'] = Model('User')->where('uid='.$v['post_uid'])->getField('uname');
+				$listData[$k] = array_merge($res, $v);
+			}
+		}
+		$this->assign('listData', $listData);
+		$this->display();
+	}
+
+	/**
+	 * 添加首页时间轴文章
+	 */
+	public function addLoginTimeTree() {
+		$data['post_id'] = $_POST['pid'];
+		$data['order'] = $_POST['order'];
+		$lt_id = D('login_time_tree')->add($data);
+		// $data['post_id'] = $data['order'] = 1;
+		// $lt_id = 5;
+		if($lt_id){
+			$res = D('weiba_post') -> where('post_id='.$data['post_id']) -> field('title, post_uid') -> find();
+			$res['uname'] = Model('User') -> where('uid='.$res['post_uid']) -> getField('uname');
+			$res['before_id'] = D('weiba_post') -> where('lt_id<'.$lt_id) -> limit(1) -> getField('lt_id');
+			$res['lt_id'] = $lt_id;
+			$res['url'] = U('weiba/Index/postDetail',array('post_id'=>$data['post_id']));
+		} else {
+			$res['error'] = 1;
+		}
+		echo json_encode($res);
+	}
+
+	/**
+	 * 检查输入的问题id是否合法
+	 * @return [type] [description]
+	 */
+	public function check_timeTreepid() {
+		$pid = $_POST['pid'];
+		if(!$pid) {
+			$res['error'] = 1;
+		}else{
+			$ltid = D('login_time_tree')->where('post_id='.$pid)->getField('lt_id');
+			if($ltid) {
+				$res['error'] = 1;
+				$res['info'] = '已添加过，不能重复添加';
+			} else {
+				$title = D('weiba_post') -> where('post_id='.$pid) -> getField('title');
+				if(!$title) {
+					$res['error'] = 1;
+					$res['info'] = '您输入的问题不存在，请确认后重新添加';
+				} else {
+					$res['info'] = '您添加的问题是:《<a href="'.U('weiba/Index/postDetail',array('post_id'=>$pid)).'" target="_blank">'.$title.'</a>》';
+				}
+			}
+		}
+
+		echo json_encode($res);
+	}
+
+	public function del_loginTimeTree() {
+		$pid = $_POST['pid'];
+		if(!$pid) {
+			$res['error'] = 1;
+		} else {
+			$flag = D('login_time_tree')->where('lt_id='.$pid)->delete();
+			if($flag){
+				$res['error'] = 0;
+			}else{
+				$res['error'] = 1;
+			}
+		}
+		echo json_decode($res);
 	}
 }

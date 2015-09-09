@@ -1,11 +1,12 @@
 <!--评论列表-->
+
 <eq name='showlist' value="1"> 
 <div class="comment_lists" id="commentlist_{$post_id}">
     <volist name='list.data' id='vo' key="k">
 		  <div class="comment_list clearfix figure" model-node="comment_list">
         <dl class="clearfix">
           <dt><a href="{$vo.user_info.space_url}" target="_blank"><img src="{$vo.user_info.avatar_tiny}" width="25"/></a></dt>
-          <dd>{$vo.user_info.space_link}</dd>
+          <dd>{$vo.user_info.space_link_no}</dd>
         </dl>
         <div class="reply_content">
           {$vo.content}

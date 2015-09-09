@@ -30,7 +30,7 @@
             	<img src="{$user_info[$vo[uid]][avatar_small]}">
             </div>
             <div class="new1-right">
-            	<p class="manjusri">{$user_info[$vo[uid]]['space_link']}<span>[{$user_info[$vo[uid]]['location']}]</span></p>
+            	<p class="manjusri">{$user_info[$vo[uid]]['space_link_no']}<span>[{$user_info[$vo[uid]]['location']}]</span></p>
                 <p class="represent">{$vo.content}</p>
                 <div class="minute">{$vo.ctime|friendlyDate} <!-- |<a href="#">举报</a> --><p><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><a href="javascript:click_zan('{$vo.reply_id}');" id="reply_id{$vo.reply_id}">赞<span>{$vo.zan}</span></a> <b>|</b> <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><a href="javascript:reply_comment2('{$vo[uid]}','{$user_info[$vo[uid]][uname]}');">回复</a></p></div>
             </div>

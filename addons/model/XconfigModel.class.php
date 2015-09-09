@@ -51,7 +51,6 @@ class XconfigModel extends Model {
 	 */
 	public function pagekey_get($key) {
 		$key = $this->_strip_key($key);	
-		
 		$keys = explode(':', $key);
 		static $_res = array();
 		if(isset($_res[$key])) {
@@ -75,7 +74,6 @@ class XconfigModel extends Model {
 		if(isset($_res[$list_name]) && !$nostatic) {
 			return $_res[$list_name];
 		}
-		
 		$cache_id = '_system_config_lget_'.$list_name;
 		
 		if(($data = F($cache_id)) === false || $data == '' || empty($data)) {
@@ -93,6 +91,7 @@ class XconfigModel extends Model {
 		//dump($data);exit;
 		$_res[$list_name] = $data;
 		return $_res[$list_name];
+
 	}
 
 	/**

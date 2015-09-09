@@ -54,14 +54,42 @@ class PassportAction extends Action
         !empty($data['title']) && $this->setTitle($data['title']);
         !empty($data['keywords']) && $this->setKeywords($data['keywords']);
         !empty($data['des'] ) && $this->setDescription ( $data ['des'] );
-		
-		$login_bg = getImageUrlByAttachId( $this->site ['login_bg'] );
-		if(empty($login_bg))
-			$login_bg = APP_PUBLIC_URL . '/image/body-bg2.jpg';
         
-		$this->assign('login', 1);
-        $this->assign('login_bg', $login_bg);
-        
+
+
+        // 时间轴数据
+        $domain = model('User')->getDomain();
+        $map['is_del'] = 0; 
+        $limit = 10;
+        $setlist = D('login_time_tree')-> select();
+        if($setlist) {  	
+        	foreach($setlist as $k=>$v){
+        		$tmp = D('weiba_post')->where('is_del = 0 and post_id='.$v['post_id'])->field('post_uid, content, title')->find();
+        		$setlist[$k]['post_uname'] = D('user') -> where('uid='.$tmp['post_uid']) -> getField('uname');
+        		$setlist[$k]['udomain'] = $domain[$tmp['post_uid']];
+        		$setlist[$k]['content'] = strip_tags($tmp['content']);
+        		$setlist[$k]['title'] = $tmp['title'];
+        		$str_ids .= $v['post_id'].',';
+        	}
+        	$str_ids = rtrim($str_ids, ',');
+        	$map['post_id'] = array('not in', $str_ids);
+        }else{
+        	$setlist = array();
+        }
+        $limit1 = $limit - count($setlist);		
+		$postList = D('weiba_post')->where($map)->limit($limit1)->order('reply_all_count desc')->field('post_uid, content, title, post_id')->select();
+		$i = 1;
+		foreach($postList as $k=>$v){
+			$postList[$k]['post_uname'] = D('user') -> where('uid='.$v['post_uid']) -> getField('uname');
+			$postList[$k]['udomain'] = $domain[$v['post_uid']];
+			$postList[$k]['content'] = strip_tags($v[content]);
+			$postList[$k]['order'] = $i+0.1;
+			$i++;
+		}
+		$postList = array_merge($postList, $setlist);
+		$postList = multi_array_sort($postList,'order');
+		$this->assign('postList', $postList);
+        $this->assign('login', 1);
 		$this->display('login');
 	}
 	

@@ -258,7 +258,7 @@ class AdministratorAction extends Action {
     private function _assignPageKeyData($detailData = false){
 
     	$pageKeyData = model('Xconfig')->pagekey_get('pageKey:'.$this->pageKey);
-       
+        //dump($this->pageKey);
         $this->assign('pageKeyData',$pageKeyData);
 
 

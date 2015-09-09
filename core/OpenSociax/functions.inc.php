@@ -2573,3 +2573,26 @@ function format_array_intval ($str) {
 
     return $arr;
 }
+
+/**
+ * 二维数组根据某个值排序
+ * @param  [type] $multi_array [要排序的二位数组]
+ * @param  [type] $sort_key    [排序的值所对应的key]
+ * @param  [type] $sort        [排序方式]
+ * @return [type]              [description]
+ */
+function multi_array_sort($multi_array,$sort_key,$sort=SORT_ASC){ 
+    if(is_array($multi_array)){ 
+        foreach ($multi_array as $row_array){ 
+            if(is_array($row_array)){ 
+                $key_array[] = $row_array[$sort_key]; 
+            }else{ 
+                return false; 
+            } 
+        } 
+    }else{ 
+        return false; 
+    } 
+    array_multisort($key_array,$sort,$multi_array); 
+    return $multi_array; 
+} 
