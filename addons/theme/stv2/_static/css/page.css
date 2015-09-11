@@ -289,7 +289,7 @@ a:hover{ text-decoration:none;}
 .problem-focused p img{ padding-right:1%; margin-bottom:3px;}
 .focused a{ display:inline-block; background:#FC5241; color:#fff; line-height:32px; padding:0 2%; font-size:14px;}
 .focused span{ color:#227AC2;}
-.focused{ color:#999; font-size:12px;}
+.focused{ color:#999; font-size:12px; margin-bottom: 10px;}
 .related{}
 .related h6{ font-size:14px; font-weight:bold; color:#232323; line-height:30px; padding-top:11px; border-top:1px solid #EEE;}
 .related p{ line-height:22px; font-size:12px; margin:0px;}

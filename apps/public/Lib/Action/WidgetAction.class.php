@@ -38,7 +38,8 @@ class WidgetAction extends Action
             $this->error($result['info']);
         }
         if(isset($result['status']) && $result['status']){
-            $this->success($result['info']);
+            //$this->success($result['info']);
+            header('Location: '.$result['url']);
         }
 	}
 
