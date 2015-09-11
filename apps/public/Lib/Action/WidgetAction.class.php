@@ -31,8 +31,6 @@ class WidgetAction extends Action
         $param['res'] = &$result;
         $param['type'] = $_REQUEST['type'];
         Addons::addonsHook(t($_GET['addon']),t($_GET['hook']),$param);
-        dump($result());
-        die();
         isset($result['url']) && $this->assign("jumpUrl",$result['url']);
         isset($result['title']) && $this->setTitle($result['title']);
         isset($result['jumpUrl']) && $this->assign('jumpUrl',$result['jumpUrl']);
