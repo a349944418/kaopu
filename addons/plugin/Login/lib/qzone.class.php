@@ -5,7 +5,8 @@ class qzone{
 		if(!$callbackurl)
 			$callbackurl = Addons::createAddonShow('Login','no_register_display',array('type'=>$type));
 		
-		return urlencode($callbackurl);
+		//return urlencode($callbackurl);
+		return 'http://kaopu.ren/qqLogin';
 	}
 	public function getUrl($callbackurl){
 		
