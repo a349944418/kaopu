@@ -598,7 +598,12 @@ class LoginHooks extends Hooks {
         if (count ( array_filter ( $check ) ) == count ( $data[$type] ) && in_array($type,$platform_options['open'])) {
             $this->_loadTypeLogin($type);
             $object = new $type ();
-            $url = Addons::createAddonShow('Login','no_register_display',array('type'=>$type));
+            if($type == 'qzone'){
+                $url = 'http://kaopu.ren/qqLogin';
+            }else{
+                $url = Addons::createAddonShow('Login','no_register_display',array('type'=>$type));
+            }
+            
             $url = $object->getUrl($url);
            // if(!$url){
                 //dump($type.'-login-error:'.$object->getError());

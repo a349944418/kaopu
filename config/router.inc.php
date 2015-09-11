@@ -64,7 +64,7 @@ return array(
 		'weiba/Index/weibaList'  	=>  SITE_URL.'/weibalist',
 		'weiba/Index/postList'  	=>  SITE_URL.'/question/postlist',
 		'weiba/Index/myWeiba'  		=>  SITE_URL.'/question/[type]',
-		'weiba/Index/detail'  		=>  SITE_URL.'/question/c_[weiba_id]',
+		'weiba/Index/detail'  		=>  SITE_URL.'/topic/c_[weiba_id]',
 		'weiba/Index/post'  		=>  SITE_URL.'/question/post',
 		'weiba/Index/postDetail'  	=>  SITE_URL.'/question/post_[post_id]',
 		'weiba/Index/postEdit'  	=>  SITE_URL.'/question/post_[post_id]/edit',
