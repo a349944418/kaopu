@@ -1,10 +1,31 @@
 <include file="__THEME__/public_header" />
 <div class="center">
     <div class="container-fluid">
-        <div class="row">
-            <img src="__THEME__/image/container-fluid.jpg" width="100%"/>
+            <div class="row" style="position:relative;" style='overflow:hidden'>
+                <img src="__THEME__/image/nav_back/{$nav_top_back}.jpg" width="100%" id="cur_bg"/>
+                <eq name="self_flag" value="1">
+                  <img class="set_space_top_pic" src="__THEME__/image/space_jiao.png" />
+                  <div id="nav_top_set">
+                    <div class="spic <eq name='nav_top_back' value='tu0'>spic_checked</eq>">
+                      <img src="__THEME__/image/nav_back/tu0_s.jpg" data-alt="tu0" class="suo">
+                      <img src="__THEME__/image/yuan2.png" class="checked">
+                    </div>
+                    <div class="spic <eq name='nav_top_back' value='tu1'>spic_checked</eq>"  >
+                      <img src="__THEME__/image/nav_back/tu1_s.jpg" data-alt="tu1" class="suo">
+                      <img src="__THEME__/image/yuan2.png" class="checked">
+                    </div>
+                    <div class="spic <eq name='nav_top_back' value='tu2'>spic_checked</eq>">
+                      <img src="__THEME__/image/nav_back/tu2_s.jpg" data-alt="tu2" class="suo">
+                      <img src="__THEME__/image/yuan2.png" class="checked">
+                    </div>
+                    <div class="spic <eq name='nav_top_back' value='tu3'>spic_checked</eq>">
+                      <img src="__THEME__/image/nav_back/tu3_s.jpg" data-alt="tu3" class="suo">
+                      <img src="__THEME__/image/yuan2.png" class="checked">
+                    </div>
+                  </div>
+                </eq>
+            </div>
         </div>
-    </div>
     <div class="container">
         <include file="_top" />
         <div class="row">
@@ -37,6 +58,26 @@
         </div>
     </div>
 </div>
+<script>
+  $(function(){
 
+    $('.set_space_top_pic').click(function(){
+      var right = $('#nav_top_set').css('right');
+      if(right == '0px') {
+        $('#nav_top_set').animate({right:"-378px"});
+      } else {
+        $('#nav_top_set').animate({right:"0"});
+      }      
+    })
+
+    $('#nav_top_set .spic').click(function(){
+      var st = $(this).find('.suo').attr('data-alt');
+      $(this).siblings().removeClass('spic_checked');
+      $(this).addClass('spic_checked');
+      $('#cur_bg').attr('src',THEME_URL+'/image/nav_back/'+st+'.jpg');
+      $.post(U('public/Profile/set_nav_bg'), {st:st}, function(){}, 'json');
+    })
+  })
+</script>
 <include file="__THEME__/public_footer" />
 <script src="__THEME__/js/module.weibo.js"></script>

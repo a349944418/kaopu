@@ -24,6 +24,14 @@ class ProfileAction extends Action {
 
 		$credit = model('Credit') -> getUserCredit($this->uid);
 		$this->assign('credit', $credit);
+
+		if($this->uid == $this->mid) {
+			$this->assign('self_flag', 1);
+		}
+
+		$nav_top_back = D('user_theme') -> where('uid='.$this->uid) -> getField('top_nav');
+		$nav_top_back = $nav_top_back ? $nav_top_back : "tu0";
+		$this->assign('nav_top_back', $nav_top_back);
 	}
 	
 	/**
@@ -50,7 +58,7 @@ class ProfileAction extends Action {
 		}
 		// 个人空间头部
 		$this->_top ();
-		
+
 		// 判断隐私设置
 		$userPrivacy = $this->privacy ( $this->uid );
 		if ($userPrivacy ['space'] !== 1) {
@@ -62,7 +70,7 @@ class ProfileAction extends Action {
 		} else {
 			$this->_assignUserInfo ( $this->uid );
 		}
-		
+
 		// 添加积分
 		model ( 'Credit' )->setUserCredit ( $this->uid, 'space_access' );
 		
@@ -100,7 +108,6 @@ class ProfileAction extends Action {
 			$ans['data'][$k]['hcontent'] = strip_tags($v[content]);
 			$ans['data'][$k]['title'] = D('weiba_post') -> where('post_id='.$v['post_id']) -> getField('title');
 		}
-
 
 		$this->assign('ans', $ans);
 		$this->display();
@@ -695,6 +702,21 @@ class ProfileAction extends Action {
 		$this->assign ( 'last_feed', $last_feed );
 	}
 	
+	/**
+	 * 设置个人首页头部背景图
+	 */
+	public function set_nav_bg() {
+		$st = t($_POST['st']);
+		$tid = D('user_theme')->where('uid='.$this->mid)->getField('tid');
+		$data['top_nav'] = $st;
+		if($tid) {
+			D('user_theme')->where('tid='.$tid)->save($data);
+		}else{
+			$data['uid'] = $this->mid;
+			D('user_theme')->add($data);
+		}
+	}
+
 	/**
 	 * 调整分组列表
 	 * 

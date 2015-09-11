@@ -84,6 +84,8 @@ function replycomment(){
                     }
                     $('#reply_comment_sub').attr('to_uid', y_to_uid);
                     $('#mini_editor_textarea').val('');
+                    var reply_count1 = $('#reply_answer_'+to_reply_id).html();
+                    $('#reply_answer_'+to_reply_id).html( parseInt(reply_count1) + 1 );
                 }
                 addComment = false;
     },'json');
