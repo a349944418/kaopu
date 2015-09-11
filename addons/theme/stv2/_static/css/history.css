@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* history */
-#history{width:680px;height:450px;position:relative;margin:50px 0;float: right;}
+#history{width:680px;position:relative;margin:50px 0;float: right;}
 .title{height:123px;}
 #circle{
 	width:108px;height:130px;position:absolute;top:0;left:85px;text-indent:0;text-align:center;
