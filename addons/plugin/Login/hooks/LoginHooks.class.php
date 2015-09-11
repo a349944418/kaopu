@@ -524,27 +524,62 @@ class LoginHooks extends Hooks {
                         $syncdata ['oauth_token_secret'] = $_SESSION [$type] ['access_token'] ['oauth_token_secret'];
                         D('Login')->save ( $syncdata );
                     }
-                    model('Passport')->loginLocalWithoutPassword($user['uname']);
+					//var_dump($user);
+                    $expire = 3600 * 24 * 30;
+					cookie('TSV3_LOGGED_USER', $this->jiami(C('SECURE_CODE').".{$user['uid']}"), $expire);
+					cookie('TSV3_ACTIVE_TIME',time() + 60 * 30);
+					cookie('login_error_time', null);
+					$_SESSION['mid'] = intval($user['uid']);
+					$_SESSION['SITE_KEY']=getSiteKey();
                     $result ['status'] = 1;
                     $result ['url'] = $GLOBALS['ts']['site']['home_url'];
                     $result ['info'] = "同步登录成功";
                     return;
                 }
-            }
+            }else{
 
             $regInfo = model('Xdata')->get('admin_Config:register');
             $regInfo['bindemail'] = model('AddonData')->get('login:bindemail');
-            $this->assign('config', $regInfo);
+            //====$this->assign('config', $regInfo);
             //没绑定过，去注册页面
-            $this->assign ( 'user', $userinfo );
-            $this->assign ( 'type', $type );
-            $this->assign ( 'typeName', self::$validAlias[$type]);
+            //====$this->assign ( 'user', $userinfo );
+            //====$this->assign ( 'type', $type );
+            //====$this->assign ( 'typeName', self::$validAlias[$type]);
             // 设置token的相关值
             $oauth_token = isset($_GET['oauth_token']) ? t($_GET['oauth_token']) : $_SESSION[$type]['access_token']['oauth_token'];
-            $this->assign('oauth_token', $oauth_token);
+            //====$this->assign('oauth_token', $oauth_token);
             $oauth_token_secret = isset($_GET['oauth_token_secret']) ? t($_GET['oauth_token_secret']) : $_SESSION[$type]['access_token']['oauth_token_secret'];
-            $this->assign('oauth_token_secret', $oauth_token_secret);
-            $this->display ( "login" );
+            //====$this->assign('oauth_token_secret', $oauth_token_secret);
+            //====$this->display ( "login" );
+			//====不填写信息，强行写入用户数据，定位用户为QQ游客，除了浏览资料其他一概无权限
+			$usertempinfo = array(
+								'uname' => $userinfo['uname'],
+								'is_audit' => 1,
+								'is_active' => 1,
+								'is_init' => 1,
+								'ctime' => time(),
+								'identity' => 1
+							);
+			$login_uid = D('user')->add($usertempinfo);
+			$logininfo = array(
+							'uid' => $login_uid,
+							'type_uid' => $userinfo['id'],
+							'type' => $type,
+							'oauth_token' => $oauth_token,
+							'oauth_token_secret' => $oauth_token_secret
+						);
+			D('login')->add($logininfo);
+			$expire = 3600 * 24 * 30;
+			cookie('TSV3_LOGGED_USER', $this->jiami(C('SECURE_CODE').".{$login_uid}"), $expire);	
+			cookie('TSV3_ACTIVE_TIME',time() + 60 * 30);
+			cookie('login_error_time', null);
+			$_SESSION['mid'] = intval($login_uid);
+			$_SESSION['SITE_KEY']=getSiteKey();
+			$result ['status'] = 1;
+            $result ['url'] = $GLOBALS['ts']['site']['home_url'];
+            $result ['info'] = "登录成功";
+            return;	
+			}
         }
     }
 
@@ -1102,4 +1137,29 @@ class LoginHooks extends Hooks {
             include_once $this->path . "/lib/{$type}.class.php";
         }
     }
+	
+	private function jiami($txt, $key = null) {
+		empty($key) && $key = C('SECURE_CODE');
+		//有mcrypt扩展时
+		if(function_exists('mcrypt_module_open')){
+			return desencrypt($txt, $key);
+		}
+		//无mcrypt扩展时
+		$chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-=_";
+		$nh = rand(0, 64);
+		$ch = $chars[$nh];
+		$mdKey = md5($key.$ch);
+		$mdKey = substr($mdKey, $nh % 8, $nh % 8 + 7);
+		$txt = base64_encode($txt);
+		$tmp = '';
+		$i = 0;
+		$j = 0;
+		$k = 0;
+		for($i = 0; $i < strlen($txt); $i++) {
+			$k = $k == strlen($mdKey) ? 0 : $k;
+			$j = ($nh + strpos($chars, $txt [$i]) + ord($mdKey[$k++])) % 64;
+			$tmp .= $chars[$j];
+		}
+		return $ch.$tmp;
+	}
 }
