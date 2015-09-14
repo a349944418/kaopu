@@ -286,15 +286,15 @@ class RegisterAction extends Action
 		$password = trim($_POST['Reg_pwd']);
 		// $repassword = trim($_POST['repassword']);
 
+		if(!$this->_register_model->isValidName($uname)) {
+			$this->error($this->_register_model->getLastError());
+		}
+
 		//检查验证码
 		/*
 		if (md5(strtoupper($_POST['verify'])) != $_SESSION['verify']) {
 			$this->error('验证码错误');
-		}
-		
-		if(!$this->_register_model->isValidName($uname)) {
-			$this->error($this->_register_model->getLastError());
-		}
+		}		
 
 		if(!$this->_register_model->isValidPassword($password, $repassword)){
 			$this->error($this->_register_model->getLastError());
@@ -342,10 +342,19 @@ class RegisterAction extends Action
 		//如果包含中文将中文翻译成拼音
 		if ( preg_match('/[\x7f-\xff]+/', $map['uname'] ) ){
 			//昵称和呢称拼音保存到搜索字段
-			$map['search_key'] = $map['uname'].' '.model('PinYin')->Pinyin( $map['uname'] );
+			$map['PY'] = model('PinYin')->Pinyin( $map['uname'] );
+			$map['search_key'] = $map['uname'].' '.$map['PY'];
+			
 		} else {
-			$map['search_key'] = $map['uname'];
+			$map['PY'] = $map['search_key'] = $map['uname'];
 		}
+		$count_PY = $this->_user_model->where('PY="'.$map[PY].'"')->count();
+		if($count_PY) {
+			$map['domain'] = $map['PY'].'-'.$count_PY;
+		} else {
+			$map['domain'] = $map['PY'];
+		}
+		
 		$uid = $this->_user_model->add($map);
 		if($uid) {
 			// 添加积分
@@ -643,7 +652,7 @@ class RegisterAction extends Action
     public function isEmailAvailable_invite() {
 		$email = t($_POST['email']);
 		if(empty($email)) {
-			exit($this->ajaxReturn(null, '', 1));
+			exit($this->ajaxReturn(null, '', false));
 		}
 		$result = $this->_register_model->isValidEmail_invite($email);
 		$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);
@@ -652,8 +661,22 @@ class RegisterAction extends Action
 	/**
 	 * 验证昵称是否已被使用
 	 */
+	public function isNameAvailable() {
+		$uname = t($_GET['Reg_name']);
+		$oldName = t($_POST['old_name']);
+		$result = $this->_register_model->isValidName($uname, $oldName);
+		$result = $result ? "true" : "false";
+		echo $result;
+	}
+
+	/**
+	 * 验证昵称是否已被使用
+	 */
 	public function isUnameAvailable() {
 		$uname = t($_POST['uname']);
+		if(empty($uname)){
+			exit($this->ajaxReturn(null, '昵称不能为空', false));
+		}
 		$oldName = t($_POST['old_name']);
 		$result = $this->_register_model->isValidName($uname, $oldName);
 		$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);

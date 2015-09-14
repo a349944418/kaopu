@@ -50,7 +50,27 @@ $(function(){
       var button = $(e.relatedTarget);
       var type = button.data('whatever');
       var modal = $(this);
-      if(type == 'middle_school') {
+      if(type == 'register') {
+          modal.find('.modal-title').text('欢迎您的注册');
+          modal.find('.modal-content').css({'background':'#000', 'color':'#fff'})
+          modal.find('.modal-body').html('<img src="'+THEME_URL+'/image/loading1.gif" style="display:block;width:75px;margin:30px auto;">');
+          $('.close').css({'color':'#fff', 'opacity':'1', 'font-weight':'normal', 'font-size': '30px'});
+          $('.close:hover').css({'color':'#fff'})
+          $('.modal-dialog').addClass('modal-sm');
+          $.post(U("public/Register/ajaxReg"),{},function(data){
+              modal.find('.modal-body').html(data);
+          },'html');
+      } else if (type == 'login') {
+          modal.find('.modal-title').text('登陆社区');
+          modal.find('.modal-content').css({'background':'#000', 'color':'#fff'})
+          modal.find('.modal-body').html('<img src="'+THEME_URL+'/image/loading1.gif" style="display:block;width:75px;margin:30px auto;">');
+          $('.close').css({'color':'#fff', 'opacity':'1', 'font-weight':'normal', 'font-size': '30px'});
+          $('.close:hover').css({'color':'#fff'})
+          $('.modal-dialog').addClass('modal-sm');
+          $.post(U("public/Passport/ajaxlogin"),{},function(data){
+              modal.find('.modal-body').html(data);
+          },'html');
+      } else if(type == 'middle_school') {
           $('.modal-dialog').addClass('modal-lg');
           $.post(U("public/Register/ajaxSchool"),{t:'middle', id: '110000'},function(data){
             modal.find('.modal-body').html(data);

@@ -30,7 +30,7 @@
     <div class="container">
         <include file="_top" />
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-10 col-md-offset-1 content-row">
                 <volist name="favorite.data" id="vo">
                     <div class="row experiment">
                         <p class="enlightenment"><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}" style="color:black;">{$vo.title}</a><span>---{$vo.favorite_count}关注| {$vo.reply_count}回答 | {:date('Y/m/d',$vo['post_time'])} </span></p>

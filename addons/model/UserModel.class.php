@@ -47,6 +47,7 @@ class UserModel extends Model {
 			35 => 'industryP',
 			36 => 'industryC',
 			37 => 'industry_names',
+			38 => 'PY',
 			'_autoinc' => true,
 			'_pk' => 'uid' 
 	);
@@ -984,13 +985,20 @@ class UserModel extends Model {
 	 * @return [type] [description]
 	 */
 	public function getDomain(){
+		//F('zbq_domain', NULL, TEMP_PATH);
 		$res = F('zbq_domain');
 		if($res) {
 			$return = json_decode($res);
 		} else {
-			$res = $this->where('is_del = 0')->field('uid, domain')->select();
+			$res = $this->where('is_del = 0')->field('uid, search_key, domain')->select();
 			foreach($res as $v) {
-				$return[ $v[uid] ] = $v['domain'] ? $v['domain'] : $v['uid'];
+				if(!$v['domain']) {
+					$arr = explode(' ', $v['search_key']); 
+					$return[ $v[uid] ] = $arr[1] ? $arr[1] : $arr[0];
+				} else {
+					$return[ $v[uid] ] = $v['domain'];
+				}
+				
 			}
 			F('zbq_domain', json_encode($return) , TEMP_PATH);
 		}

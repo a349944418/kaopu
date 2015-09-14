@@ -18,7 +18,9 @@ class ProfileAction extends Action {
 			$this->uid = intval ( $_GET ['uid'] );
 		} else {
 			$map ['domain'] = t ( $_GET ['uid'] );
-			$this->uid = model ( 'User' )->where ( $map )->getField ( 'uid' );
+			$domain_array = model('User') -> getDomain();
+			$this->uid = array_search($map['domain'], $domain_array);
+			//$this->uid = model ( 'User' )->where ( $map )->getField ( 'uid' );
 		}
 		$this->assign ( 'uid', $this->uid );
 
@@ -45,11 +47,19 @@ class ProfileAction extends Action {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * 个人档案展示页面
 	 */
 	public function index() {
+		$this->answer();
+	}
+
+
+	/**
+	 * 个人回答
+	 */
+	public function answer() {
 		// 获取用户信息
 		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
 		// 用户为空，则跳转用户不存在

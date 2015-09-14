@@ -605,6 +605,7 @@ class LoginHooks extends Hooks {
             }
             
             $url = $object->getUrl($url);
+            
            // if(!$url){
                 //dump($type.'-login-error:'.$object->getError());
             //}

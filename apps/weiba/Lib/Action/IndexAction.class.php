@@ -24,8 +24,8 @@ class IndexAction extends Action {
 		$this->_postList();
 
 
-		$this->setTitle( '微吧首页' );
-		$this->setKeywords( '微吧首页' );
+		$this->setTitle( '首页' );
+		$this->setKeywords( '首页' );
 		$this->display();
 	}
 
@@ -75,8 +75,8 @@ class IndexAction extends Action {
 		$this->assign( 'cid' , $cid );
 		$this->assign('nav','weibalist');
 		$this->assign( 'weibacate' , $weibacate );
-		$this->setTitle( '微吧列表' );
-		$this->setKeywords( '全站微吧列表' );
+		$this->setTitle( '话题' );
+		$this->setKeywords( '话题' );
 		$this->display();
 	}
 

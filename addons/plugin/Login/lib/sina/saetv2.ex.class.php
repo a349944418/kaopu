@@ -153,7 +153,7 @@ class SaeTOAuthV2 {
 		$params['response_type'] = $response_type;
 		$params['state'] = $state;
 		$params['display'] = $display;
-		$params['forcelogin'] = true;
+		$params['forcelogin'] = 'true';
 		return $this->authorizeURL() . "?" . http_build_query($params);
 	}
 	/**

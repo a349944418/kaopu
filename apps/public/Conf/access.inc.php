@@ -13,6 +13,9 @@ return array (
 
 		// 个人主页
 		'public/Profile/index' => true,
+		'public/Profile/question' => true,
+		'public/Profile/collection' => true,
+		'public/Profile/share' => true,
 		'public/Profile/following' => true,
 		'public/Profile/follower' => true,
 		'public/Profile/data' => true,

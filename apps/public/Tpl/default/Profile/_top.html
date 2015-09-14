@@ -1,7 +1,8 @@
 <style>
     .Introduction p {margin-bottom: 10px;}
     .Introduction span.level{font-size: 12px;display: inline-block;margin-left: 10px;position: relative;top: -3px;}
-    .Introduction span.level span.score{background: #165fa4;color: #fff; display: inline-block;height: 22px; line-height: 22px; padding: 0 4px;margin-right: 4px;} 
+    .Introduction span.level span.score{background: #165fa4;color: #fff; display: inline-block;height: 22px; line-height: 22px; padding: 0 4px;margin-right: 4px;}
+    .content-row {min-height: 300px;} 
 </style>
 <div class="row">
     <div class="col-md-10 col-md-offset-1">
@@ -38,16 +39,16 @@
     <div class="col-md-3 col-md-offset-7">
       <div class="row text-center">
           <div class="col-xs-3 questions">
-              <a href="{:U('public/Profile/question',array('uid'=>$uid))}"  class="<if condition="ACTION_NAME eq 'question'">active</if>">提问<br />{$user_info[$uid]['postCount']|default=0}</a>
+              <a href="{:U('public/Profile/question',array('uid'=>$_GET[uid]))}"  class="<if condition="ACTION_NAME eq 'question'">active</if>">提问<br />{$user_info[$uid]['postCount']|default=0}</a>
             </div>
             <div class="col-xs-3 questions">
-              <a href="{:U('public/Profile/index',array('uid'=>$uid))}" class="<if condition="ACTION_NAME eq 'index'">active</if>">回答<br/>{$user_info[$uid]['replyCount']|default=0}</a>
+              <a href="{:U('public/Profile/answer',array('uid'=>$_GET[uid]))}" class="<if condition="ACTION_NAME eq 'answer'">active</if>">回答<br/>{$user_info[$uid]['replyCount']|default=0}</a>
             </div>
             <div class="col-xs-3 questions">
-              <a href="{:U('public/Profile/share',array('uid'=>$uid))}" class="<if condition="ACTION_NAME eq 'share'">active</if>">分享<br />{$user_info[$uid]['shareCount']}</a>
+              <a href="{:U('public/Profile/share',array('uid'=>$_GET[uid]))}" class="<if condition="ACTION_NAME eq 'share'">active</if>">分享<br />{$user_info[$uid]['shareCount']}</a>
             </div>
             <div class="col-xs-3 questions">
-              <a href="{:U('public/Profile/collection',array('uid'=>$uid))}" class="<if condition="ACTION_NAME eq 'collection'">active</if>">收藏<br />{$user_info[$uid]['favoriteCount']|default=0}</a>
+              <a href="{:U('public/Profile/collection',array('uid'=>$_GET[uid]))}" class="<if condition="ACTION_NAME eq 'collection'">active</if>">收藏<br />{$user_info[$uid]['favoriteCount']|default=0}</a>
             </div>
         </div>
     </div>

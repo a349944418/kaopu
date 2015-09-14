@@ -24,13 +24,6 @@
         })
     })
 
-    function showReg(){
-        $('#comModal').find('.modal-title').text('欢迎您的注册');
-        $('#comModal').find('.modal-body').html('<img src="'+THEME_URL+'/image/loading1.gif" style="display:inline-block;width:75px;margin:30px auto;">');
-        $.post('{:U("public/Register/ajaxReg")}',{},function(data){
-            $('#comModal').find('.modal-body').html(data);
-        },'html');
-    }
 </script>
 <style>
     .sanf {background: url(__THEME__/image/sf_hengxian.png) center center no-repeat; text-align: center; font-size: 12px;}

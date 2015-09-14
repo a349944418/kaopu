@@ -75,6 +75,16 @@ class RegisterModel extends Model {
 	 * @return boolean 是否验证成功
 	 */
 	public function isValidName($name, $old_name = null) {
+		if(!$name) {
+			$this->_error = '昵称不能为空';
+			$res = false;
+			return $res;
+		}
+		if(is_numeric ($name)) {
+			$this->_error = '昵称不能全部为数字';
+			$res = false;
+			return $res;
+		}
 		// 默认不准使用的昵称
 		$protected_name = array('name', 'uname', 'admin', 'profile', 'space');
 		$site_config = model('Xdata')->get('admin_Config:site');

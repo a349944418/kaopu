@@ -639,7 +639,11 @@ M.addEventFns({
 			var sValue = dUname.value;
 			var oArgs = M.getEventArgs(dUname);
 			var oValue = oArgs.old_name;
-
+			if (sValue == '') {
+				tips.error(dUname, '昵称不能为空');
+				dUname.bIsValid = false;
+				return ;
+			}
 			if(!sUrl || (this.dSuggest && this.dSuggest.isEnter)) return;
 
 			$.post(sUrl, {uname:sValue, old_name:oValue}, function(oTxt) {
@@ -652,7 +656,7 @@ M.addEventFns({
 				}
 				return true;
 			}, 'json');
-			$(this.dTips).hide();
+			//$(this.dTips).hide();
 		},
 	},
 	phone: {

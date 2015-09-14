@@ -4,25 +4,27 @@
 		$('#Reg_form').validate({
           	rules : {
 	            Reg_name : {
-	              required : true,
-	              minlength : 2,
-	              maxlength : 20,
+	              	required : true,
+	              	minlength : 2,
+	             	maxlength : 20,
+	              	remote : "{:U('public/Register/isNameAvailable')}"
 	            },
 	            Reg_email : {
-	              email : true,
-	              remote : "{:U('public/Register/isEmailAvailable')}"
+	              	email : true,
+	              	remote : "{:U('public/Register/isEmailAvailable')}"
 	            },
 	            Reg_pwd : {
-	              required : true,
-	              minlength : 6,
-	              maxlength : 18,
+	              	required : true,
+	              	minlength : 6,
+	              	maxlength : 18,
 	            }
          	},
           	messages : {
 	            Reg_name : {
-	              required : '昵称必填',
-	              minlength : '昵称不得小于2个字节',
-	              maxlength : '昵称不能超过20个字节',
+		            required : '昵称必填',
+		            minlength : '昵称不得小于2个字节',
+		            maxlength : '昵称不能超过20个字节',
+		            remote : '该昵称已注册'
 	            },
 	            Reg_email : {
 	            	email : '请输入正确的邮箱格式',
