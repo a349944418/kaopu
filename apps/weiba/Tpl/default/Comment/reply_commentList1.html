@@ -1,0 +1,88 @@
+<style>
+    .new1 {margin: 0 auto;}
+    .new1-left {padding-top:10px; width: 45px; margin-left: 10px;}
+    .new1-left img {width: 40px;}
+    .new1-right{font-size: 12px;}
+    .new1-right p {line-height: 22px; }
+    .new1-right {width: 530px; margin-left: 10px; padding-top: 7px;}
+    .send_weibo {width: 97%; margin: 0 auto;}
+    .minute p {float: right; text-align: right; width: 40%; color: #ccc;}
+    .minute a {color: #ccc;}
+</style>
+<div class="newlist newlist{$reply_id}">
+    <volist name="commentList" id="vo">
+        <div class="new1 clearfix">
+            <div class="new1-left">
+                <img src="{$user_info[$vo[uid]][avatar_small]}" style="width:40px">
+            </div>
+            <div class="new1-right">
+                <p class="manjusri">{$user_info[$vo[uid]]['space_link_no']}<span>[{$user_info[$vo[uid]]['location']}]</span></p>
+                <p class="represent">{$vo.content}</p>
+                <div class="minute">{$vo.ctime|friendlyDate} <!-- |<a href="#">举报</a> --><p><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><a href="javascript:click_zan('{$vo.reply_id}');" id="reply_id{$vo.reply_id}">赞<span>{$vo.zan}</span></a> <b>|</b> <span class="glyphicon glyphicon-comment" aria-hidden="true"></span><a href="javascript:reply_comment2('{$vo[uid]}','{$user_info[$vo[uid]][uname]}','{$reply_id}');">回复</a></p></div>
+            </div>
+        </div>
+    </volist>
+</div>
+<session name="mid">
+<div class="import clearfix" model-node="weiba_reply_reply" id="reply_box">
+    <div class="input send_weibo repeat" model-node="comment_textarea">
+        <div class="input_before" model-node="mini_editor">
+            <textarea class="input_tips form-control import1" id="mini_editor_textarea{$reply_id}" rows="3" event-node="mini_editor_textarea" hidefocus="true" style="height: 34px;word-break:break-all;width: 100%;resize: none;" model-args='t=comment' placeholder="请写下您的评论..."></textarea>
+        </div>
+        <a href="javascript:replycomment();" class="btn btn-primary import2" style="float:right;margin-right:0;margin-bottom:10px;" id="reply_comment_sub{$reply_id}" to_uid="{$var.to_uid}"><span>发布</span></a>      
+    </div>
+</div>
+</session>
+<script>
+//回复评论
+function reply_comment2(uid, uname, reply_id){
+    $('#reply_comment_sub'+reply_id).attr('to_uid', uid);
+    $('#mini_editor_textarea'+reply_id).val('回复@'+uname+'：');
+}
+
+//回复评论提交
+function replycomment(){
+    if ( this.noreply == 1 ){
+        return;
+    }else{
+        this.noreply = 1;
+    }
+    var _this = this;
+    setTimeout(function (){
+        _this.noreply = 0;
+    },5000);
+    var y_to_uid = '{$var.to_uid}';
+    var addtoend = '{$var.addtoend}';
+    var weiba_id = '{$var.weiba_id}';
+    var post_id = '{$var.post_id}';
+    var post_uid= '{$var.post_uid}';
+    var to_reply_id = '{$var.to_reply_id}';
+    var to_uid = $('#reply_comment_sub').attr('to_uid');
+    var feed_id = '{$var.feed_id}';
+    var content = $('#mini_editor_textarea'+to_reply_id).val();
+
+    if(content.length < 1){
+        return;
+    }
+    var reply_count1 = $('#question'+to_reply_id+'_reply_count').html();
+    var ifShareFeed = document.getElementsByName('shareFeed')[0] == undefined ? 0 : Number(document.getElementsByName('shareFeed')[0].checked);
+    $(_this).html('<span>回复中...</span>');
+    $.post(U('widget/WeibaReply/addReply'),{widget_appname:'weiba',weiba_id:weiba_id,post_id:post_id,post_uid:post_uid,to_reply_id:to_reply_id,to_uid:to_uid,feed_id:feed_id,content:content,ifShareFeed:ifShareFeed,type:2},function(msg){
+                if(msg.status == "0"){
+                    ui.error(msg.data);
+                }else{
+                    $('.newlist'+to_reply_id).append(msg.data);
+                    $('#reply_comment_sub'+to_reply_id).attr('to_uid', y_to_uid);
+                    $('#mini_editor_textarea'+to_reply_id).val('');
+                    $('#question'+to_reply_id+'_reply_count').html( parseInt(reply_count1) + 1 );
+                }
+                addComment = false;
+    },'json');
+}
+M.addModelFns({
+    weiba_reply_reply: {
+
+    }
+});
+M(document.getElementById('reply_box'));
+</script>

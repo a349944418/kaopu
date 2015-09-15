@@ -51,7 +51,7 @@ RewriteRule ^/?topic$                  					index.php?app=public&mod=Topic&act=i
 RewriteRule ^/?topics/([_a-zA-Z0-9]+)$                  index.php?app=public&mod=Topic&act=index&domain=$1&%{QUERY_STRING} [L]
 
 #我的空间
-RewriteRule ^/?(@|people\/)([_a-zA-Z0-9]+)?$				  index.php?app=public&mod=Profile&act=index&uid=$2&%{QUERY_STRING} [L]
+RewriteRule ^/?(@|people\/)([_a-zA-Z0-9\-]+)?$				  index.php?app=public&mod=Profile&act=index&uid=$2&%{QUERY_STRING} [L]
 RewriteRule ^/?(@|people\/)([_a-zA-Z0-9]+)/answer?$           index.php?app=public&mod=Profile&act=answer&uid=$2&%{QUERY_STRING} [L]
 RewriteRule ^/?(@|people\/)([_a-zA-Z0-9]+)/ask?$         	  index.php?app=public&mod=Profile&act=question&uid=$2&%{QUERY_STRING} [L]
 RewriteRule ^/?(@|people\/)([_a-zA-Z0-9]+)/collection?$       index.php?app=public&mod=Profile&act=collection&uid=$2&%{QUERY_STRING} [L]
@@ -94,6 +94,7 @@ RewriteRule ^/?question/([0-9]+)/manage/notify$			index.php?app=weiba&mod=Manage
 RewriteRule ^/?question/([0-9]+)/manage/log$			index.php?app=weiba&mod=Manage&act=log&weiba_id=$1&%{QUERY_STRING} [L]
 RewriteRule ^/?question/search$							index.php?app=weiba&mod=Index&act=search&%{QUERY_STRING} [L]
 RewriteRule ^/?question/c_([0-9]+)/dofollow$			index.php?app=weiba&mod=Index&act=doFollowWeiba&weiba_id=$1&%{QUERY_STRING} [L]
+RewriteRule ^/?question/([0-9]+)/answer/([0-9]+)$		index.php?app=weiba&mod=Comment&act=answer&post_id=$1&reply_id=$2&%{QUERY_STRING} [L]
 
 # 日志
 RewriteRule ^/?app/blog/?$                              index.php?app=blog&mod=Index&act=index&%{QUERY_STRING} [L]

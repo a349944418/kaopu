@@ -985,7 +985,7 @@ class UserModel extends Model {
 	 * @return [type] [description]
 	 */
 	public function getDomain(){
-		//F('zbq_domain', NULL, TEMP_PATH);
+		F('zbq_domain', NULL, TEMP_PATH);
 		$res = F('zbq_domain');
 		if($res) {
 			$return = json_decode($res);

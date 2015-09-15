@@ -40,9 +40,13 @@ class CommentAction extends Action {
       	$this->assign('commentList', $commentList);
       	$uids = getSubByKey($commentList, 'uid');
       	$this->_assignUserInfo($uids);
-
+      	$this->assign('reply_id', $var['to_reply_id']);
       	$this->assign('var', $var);
-		$con = $this->fetch();
+      	if($var[type] == 2){
+      		$con = $this->fetch('reply_commentList1');
+      	}else{
+      		$con = $this->fetch();
+      	}
 		echo $con;
 	}
 
@@ -64,6 +68,17 @@ class CommentAction extends Action {
 			$this->ajaxReturn(1);
 		}
 	}
+
+	/**
+	 * [显示对应的回答]
+	 * @return [type] [description]
+	 */
+	public function answer() {
+		$reply_id = intval($_POST['reply_id']);
+		$res = D('weiba_reply')->where('reply_id='.$reply_id)->getField('content');
+		echo $res;
+	}
+
 
 	/**
 	 * 批量获取用户的相关信息加载

@@ -534,7 +534,7 @@ class RegisterAction extends Action
 
 	/**
 	 * 注册流程 - 第三步骤
-	 * 设置个人标签
+	 * 完善个人信息
 	 */
 	public function step3() {
 		// 未登录
@@ -578,6 +578,7 @@ class RegisterAction extends Action
 		$this->assign('weiba_recommend',$weiba_recommend);
 		//dump($this->_config);exit;
 		//按推荐用户
+		/*
 		$related_recommend_user = model('RelatedUser')->getRelatedUserByType(5,8);
 		$this->assign('related_recommend_user',$related_recommend_user);
 		//按标签
@@ -590,12 +591,32 @@ class RegisterAction extends Action
 			$related_city_user = model('RelatedUser')->getRelatedUserByType(3,8);
 			$this->assign('related_city_user',$related_city_user);
 		}
+		*/
 		$userInfo = model('User')->getUserInfo($this->mid);
 		$location = explode(' ', $userInfo['location']);
 		$this->assign('location',$location[0]);
-		$this->setTitle('关注感兴趣的人');
-		$this->setKeywords('关注感兴趣的人');
+		$this->setTitle('关注感兴趣的话题');
+		$this->setKeywords('关注感兴趣的话题');
 		$this->display();
+	}
+
+	/**
+	 * 添加用户关注信息
+	 */
+	public function bulkDoFollow() {
+		$res = model('Follow')->bulkDoFollow($this->mid, t($_POST['fids']));
+    	$this->ajaxReturn($res, model('Follow')->getError(), false !== $res);
+	}
+
+	public function bulkWeibaDoFollow(){
+		$weiba_id = t($_POST['user_tags']);
+		$arr = explode(',', $weiba_id);
+		foreach($arr as $v){
+			$res = D('Weiba','weiba')->doFollowWeiba($this->mid, intval($v));
+		}
+		F('zbq_domain', NULL, TEMP_PATH);
+		Model('User')->getDomain();
+    	$this->ajaxReturn($res, D('weiba')->getError(), false !== $res);
 	}
 
 	/**
@@ -680,23 +701,6 @@ class RegisterAction extends Action
 		$oldName = t($_POST['old_name']);
 		$result = $this->_register_model->isValidName($uname, $oldName);
 		$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);
-	}
-
-	/**
-	 * 添加用户关注信息
-	 */
-	public function bulkDoFollow() {
-		$res = model('Follow')->bulkDoFollow($this->mid, t($_POST['fids']));
-    	$this->ajaxReturn($res, model('Follow')->getError(), false !== $res);
-	}
-
-	public function bulkWeibaDoFollow(){
-		$weiba_id = t($_POST['user_tags']);
-		$arr = explode(',', $weiba_id);
-		foreach($arr as $v){
-			$res = D('Weiba','weiba')->doFollowWeiba($this->mid, intval($v));
-		}
-    	$this->ajaxReturn($res, D('weiba')->getError(), false !== $res);
 	}
 
 	/**

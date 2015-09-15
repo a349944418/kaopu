@@ -76,6 +76,7 @@ return array(
 		'weiba/Manage/log'  		=>  SITE_URL.'/question/[weiba_id]/manage/log',
 		'weiba/Index/search'		=>  SITE_URL.'/question/search',
 		'weiba/Index/doFollowWeiba' =>  SITE_URL.'/question/c_[weiba_id]/dofollow',
+		'weiba/Comment/answer'		=> 	SITE_URL.'/question/[post_id]/answer/[reply_id]',
 
 		// 日志
 		'blog/Index/index'			=>	SITE_URL.'/app/blog',

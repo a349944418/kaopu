@@ -106,20 +106,19 @@ $(function(){
   //获取评论
   $('.comment_btns').click(function(){
     var count = $(this).children('span').html();
-    if(count > 0){
-      var attrs = M.getEventArgs(this);
-      if($('#comment_detail_'+attrs.row_id).css('display') == 'block'){
-        $('#comment_detail_'+attrs.row_id).hide();
-      } else {
-        if($('#comment_detail_'+attrs.row_id).html().length > 0){
-          $('#comment_detail_'+attrs.row_id).show();
-        }else{
-          $.post(U('weiba/Index/getCommentList'),attrs,function(data){
-            $('#comment_detail_'+attrs.row_id).html(data);
-            $('#comment_detail_'+attrs.row_id).show();
-          },'html')
-        }         
-      }       
+    var attrs = M.getEventArgs(this);
+    if($('#comment_detail_'+attrs.comment_id).css('display') == 'block'){
+      $('#comment_detail_'+attrs.comment_id).hide();
+    } else {
+      if($('#comment_detail_'+attrs.comment_id).html()){
+        $('#comment_detail_'+attrs.comment_id).show();
+      }else{
+        $.post(U('weiba/Comment/reply_commentList'),attrs,function(data){
+          data = '<div class="arrow" style="left: 20%;top:-16px;border-width:8px;"></div>'+data;
+          $('#comment_detail_'+attrs.comment_id).html(data);
+          $('#comment_detail_'+attrs.comment_id).show();
+        },'html')
+      }         
     }     
   })
 
@@ -265,7 +264,7 @@ function weibaPost_submit_check(ue) {
         return false;
     }
 
-    var title = $('#title').val();
+    var title = $('#weiba_title').val();
     if(title.length < 1) {
         $('#weiba_title').attr('placeholder', '请填写标题').focus();
         return false;

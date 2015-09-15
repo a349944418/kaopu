@@ -47,14 +47,14 @@
                             <div class="confused-bottom row">
                               <div class="Interest-left col-sm-1"></div>
                               <div class="col-sm-11">
-                                <volist name="postList[data]" id="vo">
+                                <volist name="answer_list[data]" id="vo">
                                   <div class="higher">
-                                    <h5><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><eq name="vo.post_type" value="2">【分享】-- &nbsp;</eq>{$vo.title}</a></h5>
-                                      <p class="from">{:date('Y/m/d',$vo['post_time'])} | 来自：<a href="{:U('public/Profile/index',array('uid'=>$vo[udomain]))}">{$vo.post_uname}</a> | 阅读：{$vo.read_count}</p>
-                                      <div class="trouble"><php>if($vo['content_img']){ echo '<img src="'.$vo[content_img].'" width="25%" style="float:left;margin-right:15px;"/>'; } </php>{$vo[content]|getShort=400}</div>
+                                      <h5><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}"><eq name="vo.post_type" value="2">【分享】-- &nbsp;</eq>{$vo.post_title}</a></h5>
+                                      <p class="from">{:date('Y/m/d',$vo['ctime'])} | 来自：<a href="{:U('public/Profile/index',array('uid'=>$vo[udomain]))}">{$vo.post_uname}</a> </p>
+                                      <div class="trouble" ><php>if($vo['content_img']){ echo '<img src="'.$vo[content_img].'" width="25%" style="float:left;margin-right:15px;"/>'; } </php>{$vo[content]|getShort=400}</div>
                                       <div style="clear:both"></div>
                                       <div class="problem clearfix">
-                                        <span class="chakan"><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}">查看原文</a></span>
+                                        <span class="chakan"><a href="/question/{$vo['post_id']}/answer/{$vo['reply_id']}" class="show-All-Content">显示全部</a></span>
                                         <span class="guanzhu">
                                           <php>if($vo['favorite']==1){</php>
                                             <a event-args="post_id={$vo['post_id']}&post_uid={$vo['post_uid']}" href="javascript:void(0)" event-node="post_unfavorite" id="favorite">已关注</a>
@@ -62,9 +62,9 @@
                                             <a event-args="post_id={$vo['post_id']}&post_uid={$vo['post_uid']}" href="javascript:void(0)" event-node="post_favorite" id="favorite">关注问题</a>
                                           <php>}</php>
                                         </span>
-                                        <span class="pinglun"><a class="comment_btns" href="javascript:void(0)" event-args="row_id={$vo[post_id]}&app_name=weiba&table=feed&cancomment=0"><span id="question{$vo.post_id}_reply_count">{$vo.reply_count|default=0}</span>条评论</a></span><span class="zan" style="display:none;"><a href="#">赞</a></span><span class="fenxiang" style="display:none;"><a href="#">分享</a></span>
+                                        <span class="pinglun"><a class="comment_btns" href="javascript:void(0)" event-args="post_id={$vo['post_id']}&post_uid={$vo['post_uid']}&to_reply_id={$vo['reply_id']}&to_uid={$vo['post_uid']}&to_comment_uname={$vo.post_uname}&feed_id=0&comment_id={$vo['reply_id']}&addtoend=0&flag=1&type=2"><span id="question{$vo.reply_id}_reply_count">{$vo.reply_count|default=0}</span>条评论</a></span><span class="zan"><a href="javascript:click_zan('{$vo.reply_id}');" id="reply_id{$vo.reply_id}">赞 <span>{$vo.zan}</span></a></span><span class="fenxiang" style="display:none;"><a href="#">分享</a></span>
                                       </div>
-                                      <div id="comment_detail_{$vo[post_id]}" class="comments repeat clearfix popover bottom in" style="display:none;"></div>
+                                      <div id="comment_detail_{$vo[reply_id]}" class="comments repeat clearfix popover bottom in" style="display:none;"></div>
                                   </div>
                                 </volist>
                               </div>
@@ -79,5 +79,33 @@
         </div>
     </div>
 </div>
-
+<script>
+  $(function() {
+    var answer_ids = new Array();
+    $('.show-All-Content').click(function(){
+      var obj = $(this);
+      var flag = $(this).html() == '显示全部' ? 1 : 2;
+      var opt = $(this).attr('href');
+      var arr = opt.split('/');
+      var reply_id = arr[arr.length-1];
+      if(flag == 1 ){
+        answer_ids['tmp_html'+reply_id] = $(this).parents('.higher').children('.trouble').html();
+        if(!answer_ids['con'+reply_id]){
+          $.post(U('weiba/Comment/answer'), {reply_id:reply_id}, function(data){
+            obj.parents('.higher').children('.trouble').html(data);
+            obj.html('收起');
+            answer_ids['con'+reply_id] = data;
+          }, 'html');
+        }else{
+          $(this).parents('.higher').children('.trouble').html(answer_ids['con'+reply_id]);
+          $(this).html('收起');
+        }
+      } else {
+        $(this).parents('.higher').children('.trouble').html(answer_ids['tmp_html'+reply_id]);
+        $(this).html('显示全部');
+      } 
+      return false;
+    })
+  } )
+</script>
 <include file="__THEME__/public_footer" />

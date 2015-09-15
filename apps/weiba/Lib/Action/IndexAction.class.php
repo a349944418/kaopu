@@ -21,8 +21,10 @@ class IndexAction extends Action {
 		//微吧排行榜
 		//$this->_weibaOrder();
 		//帖子列表
-		$this->_postList();
-
+		//$this->_postList();
+		
+		//获取热门回答
+		$this->_answerList();
 
 		$this->setTitle( '首页' );
 		$this->setKeywords( '首页' );
@@ -753,7 +755,7 @@ class IndexAction extends Action {
 			}
 		*/
 		if($weiba['post_uid'] == $this->mid){
-			$_POST['content'] = $_POST['editorValue'];
+			$_POST['content'] = $_POST['wbreply_contents_input'];
 			$checkContent = str_replace('&nbsp;', '', $_POST['content']);
 			$checkContent = str_replace('<br />', '', $checkContent);
 			$checkContent = str_replace('<p>', '', $checkContent);
@@ -768,7 +770,7 @@ class IndexAction extends Action {
 	        }
 			$post_id = intval($_POST['post_id']);
 			$data['title'] = t($_POST['title']);
-			$data['content'] = h($_POST['content']);
+			$data['content'] = h($_POST['wbreply_contents_input']);
 			$data['attach'] = '';
 			if ( $_POST['attach_ids'] ){
 				$attach = explode('|', $_POST['attach_ids']);
@@ -1339,5 +1341,46 @@ class IndexAction extends Action {
 			$tmp = array('weiba_id'=>$weibaid,'post_id'=>$post_id, 'weiba_name'=>$weiba['weiba_name']);
 			D('weiba_relation')->add($tmp);
 		}
+	}
+
+	/**
+	 * 获取用户关注分类的热门问题
+	 * @param  integer $limit [description]
+	 * @return [type]         [description]
+	 */
+	private function _answerList($limit = 20){
+		$map['is_del'] = 0;
+		$map['to_reply_id'] = 0;
+		if($this->mid) {
+			$topics = D('weiba_follow') -> where( 'follower_uid='.$this->mid)->field('weiba_id')->select();
+			if($topics) {
+				$topics = getSubByKey($topics, 'weiba_id');
+				$topics = join($topics, ',');
+				$map1['weiba_id'] = array('in', $topics);
+				$post_ids = getSubByKey(D('weiba_relation')->where($map1)->field('post_id')->group('post_id')->select(),'post_id');
+				if($post_ids) {
+					$map['post_id'] = array('in', join($post_ids, ','));
+				}
+			}			
+		} 
+		$answer_List = D('weiba_reply')->where($map)->group('post_id')->field('post_id')->findpage(20);
+		foreach($answer_List['data'] as $k=>$v){
+			$res_tmp = D('weiba_reply')->where('post_id='.$v['post_id'])->order('zan desc, ctime desc')->find(); 
+			$v = $answer_List['data'][$k] = array_merge($v, $res_tmp);
+			$answer_List['data'][$k]['post_uname'] = D('user') -> where('uid='.$v['post_uid']) -> getField('uname');
+			if(strstr($v['content'],'<img')) {
+				preg_match('/<img.+src=\"?(.*?)\"[^>]*?\/?\s*>/',$v['content'],$match); 
+				$answer_List['data'][$k]['content_img'] = $match[1];
+			}
+			$answer_List['data'][$k]['reply_count'] = D('weiba_reply')->where('to_reply_id='.$v['reply_id'])->count();
+			$answer_List['data'][$k]['content'] = strip_tags($v[content]);
+			$post_info = D('weiba_post')->where('post_id='.$v['post_id'])->field('title, post_type')->find();
+			$answer_List['data'][$k]['post_title'] = $post_info['title'];
+			$answer_List['data'][$k]['post_type'] = $post_info['post_type'];
+			$answer_List['data'][$k]['favorite'] = $this->_getFavoriteStatus($v['post_id']);
+		}
+		$uids = getSubByKey($answer_List['data'], 'post_uid');
+		$this->_assignUserInfo($uids);
+		$this->assign('answer_list', $answer_List);
 	}
 }
