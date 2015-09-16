@@ -4,11 +4,14 @@
 <script type="text/javascript" src="__APP__/weiba.js"></script>
 <style>
   .share .active {font-weight:bold;}
+  .making {padding-bottom: 10px;}
+  .making-top {padding-top: 10px;}
+  .btn-cancel span {padding: 0;line-height: 13px; color: #337ab7;}
 </style>
 <div class="center">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-md-offset-1">
+            <div class="col-md-8 ">
               <div class="dynamic clearfix">
                   <dl>
                       <dt><img src="{$weiba_detail['logo']}" width="48px"/></dt>
@@ -51,8 +54,62 @@
                   <div id="page" class="page" style="">{$list.html}</div>
                 </neq>
             </div>
-            <div class="col-sm-3">
-              
+            <div class="col-sm-4">
+                <aside>
+                    <nosession name="mid">
+                        <section id="nosession">
+                            <p>靠谱是国内第一家垂直聚焦于青少年的靠谱的问答和分享社群，旨在为青少年的学习和成长提供靠谱的知识、方法和经验，帮助其发现和发挥优势，在这里发起和建立各种靠谱活动和靠谱圈，最终成为一个靠谱青年！</p>
+                            <p>青少年的学习和成长，离不开过来人靠谱的问答和分享！</p>
+                            <a href="javascript:;" data-toggle="modal" data-target="#comModal" data-whatever="login" data-backdrop="static" class="btn btn-lg btn-block btn-gray" >使用邮箱登陆</a>
+                            <a href="http://kaopu.ren/index.php?app=public&mod=Widget&act=displayAddons&type=sina&addon=Login&hook=login_sync_other" class="btn btn-lg btn-block btn-sina"><img src="__THEME__/image/sina-login1.png">使用微博登陆</a>
+                            <a href="http://kaopu.ren/index.php?app=public&mod=Widget&act=displayAddons&type=qzone&addon=Login&hook=login_sync_other" class="btn btn-lg btn-block btn-qq"><img src="__THEME__/image/qq-login1.png">使用QQ登陆</a>
+                        </section>
+                    </nosession>                   
+                    <section id="follow_status">
+                        <a href="javascript:;" class="btn btn-dofollow" event-args="weiba_id={$weiba_detail.weiba_id}&following={$follow_state[$weiba_id][following]|default=0}" id="follow_weiba"><if condition='$follow_state[$weiba_id][following] eq 0'>关注话题<else />取消关注</if></a>
+                        <span id="follower_count">{$weiba_detail.follower_count}</span>人关注了该话题
+                    </section>
+                    <section>
+                        <header><h4>话题描述</h4></header>
+                        <p>{$weiba_detail.intro}</p>
+                    </section>
+                    <php>if($parent_weiba) {</php>
+                        <section>
+                            <header><h4>父话题</h4></header>
+                            <p id="parent_topic">
+                              <volist name="parent_weiba" id="v">
+                                <a href="{:U('weiba/Index/detail', array('weiba_id'=>$v[pid]))}">{$v.weiba_name}</a>
+                              </volist>
+                            </p>
+                        </section>
+                    <php>}</php> 
+                    <php>if($child_weiba){</php>
+                        <section>
+                            <header><h4>子话题</h4></header>
+                            <p id="child_topic">
+                              <volist name="child_weiba" id="v">
+                                <a href="{:U('weiba/Index/detail', array('weiba_id'=>$v[weiba_id]))}">{$v.weiba_name}</a>
+                              </volist>
+                            </p>
+                        </section>
+                    <php>}</php>
+                    <php>if($topic_dtai){</php>
+                        <section>
+                            <header><h4>话题动态</h4></header>
+                            <volist name="topic_dtai" id="v">
+                                <div class="dt_list clearfix">
+                                  <a href="{$user_info[$v][space_url]}"><img src="{$user_info[$v][avatar_tiny]}" style="width:20px;float:left;margin-right:10px" /></a>
+                                  <div style="width:230px;float:left">
+                                      <a href="{$user_info[$v][space_url]}">{$user_info[$v][uname]}</a>
+                                      <p>{$user_info[$v][intro]}</p>
+                                      <p style="color:#999;">回答了 {$user_info[$v][replyCount]} 个问题 <php>if($user_info[$v]['uid'] != $mid){</php>· {:W('FollowBtn', array('fid'=>$user_info[$v]['uid'], 'uname'=>$user_info[$v]['uname'], 'follow_state'=>$follow_state[$user_info[$v]['uid']], 'isrefresh'=>0))}<php>}</php></p>
+                                  </div>
+                                </div>
+                            </volist>
+                            
+                        </section>
+                    <php>}</php>
+                </aside>
             </div>
         </div>
     </div>

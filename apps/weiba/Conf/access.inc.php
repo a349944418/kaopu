@@ -10,5 +10,6 @@ return array (
 		'weiba/Index/postList' => true,
 		'weiba/Index/weibaList' => true,
 		'weiba/Index/search' => true,
+		'weiba/Index/getWeibaChild' => true,
 	)	 
 );

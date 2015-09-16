@@ -1,90 +1,113 @@
 <include file="__THEME__/public_header" />
-    <div class="center">
-        <div class="container-fluid" style='overflow:hidden'>
-            <div class="row" style="position:relative;">
-                <img src="__THEME__/image/nav_back/{$nav_top_back}.jpg" width="100%" id="cur_bg"/>
-                <eq name="self_flag" value="1">
-                  <img class="set_space_top_pic" src="__THEME__/image/space_jiao.png" />
-                  <div id="nav_top_set">
-                    <div class="spic <eq name='nav_top_back' value='tu0'>spic_checked</eq>">
-                      <img src="__THEME__/image/nav_back/tu0_s.jpg" data-alt="tu0" class="suo">
-                      <img src="__THEME__/image/yuan2.png" class="checked">
+<include file="_top" />
+<div class="center">        
+    <div class="container">        
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    <h3 class="fish">{$user_info[$uid]['uname']}</h3>
+                    <div class="col-md-3">
+                        <dl class="points">
+                            <dt><img src="{$user_info[$uid]['avatar_big']}" style="width:100%"/></dt>
+                            <dd class="spectrum">靠谱分：{$credit[credit][experience][value]}</dd>
+                            <dd>人品值：{$credit[credit][score][value]}</dd>
+                        </dl>
                     </div>
-                    <div class="spic <eq name='nav_top_back' value='tu1'>spic_checked</eq>"  >
-                      <img src="__THEME__/image/nav_back/tu1_s.jpg" data-alt="tu1" class="suo">
-                      <img src="__THEME__/image/yuan2.png" class="checked">
+                    <div class="col-md-8">
+                        <div class="add clearfix">
+                            <p><a href="#">加关注<span class="glyphicon glyphicon-plus" aria-hidden="true" style="padding-left:5px;"></span></a></p><p><a href="#">发私信<span class="glyphicon glyphicon-envelope" aria-hidden="true" style="padding-left:5px;"></span></a></p>
+                        </div>
+                        <div class="synopsis">简介：{$user_info[$uid]['intro']|getShort=100}</div>
+                        <div class="marketing">
+                            <volist name="user_info[$uid]['weibaList']" id="vo" offset="0" length='10'>
+                                <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}">{$vo.weiba_name}</a>
+                            </volist>
+                            <if condition="count($user_info[$uid][weibaList]) gt 10">
+                                ...
+                            </if>
+                        </div>
+                        <p class="hei"><span class="nan1"><if condition="$user_info[$uid]['sex'] eq 2">♀ 女<else />♂ 男</if></span><span class="location">来自{$user_info[$uid][location]}</span></p>
+                        <div class="obtain clearfix">
+                            <p>获得：934&nbsp;<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;赞同</p> <p>3464&nbsp;<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>&nbsp;感谢</p>
+                        </div>
+                        <div class="tiwen2 clearfix">
+                            <div class="col-md-8">
+                                <div class="row text-center">
+                                    <div class="col-xs-3 questions">
+                                        <a href="#" class="hover">提问<br/>{$user_info[$uid]['postCount']|default=0}</a>
+                                    </div>
+                                    <div class="col-xs-3 questions">
+                                        <a href="#">回答<br/>{$user_info[$uid]['replyCount']|default=0}</a>
+                                    </div>
+                                    <div class="col-xs-3 questions">
+                                        <a href="#">分享<br/>{$user_info[$uid]['shareCount']|default=0}</a>
+                                    </div>
+                                    <div class="col-xs-3 questions">
+                                        <a href="#">收藏<br />{$user_info[$uid]['favoriteCount']|default=0}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tiwen3">
+                            <div class="row tiyu">
+                                <div class="col-xs-2 text-center">
+                                    <div class="browse"><span>8</span><br/>浏览</div>
+                                </div>
+                                <div class="col-xs-10 riyu1">
+                                    <p class="riyu">有些日语歌词为什么要写一个词却特别用假名标注唱成另一个词？</p>
+                                    <p class="riyu"><span class="nine">9</span>个回答｜<span class="nine">45</span>关注</p>
+                                </div>
+                            </div>
+                            <div class="row tiyu">
+                                <div class="col-xs-2 text-center">
+                                    <div class="browse"><span>8</span><br/>浏览</div>
+                                </div>
+                                <div class="col-xs-10 riyu1">
+                                    <p class="riyu">有些日语歌词为什么要写一个词却特别用假名标注唱成另一个词？</p>
+                                    <p class="riyu"><span class="nine">9</span>个回答｜<span class="nine">45</span>关注</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="spic <eq name='nav_top_back' value='tu2'>spic_checked</eq>">
-                      <img src="__THEME__/image/nav_back/tu2_s.jpg" data-alt="tu2" class="suo">
-                      <img src="__THEME__/image/yuan2.png" class="checked">
-                    </div>
-                    <div class="spic <eq name='nav_top_back' value='tu3'>spic_checked</eq>">
-                      <img src="__THEME__/image/nav_back/tu3_s.jpg" data-alt="tu3" class="suo">
-                      <img src="__THEME__/image/yuan2.png" class="checked">
-                    </div>
-                  </div>
-                </eq>
-            </div>
-        </div>
-        <div class="container">
-            <include file="_top" />
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1 content-row">
-                    <volist name="ans.data" id="vo">
-                      <div class="row resume">
-                          <div class="col-md-1">
-                            <img src="{$user_info[$uid]['avatar_small']}" width="50"/>
-                          </div>
-                          <div class="col-md-11">
-                            <p class="part"><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}">{$vo.title}</a></p>
-                              <div><p class="sorting" style="display:none">排序方式：回答时间 | <b>靠谱值</b></p><span class="time">{:date('Y/m/d',$vo['ctime'])}</span><span class="Other">其他相关|Other</span></div>
-                          </div>
-                          <div class="col-md-12">
-                            <div class="chance" id="showShort_{$vo.reply_id}">
-                              <neq name='vo.content_img' value=''>
-                                <img src="{$vo.content_img}" width="25%"/>
-                              </neq>
-                              {$vo['hcontent']|getShort=300}</div>
-                            <div style="display:none" id="hideCon_{$vo.reply_id}">{$vo.content}</div>
-                            <p class="reading"><a href="javascript:;" data-id="{$vo.reply_id}">阅读全文</a></p>
-                          </div>
-                      </div>
-                    </volist>
-                    <!--页码-->
-                    <neq name='ans.html' value=''>
-                       <div id="page" class="page">
-                          {$ans.html}
-                       </div>
-                    </neq>
-                    <!--页码/end-->
                 </div>
+            </div>
+            <div class="col-md-3">
+                <aside class="right" style="padding-top:0;">
+                    <nosession name="mid">
+                        <section id="nosession">
+                            <p>靠谱是国内第一家垂直聚焦于青少年的靠谱的问答和分享社群，旨在为青少年的学习和成长提供靠谱的知识、方法和经验，帮助其发现和发挥优势，在这里发起和建立各种靠谱活动和靠谱圈，最终成为一个靠谱青年！</p>
+                            <p>青少年的学习和成长，离不开过来人靠谱的问答和分享！</p>
+                            <a href="javascript:;" data-toggle="modal" data-target="#comModal" data-whatever="login" data-backdrop="static" class="btn btn-lg btn-block btn-gray" >使用邮箱登陆</a>
+                            <a href="http://kaopu.ren/index.php?app=public&mod=Widget&act=displayAddons&type=sina&addon=Login&hook=login_sync_other" class="btn btn-lg btn-block btn-sina"><img src="__THEME__/image/sina-login1.png">使用微博登陆</a>
+                            <a href="http://kaopu.ren/index.php?app=public&mod=Widget&act=displayAddons&type=qzone&addon=Login&hook=login_sync_other" class="btn btn-lg btn-block btn-qq"><img src="__THEME__/image/qq-login1.png">使用QQ登陆</a>
+                        </section>
+                    </nosession> 
+                    <div class="attentionto clearfix">
+                        <p class="attentionto1">关注了<br/><span>{$userData.following_count|default=0}</span>人</p><p>关注者<br/><span>{$userData.follower_count|default=0}</span>人</p>
+                    </div>
+                    <div class="theme">
+                      <p>关注了<span>7个话题</span></p>
+                        <div class="huati">
+                          <a href="#"><img src="image/huati1.jpg"/></a><a href="#"><img src="image/huati2.jpg"/></a><a href="#"><img src="image/huati3.jpg"/></a><a href="#"><img src="image/huati4.jpg"/></a><a href="#"><img src="image/huati5.jpg"/></a><a href="#"><img src="image/huati6.jpg"/></a>
+                        </div>
+                    </div>
+                    <div class="theme">
+                      <p>加入<span>18个靠谱圈</span></p>
+                        <div class="huati">
+                          <a href="#"><img src="image/huati1.jpg"/></a><a href="#"><img src="image/huati2.jpg"/></a><a href="#"><img src="image/huati3.jpg"/></a><a href="#"><img src="image/huati4.jpg"/></a><a href="#"><img src="image/huati5.jpg"/></a><a href="#"><img src="image/huati6.jpg"/></a>
+                        </div>
+                    </div>
+                    <div class="theme">
+                      <p>发起了<span>8个靠谱活动</span></p>
+                        <div class="huati">
+                          <a href="#"><img src="image/huati1.jpg"/></a><a href="#"><img src="image/huati2.jpg"/></a><a href="#"><img src="image/huati3.jpg"/></a><a href="#"><img src="image/huati4.jpg"/></a><a href="#"><img src="image/huati5.jpg"/></a><a href="#"><img src="image/huati6.jpg"/></a>
+                        </div>
+                    </div>
+                    <div class="homepage2">个人主页被5684人浏览</div>
+                </aside>
             </div>
         </div>
     </div>
-<script>
-  $(function(){
-    $('.reading a').click(function(){
-      var id = $(this).attr('data-id');
-      $('#showShort_'+id).html($('#hideCon_'+id).html());
-    })
-
-    $('.set_space_top_pic').click(function(){
-      var right = $('#nav_top_set').css('right');
-      if(right == '0px') {
-        $('#nav_top_set').animate({right:"-378px"});
-      } else {
-        $('#nav_top_set').animate({right:"0"});
-      }      
-    })
-
-    $('#nav_top_set .spic').click(function(){
-      var st = $(this).find('.suo').attr('data-alt');
-      $(this).siblings().removeClass('spic_checked');
-      $(this).addClass('spic_checked');
-      $('#cur_bg').attr('src',THEME_URL+'/image/nav_back/'+st+'.jpg');
-      $.post(U('public/Profile/set_nav_bg'), {st:st}, function(){}, 'json');
-    })
-  })
-</script>
-<include file="__THEME__/public_footer" />
+</div>
 <script src="__THEME__/js/module.weibo.js"></script>
+<include file="__THEME__/public_footer" />

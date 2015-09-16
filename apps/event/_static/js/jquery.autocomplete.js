@@ -733,7 +733,7 @@ $.Autocompleter.Select = function (options, input, select, config) {
 					overflow: 'auto'
 				});
 				
-                if($.browser.msie && typeof document.body.style.maxHeight === "undefined") {
+                if($.support.msie && typeof document.body.style.maxHeight === "undefined") {
 					var listHeight = 0;
 					listItems.each(function() {
 						listHeight += this.offsetHeight;

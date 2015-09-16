@@ -138,12 +138,12 @@ function async_form(form)
 // 复制剪贴板
 function copy_clip(copy){
 	var copy_clip = function(g){
-		if(window.clipboardData&&(jQuery.browser.msie && jQuery.browser.version < 7)){
+		if(window.clipboardData&&(jQuery.support.msie && jQuery.support.version < 7)){
 			window.clipboardData.clearData();
 			window.clipboardData.setData("Text",g);
 			return true;
 		}else{
-			if(jQuery.browser.msie){
+			if(jQuery.support.msie){
 				try{
 					window.clipboardData.clearData();
 					window.clipboardData.setData("Text",g);

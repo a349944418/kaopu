@@ -4,7 +4,7 @@
 <script type="text/javascript" src="__APP__/weiba.js"></script>
 
 <style>
-    .pid_weiba .active{
+    .pid_weiba a:hover, .pid_weiba .active{
         background: #FC5241;
         color:white;
     }
@@ -13,7 +13,7 @@
 <div class="center1">
     <div class="container">
         <div class="row">
-            <div class="col-md-11 col-md-offset-1">
+            <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-9">
                         <div class="square">
@@ -44,7 +44,7 @@
                             <php>if($userinfo) {</php>
                                 <div class="visual1-top clearfix">
                                     <div class="visual1-left">
-                                        <img src="{$userinfo.avatar_big}" width="100%"/>
+                                        <img src="{$userinfo.avatar_big}" width="68px"/>
                                     </div>
                                     <div class="visual1-right">
                                         <p class="shi"><a href="{$user['space_url']}">{$userinfo['uname']}</a></p>

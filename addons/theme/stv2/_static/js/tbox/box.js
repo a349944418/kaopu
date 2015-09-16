@@ -16,7 +16,7 @@ jQuery.extend(ui.box, {
                 '</div></div>',
               
     inited:             false,
-    IE6:                (jQuery.browser.msie && jQuery.browser.version < 7),
+    IE6:                (jQuery.support.msie && jQuery.support.version < 7),
     init:function(title,callback){
     	
     	//edit by yangjs 避免意外情况重载

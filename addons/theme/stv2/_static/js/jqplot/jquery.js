@@ -74,7 +74,7 @@ var jQuery = function( selector, context ) {
 		return ( letter + "" ).toUpperCase();
 	},
 
-	// Keep a UserAgent string for use with jQuery.browser
+	// Keep a UserAgent string for use with jQuery.support
 	userAgent = navigator.userAgent,
 
 	// For matching the engine and version of the browser
@@ -853,8 +853,8 @@ jQuery.extend({
 		return (new Date()).getTime();
 	},
 
-	// Use of jQuery.browser is frowned upon.
-	// More details: http://docs.jquery.com/Utilities/jQuery.browser
+	// Use of jQuery.support is frowned upon.
+	// More details: http://docs.jquery.com/Utilities/jQuery.support
 	uaMatch: function( ua ) {
 		ua = ua.toLowerCase();
 
@@ -898,13 +898,13 @@ jQuery.each("Boolean Number String Function Array Date RegExp Object".split(" ")
 
 browserMatch = jQuery.uaMatch( userAgent );
 if ( browserMatch.browser ) {
-	jQuery.browser[ browserMatch.browser ] = true;
-	jQuery.browser.version = browserMatch.version;
+	jQuery.support[ browserMatch.browser ] = true;
+	jQuery.support.version = browserMatch.version;
 }
 
-// Deprecated, use jQuery.browser.webkit instead
-if ( jQuery.browser.webkit ) {
-	jQuery.browser.safari = true;
+// Deprecated, use jQuery.support.webkit instead
+if ( jQuery.support.webkit ) {
+	jQuery.support.safari = true;
 }
 
 // IE doesn't match non-breaking spaces with \s

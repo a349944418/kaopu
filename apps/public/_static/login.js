@@ -98,7 +98,7 @@ M.addModelFns({
             jPDiv.attr('class', 'input');
             var jPInput = jPwd.find('input').eq(0);
             // 动态改变密码域，IE6
-            if(!$.browser.msie) {
+            if(!$.support.msie) {
                 jPInput[0].type = 'password';
             }
             jPInput.val('');
@@ -216,7 +216,7 @@ M.addEventFns({
                 }
             }
             // 浏览器的输入的兼容性
-            if($.browser.msie && $.browser.version != '9.0') {
+            if($.support.msie && $.browser.version != '9.0') {
                 $(this).bind("propertychange", function() {
                     valChange();
                 });

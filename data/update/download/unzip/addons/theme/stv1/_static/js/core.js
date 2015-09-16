@@ -523,7 +523,7 @@ var ui = {
 	 * @return void
 	 */
 	sendbox: function(title, initHtml,channelID) {
-		if($.browser.msie) {
+		if($.support.msie) {
 			initHtml = encodeURI(initHtml);
 		}
 		initHtml = initHtml.replace(/\#/g, "%23"); 
@@ -557,7 +557,7 @@ var ui = {
      			  <div class="layer-content" id="layer-content"></div>\
      			  </div></div>',
 		inited: false,
-		IE6: (jQuery.browser.msie && jQuery.browser.version < 7),
+		IE6: (jQuery.support.msie && jQuery.support.version < 7),
 		init: function(title, callback) {
 			this.callback = callback;
 			// 弹窗中隐藏小名片
@@ -701,7 +701,7 @@ var ui = {
 		_viewport: function() {
 			var d = document.documentElement, b = document.body, w = window;
 			return jQuery.extend(
-				jQuery.browser.msie ? { left: b.scrollLeft || d.scrollLeft, top: b.scrollTop || d.scrollTop } : { left: w.pageXOffset, top: w.pageYOffset },
+				jQuery.support.msie ? { left: b.scrollLeft || d.scrollLeft, top: b.scrollTop || d.scrollTop } : { left: w.pageXOffset, top: w.pageYOffset },
 				!ui.box._u(w.innerWidth) ? { width: w.innerWidth, height: w.innerHeight } : (!ui.box._u(d) && !ui.box._u(d.clientWidth) && d.clientWidth != 0 ? { width: d.clientWidth, height: d.clientHeight } : { width: b.clientWidth, height: b.clientHeight }) );
 		},
 		/**

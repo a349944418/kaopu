@@ -2,9 +2,9 @@
 /* CSS Document */
 li{list-style:none;}
 ul, p {padding: 0;}
-dl, p {margin-bottom: 0px}
 .left {float: left;}
 .tx-right {text-align: right;}
+a:hover, a:focus{text-decoration: none;}
 a.top_stick:link, a.top_stick:visited, a.to_answer:link, a.to_answer:visited {color: #ccc;display:block;width:41px; height:41px;text-decoration: none;padding: 4px;}
 a.to_answer:hover, a.top_stick:hover {color: #7cb7d9; text-decoration: none;}
 #topcontrol .sui-icon {font-size: 33px;}
@@ -120,7 +120,7 @@ span.wjg {display:inline-block; width: 10px;}
 .planning a{ display:inline-block; line-height:20px; border:1px solid #DEDEDE; color:#DEDEDE; margin-right:1%; padding:0 1%;font-size:12px;}
 .praise{ color:#808080; font-size:12px;}
 .praise img{ margin-left:1%;}
-.attention{ border-bottom:1px solid #DFDFDF;}
+.questions{ background:url(../image/questions.png) no-repeat right top; font-size:12px;}
 .questions a:hover,.questions a.active{ background:#FC5241; color:#fff;}
 .questions a{ height:80px; display:inline-block; width:100%; color:#AFAFAF; line-height:40px;text-decoration:none;}
 .questions{ border-right:1px solid #DFDFDF;}
@@ -143,15 +143,16 @@ span.wjg {display:inline-block; width: 10px;}
 
 
 /*话题列表*/
-.dynamic{ border-bottom:1px solid #ccc; padding-top:35px;}
+.dynamic{ border-bottom:1px solid #ccc; padding-top:35px;padding-bottom: 15px;}
 .dynamic dl{ float:left; width:37%;}
-.dynamic p{ float:right;color:#999; line-height:48px;}
+.dynamic p{ float: right; color: #999; font-size: 12px; height: 50px; padding-top: 30px;} 
 .dynamic dl dt{ float:left;}
 .dynamic dl dd{ float:left; padding-left:17px;}
-.dynamic dl dd.Adobe{ font-size:18px; font-family:"Arial"; font-weight:bold;}
+.dynamic dl dd.Adobe{ font-size:18px; font-family:"Arial"; font-weight:bold;  margin-bottom: 9px;line-height: 22px;}
 .dynamic dl dd.share{ font-size:14px;}
 .dynamic dl dd.share a{ color:#555;}
 .dynamic dl dd.share span{ padding:0 13px; border-left:1px solid #EEE;}
+.dynamic dl dd.share span:first-child {border-left: none; padding-left: 0;}
 .dynamic dl dd.share b{ padding-right:13px;}
 .dynamic p a{ padding:0 10px; color:#999;}
 .dynamic p a.hover{ color:#245598;}
@@ -316,7 +317,7 @@ a:hover{ text-decoration:none;}
 .square{}
 .square h6{ font-size:14px; font-family:"宋体"; font-weight:bold; color:#454545; line-height:24px; padding-top:24px; margin:0px; border-bottom:1px solid #D2D2D2; padding-bottom:12px;}
 .square h6 span{ margin-right:2%;}
-.supervise a{ background:#fff; color:#b4b4b4; font-size:12px; padding:0 1%; border:1px solid #DEDEDE; line-height:20px; display:inline-block; margin-top:15px; margin-right:1.2%;}
+.supervise a{ background:#fff; color:#b4b4b4; font-size:12px; padding:0 1%; border:1px solid #DEDEDE; line-height:20px; display:inline-block; margin-top:15px; margin-right:1.2%; border-radius: 10px;}
 .supervise{ border-bottom:1px solid #D2D2D2; padding-bottom:17px;}
 .health dl dt{ float:left; width:14%;}
 .health dl dd{ float:left; padding-left:5%; width:75%; font-size:12px; color:#222; line-height:22px;}
@@ -512,6 +513,68 @@ button.nav_button:hover {color: white;}
 .foot-icon3:hover{ background:url(../image/foot-icon3h.png) no-repeat;}
 .foot-icon4{ background:url(../image/foot-icon4.png) no-repeat;}
 .foot-icon4:hover{ background:url(../image/foot-icon4h.png) no-repeat;}
+
+
+/*右侧边栏*/
+aside {padding-top: 35px; padding-right: 20%; padding-left: 5%;}
+aside section p {font-size: 12px; color: #5c5c5c; line-height: 23px;}
+aside section a.btn {padding: 4px; height: 39px;  margin-bottom: 13px; font-size: 14px; padding-left: 62px; text-align: left}
+aside section a.btn-gray, aside section a.btn-gray:hover, aside section a.btn-gray:focus {padding: 10px; background: #e9e9e9; color: #717171; margin-top: 10px; text-align: center}
+aside section a.btn-sina, aside section a.btn-sina:hover, aside section a.btn-sina:focus {background: #e65746; color: white;}
+aside section a.btn-qq, aside section a.btn-qq:hover, aside section a.btn-qq:focus {background: #1576d7; color: white;}
+aside section {border-top: 1px solid #eee; padding: 2px 4px 10px 4px;  }
+aside #nosession  {border-top: none; padding: 0px;}
+aside #follow_status {border-top: none; line-height: 32px; font-size: 14px;padding: 0; padding-bottom: 10px;}
+aside #follow_status #follow_weiba {padding:5px 9px; background-color: #e65746; color: white; margin: 0px; height: 32px;}
+aside #follower_count {color: #e65746; margin-left: 15px; margin-right: 5px;}
+aside section header h4 {font-family: "微软雅黑"; font-size: 16px; color: #939393;}
+aside section p[id$=topic] a {border: 1px solid #ccc; padding: 3px 10px; border-radius: 8px; font-size: 12px; margin:0px 10px 13px 0; color: #999;    display: inline-block;}
+aside section p#parent_topic a:hover {background: #26866e; color: #fff; border:none;}
+aside section p#child_topic a:hover {background: #e65746; color: #fff;border:none;}
+aside section .dt_list {border-bottom: 1px solid #eee; padding: 10px 0;}
+
+/*个人中心-未登录*/
+.fish{ font-family:"微软雅黑"; font-size:22px; color:#282828; padding-left:15px;}
+.points{ width:100%;}
+.points dt{ width:100%; text-align:center;}
+.points dt img{ border:1px solid #E5E5E5; padding:4px;}
+.points dd{ color:#b6b6b6; font-size:16px; width:100%; line-height:30px; text-align:center; font-family:"微软雅黑";}
+.points dd.spectrum{ border-bottom:1px dashed #DADADA;}
+.add p a{ color:#b6b6b6;}
+.add p{ float:left; padding:0px; padding-right:2%;}
+.marketing{ color:#999; font-size:12px;}
+.synopsis{ line-height:30px; color:#868686; padding-bottom:10px; font-size:12px;}
+.marketing a{ color:#999; border:1px solid #DEDEDE; border-radius:11px; padding:0 6px; line-height:22px; margin-right:2%; display:inline-block;}
+.marketing a:hover{ background:#89C734; color:#fff;}
+.marketing{ margin-bottom:10px;}
+.hei{ line-height:22px; border-bottom:1px solid #DEDEDE; padding-bottom:10px; margin-bottom:0px;}
+.obtain{ color:#999; line-height:46px; font-size:12px;}
+.tiwen2{ border-top:1px solid #DEDEDE;}
+.riyu{ font-size:12px;}
+.riyu1{ padding-bottom:8px; border-bottom:1px dashed #D8D8D8;}
+.tiyu{ padding-top:10px;}
+.nine{ font-size:12px; color:#fb5240;font-weight:bold;}
+.obtain p{ padding-right:10px; float:left; margin:0px;}
+.browse span{ font-weight:bold;}
+.right{ margin-top:50px;}
+.focussing p{ line-height:24px; font-size:12px; color:#5c5c5c; margin:0px;}
+.registered1 a{ background:#E9E9E9; width:100%; display:block; line-height:39px; text-align:center; border-radius:5px; font-weight:bold; height:39px; font-size:14px; font-family:"宋体"; color:#717171;}
+.registered{ margin-top:8px;}
+.registered2{ background:#E65746; width:100%; display:block; line-height:39px; border-radius:5px; height:39px; font-size:14px; color:#fff; font-family:"宋体"; padding-left:22%;}
+.registered3{ background:#1576D7; width:100%; display:block; line-height:39px; padding-left:22%; border-radius:5px; height:39px; font-size:14px; color:#fff; font-family:"宋体";}
+.registered2 a{ font-size:14px; color:#fff; font-family:"宋体";}
+.registered3 a{ font-size:14px; color:#fff; font-family:"宋体";}
+.registered2 span{ margin-right:5px;}
+.registered3 span{ margin-right:5px;}
+.attentionto{ padding-top:17px; border-bottom:1px solid #EEEEEE;}
+.attentionto p{ font-size:12px; float:left; line-height:24px; color:#999; padding-left:5%; padding-bottom:10px; margin:0px;}
+.attentionto1{ width:30%; border-right:1px solid #eee;}
+.attentionto p span{ font-weight:bold;}
+.theme p{ font-size:14px; line-height:36px; padding-top:9px; font-weight:bold; color:#666; margin:0px;}
+.theme p span{ color:#fb5240;}
+.huati{}
+.huati img{ margin-right:2%;}
+.homepage2{ font-size:12px; color:#b1b1b1; font-family:"宋体"; line-height:30px; padding-top:10px;}
 
 @media (min-width: 768px){ .toggle {display: none; } .information1{ text-align:right;}} 
 @media (max-width: 768px){ .birthday,.school,.birthday1 {width:  100%;height: 34px;margin-bottom: 10px;} .nan,.nv {width: 30%;} .Interest-left,.confused-left{display: none;},}

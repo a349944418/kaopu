@@ -406,7 +406,6 @@ var followWeiba = {
 		var url = node.getAttribute("href") || [U('weiba/Index/doFollowWeiba'), '&weiba_id=', args.weiba_id].join("");
 		$.post(url, {}, function(txt) {
 			if(1 == txt.status ) {
-				ui.success('关注成功');
 				if(args.isrefresh==1){
 					setTimeout("location.reload()",1000);
 				}else{

@@ -20,7 +20,7 @@ jQuery.extend(ui.box, {
                 "</table>",
               
     inited:             false,
-    IE6:                (jQuery.browser.msie && jQuery.browser.version < 7),
+    IE6:                (jQuery.support.msie && jQuery.support.version < 7),
     init:function(option){
 		if( !this.inited ){
 			$('body').prepend( this.WRAPPER );

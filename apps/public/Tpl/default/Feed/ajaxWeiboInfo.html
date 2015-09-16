@@ -333,7 +333,7 @@ var valChange = function () {
  */
 $(function () {
   // 浏览器的输入的兼容性
-  if($.browser.msie && $.browser.version != '9.0') {
+  if($.support.msie && $.browser.version != '9.0') {
     $('#mini_editor_textarea').bind("propertychange", function() {
       valChange();
     });

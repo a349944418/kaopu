@@ -226,7 +226,6 @@ channel.upFollowStatus = function(uid, cid, type, obj)
 				$(obj).attr('onclick', "channel.upFollowStatus('"+uid+"', '"+cid+"', 'add', this)");
 				channel.upFigures(false);
 			} else if(type === 'add') {
-				ui.success('关注成功');
 				$(obj).html('<span><i class="ico-already"></i>已关注</span>');
 				$(obj).attr('onclick', "channel.upFollowStatus('"+uid+"', '"+cid+"', 'del', this)");
 				channel.upFigures(true);

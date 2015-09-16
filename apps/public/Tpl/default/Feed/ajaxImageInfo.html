@@ -28,7 +28,7 @@
     wresize = {fired: false, width: 0};
 
     function resizeOnce () {
-      if ($.browser.msie) {
+      if ($.support.msie) {
         if (!wresize.fired) {
           wresize.fired = true;
         } else {

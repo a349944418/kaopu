@@ -4,7 +4,7 @@ Common.trim = function(str){
 }
 
 Common.strlen = function (str){
-	var Charset = jQuery.browser.msie ?document.charset : document.characterSet
+	var Charset = jQuery.support.msie ?document.charset : document.characterSet
 	if(Charset.toLowerCase() == 'utf-8'){
 		return str.replace(/[\u4e00-\u9fa5]/g, "***").length;
 	} else {
@@ -178,7 +178,7 @@ validator={
       		errmsg='';
 		}
 		var type=this['element'].attr('type');
-		var Charset = jQuery.browser.msie ? document.charset : document.characterSet;
+		var Charset = jQuery.support.msie ? document.charset : document.characterSet;
 		//var methodtype = (Charset.toLowerCase() == 'utf-8') ? 'post' : 'get';
 		var methodtype	=	'post';
 		var method=this['element'].attr('method') || methodtype;

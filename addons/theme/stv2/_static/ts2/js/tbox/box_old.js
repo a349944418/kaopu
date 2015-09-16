@@ -136,7 +136,7 @@ jQuery.extend(ui.box, {
         hideShrink:             'vertical'
     },
     
-    IE6:                (jQuery.browser.msie && jQuery.browser.version < 7),
+    IE6:                (jQuery.support.msie && jQuery.support.version < 7),
     DEFAULT_X:          50,
     DEFAULT_Y:          50,
     MODAL_OPACITY:      0.3,

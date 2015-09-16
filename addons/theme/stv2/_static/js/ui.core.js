@@ -10,7 +10,7 @@
 ;jQuery.ui || (function($) {
 
 var _remove = $.fn.remove,
-	isFF2 = $.browser.mozilla && (parseFloat($.browser.version) < 1.9);
+	isFF2 = $.support.mozilla && (parseFloat($.support.version) < 1.9);
 
 //Helper functions and ui object
 $.ui = {
@@ -160,7 +160,7 @@ $.fn.extend({
 
 	scrollParent: function() {
 		var scrollParent;
-		if(($.browser.msie && (/(static|relative)/).test(this.css('position'))) || (/absolute/).test(this.css('position'))) {
+		if(($.support.msie && (/(static|relative)/).test(this.css('position'))) || (/absolute/).test(this.css('position'))) {
 			scrollParent = this.parents().filter(function() {
 				return (/(relative|absolute|fixed)/).test($.curCSS(this,'position',1)) && (/(auto|scroll)/).test($.curCSS(this,'overflow',1)+$.curCSS(this,'overflow-y',1)+$.curCSS(this,'overflow-x',1));
 			}).eq(0);
@@ -386,7 +386,7 @@ $.ui.mouse = {
 			});
 
 		// Prevent text selection in IE
-		if ($.browser.msie) {
+		if ($.support.msie) {
 			this._mouseUnselectable = this.element.attr('unselectable');
 			this.element.attr('unselectable', 'on');
 		}
@@ -400,7 +400,7 @@ $.ui.mouse = {
 		this.element.unbind('.'+this.widgetName);
 
 		// Restore text selection in IE
-		($.browser.msie
+		($.support.msie
 			&& this.element.attr('unselectable', this._mouseUnselectable));
 	},
 
@@ -459,7 +459,7 @@ $.ui.mouse = {
 
 	_mouseMove: function(event) {
 		// IE mouseup check - mouseup happened when mouse was out of window
-		if ($.browser.msie && !event.button) {
+		if ($.support.msie && !event.button) {
 			return this._mouseUp(event);
 		}
 

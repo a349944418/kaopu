@@ -586,12 +586,11 @@ var follow = {
 						$(_model[0]).append(msg);
 						M(_model[0]);
 					}, 'json');
-					ui.success("关注成功");
 				} else {
-					followGroupSelectorBox(args.uid, args.isrefresh);
+					//followGroupSelectorBox(args.uid, args.isrefresh);
 				}
 			} else {
-				ui.error(txt.info);
+				
 			}
 		}, 'json');
 	},

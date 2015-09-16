@@ -122,7 +122,6 @@ $(function(){
     }     
   })
 
-
   //默认页面高度
   var windowh = $(window).height();
   $('.center1').css('min-height', (windowh-283)+'px');
@@ -146,6 +145,31 @@ $(function(){
         }
       });
     }   
+  })
+
+  //关注微吧 或 取消关注
+  $('#follow_weiba').click(function(){
+    var attrs = M.getEventArgs(this);
+    var _this = this;
+    var act = attrs.following == 1 ? 'unFollowWeiba' : 'doFollowWeiba';
+    var count = $('#follower_count').html();
+    $.post(U('weiba/Index/'+act), {weiba_id: attrs.weiba_id}, function(data) {
+      if(data.status) {
+        if(attrs.following == 1) {
+          $(_this).html('关注话题');
+          $(_this).attr('event-args', 'weiba_id='+attrs.weiba_id+'&following=0');
+          attrs.following = 0;
+          $('#follower_count').html(count-1);
+        } else {
+          $(_this).html('取消关注');
+          $(_this).attr('event-args', 'weiba_id='+attrs.weiba_id+'&following=1');
+          attrs.following = 1;
+          $('#follower_count').html(parseInt(count)+1);        
+        }       
+      } else {
+        ui.error(data.info);
+      }
+    }, 'json');
   })
 })
 

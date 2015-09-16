@@ -274,6 +274,30 @@ class IndexAction extends Action {
 		if($_GET['type']=='digest'){
 			$jinghua = '精华帖';
 		}
+		
+		//父话题 与 子话题 与 话题动态
+		$parent_weiba = D('weiba_structure')->where('weiba_id='.$weiba_id) -> field('pid') -> select();
+		foreach($parent_weiba as $k=>$v){
+			if($v['pid'] == 0) 
+				unset($parent_weiba[$k]);
+			else 
+				$parent_weiba[$k]['weiba_name'] = D('weiba')->where('weiba_id='.$v['pid'])->getField('weiba_name'); 
+		}
+		$child_weiba = D('weiba_structure')->where('pid='.$weiba_id) -> field('weiba_id') -> select();
+		foreach($child_weiba as $k=>$v){
+			$child_weiba[$k]['weiba_name'] = D('weiba')->where('weiba_id='.$v['weiba_id'])->getField('weiba_name'); 
+		}
+		// 批量获取与当前登录用户之间的关注状态
+		$follow_state = model ( 'Follow' )->getFollowStateByFids ( $this->mid, array_slice($uids, 0, 2) );
+		$this->assign(
+			array(
+				'parent_weiba'	=> $parent_weiba,
+				'child_weiba'	=> $child_weiba,
+				'topic_dtai'	=> array_slice($uids, 0, 2),
+				'follow_state'	=> $follow_state,
+			)
+		);
+
 		$this->assign('nav' , 'weibadetail');
 		$this->assign('weiba_name' , $weiba_detail['weiba_name']);
 		$this->assign('weiba_id', $weiba_id );
@@ -288,7 +312,8 @@ class IndexAction extends Action {
 	 */
 	public function doFollowWeiba(){
 		$res = D('weiba')->doFollowWeiba($this->mid, intval($_REQUEST['weiba_id']));
-    	$this->ajaxReturn($res, D('weiba')->getError(), false !== $res);
+		$info = $res ? "" : D('weiba')->getError();
+    	$this->ajaxReturn($res, $info, false !== $res);
 	}
 
 	/**
@@ -296,7 +321,8 @@ class IndexAction extends Action {
 	 */
 	public function unFollowWeiba(){
 		$res = D('weiba')->unFollowWeiba($this->mid, intval($_REQUEST['weiba_id']));
-    	$this->ajaxReturn($res, D('weiba')->getError(), false !== $res);
+		$info = $res ? "" : D('weiba')->getError();
+    	$this->ajaxReturn($res, $info, false !== $res);
 	}
 
 	/**

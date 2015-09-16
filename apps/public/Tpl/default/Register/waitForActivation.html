@@ -116,7 +116,7 @@ var checkEmailBox = function(inputId)
     $dropDown.hide();
   };
   // 浏览器输入兼容性
-  if($.browser.msie) {
+  if($.support.msie) {
     $input.bind('propertychange', function() {
       $(this).val() != oldVal && valChange();
     });

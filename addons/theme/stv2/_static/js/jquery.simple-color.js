@@ -112,7 +112,7 @@
 
     // Figure out the cell dimensions
     options.totalWidth = options.columns * (options.cellWidth + (2 * options.cellMargin));
-    if ($.browser.msie) {
+    if ($.support.msie) {
       options.totalWidth += 2;
     }
 
