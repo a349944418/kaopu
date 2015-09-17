@@ -58,7 +58,7 @@ core.dropnotify = {
 					return false;
 				}else{	
 					var txt =msg.data;
-					if(txt.unread_total <= 0 ){
+					if(txt.unread_total <= 0){
 						_this.hideParentObj();
 						return false;
 					}else{
