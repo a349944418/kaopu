@@ -78,6 +78,9 @@ return array(
 		'weiba/Index/doFollowWeiba' =>  SITE_URL.'/question/c_[weiba_id]/dofollow',
 		'weiba/Comment/answer'		=> 	SITE_URL.'/question/[post_id]/answer/[reply_id]',
 
+		//靠谱圈
+		'public/Circles/index'		=>  SITE_URL.'/circles',
+
 		// 日志
 		'blog/Index/index'			=>	SITE_URL.'/app/blog',
 		'blog/Index/news'			=>	SITE_URL.'/app/blog/lastest',
@@ -103,12 +106,12 @@ return array(
 		'photo/Manage/album_order'	=>	SITE_URL.'/app/photo/order/[id]',
 
 		// 活动
-		'event/Index/index'			=>	SITE_URL.'/app/event',
-		'event/Index/personal'		=>	SITE_URL.'/app/event/events',
-		'event/Index/addEvent'		=>	SITE_URL.'/app/event/post',
-		'event/Index/edit'			=>	SITE_URL.'/app/event/edit/[id]',
-		'event/Index/eventDetail'	=>	SITE_URL.'/app/event/detail/[id]',
-		'event/Index/member'		=>	SITE_URL.'/app/event/member/[id]',
+		'event/Index/index'			=>	SITE_URL.'/event',
+		'event/Index/personal'		=>	SITE_URL.'/event/events',
+		'event/Index/addEvent'		=>	SITE_URL.'/event/post',
+		'event/Index/edit'			=>	SITE_URL.'/event/edit/[id]',
+		'event/Index/eventDetail'	=>	SITE_URL.'/event/detail/[id]',
+		'event/Index/member'		=>	SITE_URL.'/event/member/[id]',
 
 		// 投票
 		'vote/Index/index'			=>	SITE_URL.'/app/vote',

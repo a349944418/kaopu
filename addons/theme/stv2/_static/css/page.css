@@ -616,6 +616,17 @@ a.ico-close, a.ico-close:hover, .ico-close1 {background: url(../image/del.png) n
 .choose-user span{display:inline-block;padding:5px 0 0}
 .right{float:right;}
 
+/*靠谱圈*/
+.lap{ padding-top:160px;}
+.lap1 a{ display:inline-block; background:url(../image/kaopupeople.png) no-repeat; width:147px; height:147px; margin:0 15px;transition:background-position .2s linear;-webkit-transition:background-position .2s linear;-o-transition:background-position .2s linear;-moz-transition:background-position .2s linear;}
+.lap1{ margin-top:24px; padding-bottom:185px;}
+.lap1 a.kaopupeople1{background-position:0px 0px;}
+.lap1 a.kaopupeople2{background-position:-147px 0px;}
+.lap1 a.kaopupeople3{background-position:-294px 0px;}
+.lap1 a.kaopupeople1:hover{background-position:0px -147px;}
+.lap1 a.kaopupeople2:hover{background-position:-147px -147px;}
+.lap1 a.kaopupeople3:hover{background-position:-294px -147px;}
+
 @media (min-width: 768px){ .toggle {display: none; } .information1{ text-align:right;}} 
 @media (max-width: 768px){ .birthday,.school,.birthday1 {width:  100%;height: 34px;margin-bottom: 10px;} .nan,.nv {width: 30%;} .Interest-left,.confused-left{display: none;},}
 input.error { border: 1px solid red; }

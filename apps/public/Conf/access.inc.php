@@ -31,6 +31,8 @@ return array (
 
 		'public/Feed/addDigg' => true,
 		'public/Feed/delDigg' => true,
+
+		'public/Circles/index' => true,
 	)
 		 
 );
