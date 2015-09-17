@@ -68,7 +68,7 @@ core.dropnotify = {
 						$(this).find('li').each(function(){
 							var name = $(this).attr('rel');
 							num  =  txt[name] ;
-							if(num > 0){
+							if(num > 0 && name !='new_folower_count' ){
 								$(this).find('span').html(num +noticeTipsText[name]);
 								$(this).show();
 							}else{

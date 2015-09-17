@@ -62,7 +62,7 @@ jQuery.extend(ui.box, {
 	
 	close:function(fn){
 		this.inited = false;
-		$('#ui-fs .ui-fs-all .ui-fs-allinner div.list').find("a").die("click");
+		$('#ui-fs .ui-fs-all .ui-fs-allinner div.list').find("a").off("click");
 		$('.talkPop').remove();
 		$('#tsbox').remove();
         jQuery('.boxy-modal-blackout').remove();

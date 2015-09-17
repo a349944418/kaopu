@@ -3528,7 +3528,7 @@ jQuery.fn.extend({
 			return this.unbind( "live" );
 
 		} else {
-			return this.die( types, null, fn, selector );
+			return this.off( types, null, fn, selector );
 		}
 	},
 

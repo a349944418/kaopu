@@ -451,7 +451,7 @@ $.ui.mouse = {
 		// preventDefault() is used to prevent the selection of text here -
 		// however, in Safari, this causes select boxes not to be selectable
 		// anymore, so this fix is needed
-		($.browser.safari || event.preventDefault());
+		($.support.safari || event.preventDefault());
 
 		event.originalEvent.mouseHandled = true;
 		return true;

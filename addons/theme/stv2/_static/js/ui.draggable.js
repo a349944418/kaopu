@@ -305,14 +305,14 @@
  +
                 this.offset.parent.top * mod // The offsetParent's offset without borders (offset + border)
  -
-                ($.browser.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollTop() : (scrollIsRootNode ? 0 : scroll.scrollTop())) * mod)),
+                ($.support.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollTop() : (scrollIsRootNode ? 0 : scroll.scrollTop())) * mod)),
                 left: (pos.left // The absolute mouse position
  +
                 this.offset.relative.left * mod // Only for relative positioned nodes: Relative offset from element to offset parent
  +
                 this.offset.parent.left * mod // The offsetParent's offset without borders (offset + border)
  -
-                ($.browser.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft()) * mod))
+                ($.support.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft()) * mod))
             };
             
         },
@@ -367,7 +367,7 @@
  -
                 this.offset.parent.top // The offsetParent's offset without borders (offset + border)
  +
-                ($.browser.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollTop() : (scrollIsRootNode ? 0 : scroll.scrollTop())))),
+                ($.support.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollTop() : (scrollIsRootNode ? 0 : scroll.scrollTop())))),
                 left: (pageX // The absolute mouse position
  -
                 this.offset.click.left // Click offset (relative to the element)
@@ -376,7 +376,7 @@
  -
                 this.offset.parent.left // The offsetParent's offset without borders (offset + border)
  +
-                ($.browser.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft())))
+                ($.support.safari && this.cssPosition == 'fixed' ? 0 : (this.cssPosition == 'fixed' ? -this.scrollParent.scrollLeft() : scrollIsRootNode ? 0 : scroll.scrollLeft())))
             };
             
         },

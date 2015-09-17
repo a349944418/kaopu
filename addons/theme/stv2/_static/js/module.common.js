@@ -337,6 +337,24 @@ M.addEventFns({
 			follow.createBtn( this );
 		}
 	},
+	zdoFollow: {
+		click: function() {
+			follow.zdoFollow(this);
+			return false;
+		},
+		load: function() {
+			follow.zcreateBtn(this);
+		}
+	},
+	zunFollow: {
+		click: function() {
+			follow.zunFollow( this );
+			return false;
+		},
+		load: function() {
+			follow.zcreateBtn( this );
+		}
+	},
 	setFollowGroup:{
 		click:function(){
 			var args = M.getEventArgs(this);
@@ -512,6 +530,20 @@ var follow = {
 		haveFollow: '已关注',
 		eachFollow: '相互关注'
 	},
+	// 按钮图标
+	zflagClass: {
+		doFollow: "glyphicon glyphicon-plus",
+		unFollow: "ico-minus-gray",
+		haveFollow: "glyphicon glyphicon-minus",
+		eachFollow: "ico-connect"
+	},
+	// 按钮文字
+	zbtnText: {
+		doFollow: '加关注',
+		unFollow: L('PUBLIC_ERROR_FOLLOWING'),
+		haveFollow: '已关注',
+		eachFollow: '相互关注'
+	},
 	/**
 	 * 创建关注按钮
 	 * @param object node 按钮节点对象
@@ -553,6 +585,120 @@ var follow = {
 				$(node).unbind('mouseover');
 				$(node).unbind('mouseout');
 		}
+	},
+	/**
+	 * 创建关注按钮 zbq
+	 * @param object node 按钮节点对象
+	 * @param string btnType 按钮类型，4种
+	 * @return void
+	 */
+	zcreateBtn: function(node, btnType) {
+		var args = M.getEventArgs(node);
+		var btnType = (0 == args.following) ? "doFollow" : ((0 == args.follower) ? "haveFollow" : "eachFollow");
+		var flagClass = this.zflagClass[btnType];
+		var btnText = this.zbtnText[btnType];
+		//var btnHTML = ['<span><b class="', flagClass, '"></b>', btnText, '</span>'].join( "" );
+		var btnHTML = [btnText, '<span class="', flagClass ,' aria-hidden="true" style="padding-left:5px;">', '</span>'].join( "" );
+		// 按钮节点添加HTML与样式
+		node.innerHTML = btnHTML;
+		// 选择按钮类型
+		switch(btnType) {
+			case "haveFollow":
+			case "eachFollow":
+				$(node).bind({
+					mouseover: function() {
+						var b = this.getElementsByTagName( "span" )[0];
+						var text = b.previousSibling;
+						b.className = follow.zflagClass.unFollow;
+						text.nodeValue = follow.zbtnText.unFollow;
+					},
+					mouseout: function() {
+						var b = this.getElementsByTagName( "span" )[0];
+						var text = b.previousSibling;
+						b.className = flagClass;
+						text.nodeValue = btnText;
+					}
+				});
+				break;
+			default:
+				$(node).unbind('mouseover');
+				$(node).unbind('mouseout');
+		}
+	},
+	/**
+	 * 取消关注操作
+	 * @param object node 关注按钮的DOM对象
+	 * @return void
+	 */
+	zunFollow: function(node) {
+		var _this = this;
+		var args = M.getEventArgs(node);
+		var url = node.getAttribute( "href" ) || U('public/Follow/unFollow');
+		// 取消关注操作
+		$.post(url, {fid:args.uid}, function(txt) {
+			txt = eval( "(" + txt + ")" );
+			if ( 1 == txt.status ) {
+				if("undefined" != typeof(core.facecard) ){
+					core.facecard.deleteUser(args.uid);
+				}
+				if ( "following_list" == args.refer ) {
+					var item = node.parentModel;
+					// 移除
+					item.parentNode.removeChild( item );
+				} else {					
+					node.setAttribute( "event-node", "zdoFollow" );
+					node.setAttribute( "href", [U('public/Follow/doFollow'), '&fid=', args.uid].join( "" ) );
+					M.setEventArgs( node, ["uid=", args.uid, "&uname=", args.uname, "&following=", txt.data.following, "&follower=", txt.data.follower].join( "" ) );
+					M.removeListener( node );
+					M( node );
+				}
+				_this.updateFollowCount( - 1 );
+				updateUserData('follower_count', -1, args.uid);
+				if(args.isrefresh==1) location.reload();
+			} else {
+				ui.error( txt.info );
+			}
+		});
+	},
+	/**
+	 * 添加关注操作
+	 * @param object node 关注按钮的DOM对象
+	 * @return void
+	 */
+	zdoFollow: function(node) {
+		var _this = this;
+		var args = M.getEventArgs(node);
+		var url = node.getAttribute("href") || U('public/Follow/doFollow');
+		$.post(url, {fid:args.uid}, function(txt) {
+			if(1 == txt.status ) {
+				if("undefined" != typeof(core.facecard)){
+					core.facecard.deleteUser(args.uid);
+				}
+				node.setAttribute("event-node", "zunFollow");
+				node.setAttribute("href", [U('public/Follow/unFollow'), '&fid=', args.uid].join(""));
+				M.setEventArgs(node, ["uid=", args.uid, "&uname=", args.uname, "&following=", txt.data.following, "&follower=", txt.data.follower].join(""));
+				M.removeListener(node);
+				M(node);
+				_this.updateFollowCount(1);
+				updateUserData('follower_count', 1, args.uid);
+				if("following_right" == args.refer) {
+					var item = node.parentModel;
+					// item.parentNode.removeChild(item);
+					$(item).slideUp('normal', function() {
+						$(this).remove();
+					});
+					$.post(U('widget/RelatedUser/changeRelate'), {uid:args.uid, limit:1}, function(msg) {
+						var _model = M.getModels("related_list");
+						$(_model[0]).append(msg);
+						M(_model[0]);
+					}, 'json');
+				} else {
+					//followGroupSelectorBox(args.uid, args.isrefresh);
+				}
+			} else {
+				
+			}
+		}, 'json');
 	},
 	/**
 	 * 添加关注操作
@@ -617,7 +763,6 @@ var follow = {
 		$.post(url, {fid:args.uid}, function(txt) {
 			txt = eval( "(" + txt + ")" );
 			if ( 1 == txt.status ) {
-				ui.success( txt.info );
 				if("undefined" != typeof(core.facecard) ){
 					core.facecard.deleteUser(args.uid);
 				}

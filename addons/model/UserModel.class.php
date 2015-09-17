@@ -48,6 +48,7 @@ class UserModel extends Model {
 			36 => 'industryC',
 			37 => 'industry_names',
 			38 => 'PY',
+			39 => 'view',
 			'_autoinc' => true,
 			'_pk' => 'uid' 
 	);

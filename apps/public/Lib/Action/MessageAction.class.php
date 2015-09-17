@@ -130,7 +130,7 @@ class MessageAction extends Action
 		// 	}
 		// }
 		// $this->assign('imgUrl', json_encode($imgUrl));
-
+	
 		$message['data'] = $message['data'] ? $this->fetch() : null;
 		echo json_encode($message);
 	}

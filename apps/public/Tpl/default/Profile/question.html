@@ -1,77 +1,18 @@
-<include file="__THEME__/public_header" />
-<div class="center">
-    <div class="container-fluid" style='overflow:hidden'>
-            <div class="row" style="position:relative;">
-                <img src="__THEME__/image/nav_back/{$nav_top_back}.jpg" width="100%" id="cur_bg"/>
-                <eq name="self_flag" value="1">
-                  <img class="set_space_top_pic" src="__THEME__/image/space_jiao.png" />
-                  <div id="nav_top_set">
-                    <div class="spic <eq name='nav_top_back' value='tu0'>spic_checked</eq>">
-                      <img src="__THEME__/image/nav_back/tu0_s.jpg" data-alt="tu0" class="suo">
-                      <img src="__THEME__/image/yuan2.png" class="checked">
-                    </div>
-                    <div class="spic <eq name='nav_top_back' value='tu1'>spic_checked</eq>"  >
-                      <img src="__THEME__/image/nav_back/tu1_s.jpg" data-alt="tu1" class="suo">
-                      <img src="__THEME__/image/yuan2.png" class="checked">
-                    </div>
-                    <div class="spic <eq name='nav_top_back' value='tu2'>spic_checked</eq>">
-                      <img src="__THEME__/image/nav_back/tu2_s.jpg" data-alt="tu2" class="suo">
-                      <img src="__THEME__/image/yuan2.png" class="checked">
-                    </div>
-                    <div class="spic <eq name='nav_top_back' value='tu3'>spic_checked</eq>">
-                      <img src="__THEME__/image/nav_back/tu3_s.jpg" data-alt="tu3" class="suo">
-                      <img src="__THEME__/image/yuan2.png" class="checked">
-                    </div>
-                  </div>
-                </eq>
-            </div>
+<volist name="question.data" id="vo">
+    <div class="row tiyu">
+        <div class="col-xs-2 text-center">
+            <div class="browse"><span>{$vo.read_count}</span><br/>浏览</div>
         </div>
-    <div class="container">
-        <include file="_top" />
-        <div class="row">
-            <div class="col-md-10 col-md-offset-1 content-row">
-                <volist name="question.data" id="vo">
-                    <div class="row lyrics">
-                        <div class="col-xs-1 text-center">
-                          <div class="browse">{$vo.read_count}<br>浏览</div>
-                        </div>
-                        <div class="col-xs-11">
-                          <p><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}">{$vo.title}</a></p>
-                            <p><span>{$vo.reply_count}</span>个回答｜<span>{$vo.favorite_count}</span>关注</p>
-                        </div>
-                    </div>
-                </volist>
-                <!--页码-->
-               <neq name='question.html' value=''>
-                   <div id="page" class="page">
-                      {$question.html}
-                   </div>
-               </neq>
-               <!--页码/end-->
-            </div>
+        <div class="col-xs-10 riyu1">
+            <p class="riyu"><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}">{$vo.title}</a></p>
+            <p class="riyu"><span class="nine">{$vo.reply_count}</span>个回答｜<span class="nine">{$vo.favorite_count}</span>关注</p>
         </div>
     </div>
-</div>
-<script>
-  $(function(){
-
-    $('.set_space_top_pic').click(function(){
-      var right = $('#nav_top_set').css('right');
-      if(right == '0px') {
-        $('#nav_top_set').animate({right:"-378px"});
-      } else {
-        $('#nav_top_set').animate({right:"0"});
-      }      
-    })
-
-    $('#nav_top_set .spic').click(function(){
-      var st = $(this).find('.suo').attr('data-alt');
-      $(this).siblings().removeClass('spic_checked');
-      $(this).addClass('spic_checked');
-      $('#cur_bg').attr('src',THEME_URL+'/image/nav_back/'+st+'.jpg');
-      $.post(U('public/Profile/set_nav_bg'), {st:st}, function(){}, 'json');
-    })
-  })
-</script>
-<include file="__THEME__/public_footer" />
-<script src="__THEME__/js/module.weibo.js"></script>
+</volist>
+<!--页码-->
+<neq name='question.html' value=''>
+    <div id="page" class="page">
+        {$question.html}
+    </div>
+</neq>
+<!--页码/end-->        

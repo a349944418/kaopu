@@ -52,81 +52,6 @@ class ProfileAction extends Action {
 	 * 个人档案展示页面
 	 */
 	public function index() {
-		$this->answer();
-	}
-
-
-	/**
-	 * 个人回答
-	 */
-	public function answer() {
-		// 获取用户信息
-		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
-		// 用户为空，则跳转用户不存在
-		if (empty ( $user_info )) {
-			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
-		}
-		// 个人空间头部
-		$this->_top ();
-
-		// 判断隐私设置
-		$userPrivacy = $this->privacy ( $this->uid );
-		if ($userPrivacy ['space'] !== 1) {
-			$this->_sidebar ();
-			// 加载微博筛选信息
-			$d ['feed_type'] = t ( $_REQUEST ['feed_type'] ) ? t ( $_REQUEST ['feed_type'] ) : '';
-			$d ['feed_key'] = t ( $_REQUEST ['feed_key'] ) ? t ( $_REQUEST ['feed_key'] ) : '';
-			$this->assign ( $d );
-		} else {
-			$this->_assignUserInfo ( $this->uid );
-		}
-
-		// 添加积分
-		model ( 'Credit' )->setUserCredit ( $this->uid, 'space_access' );
-		
-		$this->assign ( 'userPrivacy', $userPrivacy );
-		// seo
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
-		$replace ['uname'] = $user_info ['uname'];
-		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
-			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
-		}
-		$replaces = array_keys ( $replace );
-		foreach ( $replaces as &$v ) {
-			$v = "{" . $v . "}";
-		}
-		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
-		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
-		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
-		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
-		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
-
-		if($_GET['order'] == 'favorite') {
-			$order = 'favorite DESC';
-			$this->assign('order', 'favorite');
-		} else {
-			$order = 'ctime DESC';
-			$this->assign('order', 'ctime');
-		}
-		$ans = D('weiba_reply') -> where('uid='.$this->uid.' and is_del=0') -> order($order) -> findpage(10);
-		foreach($ans['data'] as $k=>$v){
-			if(strstr($v['content'],'<img')) {
-				preg_match('/<img.+src=\"?(.+)\"?.+\/>/i',$v['content'],$match); 
-				$ans['data'][$k]['content_img'] = $match[1];
-			}
-			$ans['data'][$k]['hcontent'] = strip_tags($v[content]);
-			$ans['data'][$k]['title'] = D('weiba_post') -> where('post_id='.$v['post_id']) -> getField('title');
-		}
-
-		$this->assign('ans', $ans);
-		$this->display();
-	}
-
-	/**
-	 * 个人问题展示页面
-	 */
-	public function question() {
 		// 获取用户信息
 		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
 		
@@ -137,6 +62,16 @@ class ProfileAction extends Action {
 		// 个人空间头部
 		$this->_top ();
 		$this->_assignUserInfo ( $this->uid );
+
+		model ( 'Credit' )->setUserCredit ( $this->uid, 'space_access' );
+
+		//获赞数 和 查看数
+		$zan_count = D('weiba_reply') -> where('post_uid='.$this->uid) -> getField('sum(zan) as totle');
+		$this->assign('zan_count', $zan_count);
+		$view_count = D('User') -> where('uid='.$this->uid) -> getField('view');
+		D('User')->where('uid='.$this->uid)->setInc('view');
+		$this->assign('view_count', $view_count+1);
+		$this->_assignFollowState ( $this->uid );
 
 		// seo
 		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
@@ -168,49 +103,50 @@ class ProfileAction extends Action {
 		$this->display ();
 	}
 
+
+	/**
+	 * 个人回答
+	 */
+	public function answer() {
+		$uid = t($_POST['uid']);
+		$this->_assignUserInfo ( $uid );
+
+		$ans = D('weiba_reply') -> where('uid='.$uid.' and is_del=0') -> findpage(10);
+		foreach($ans['data'] as $k=>$v){
+			if(strstr($v['content'],'<img')) {
+				preg_match('/<img.+src=\"?(.*?)\"[^>]*?\/?\s*>/',$v['content'],$match); 
+				$ans['data'][$k]['content_img'] = $match[1];
+			}
+			$ans['data'][$k]['hcontent'] = strip_tags($v[content]);
+			$ans['data'][$k]['title'] = D('weiba_post') -> where('post_id='.$v['post_id']) -> getField('title');
+		}
+
+		$this->assign('ans', $ans);
+		echo $this->fetch();
+	}
+
+	/**
+	 * 个人问题展示页面
+	 */
+	public function question() {
+		$uid = t($_POST['uid']);
+		$this->_assignUserInfo ( $uid );
+
+		$question = D('weiba_post') -> where('is_del=0 and post_type=1 and post_uid='.$uid) ->findpage(10);
+		$this->assign('question', $question);
+		echo $this->fetch();
+	}
+
 	/**
 	 * [ 我的分享 ]
 	 * @return [type] [description]
 	 */
 	public function share(){
-		// 获取用户信息
-		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
-		// 用户为空，则跳转用户不存在
-		if (empty ( $user_info )) {
-			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
-		}
-		// 个人空间头部
-		$this->_top ();
-		$this->_assignUserInfo ( $this->uid );
-		
-		// seo
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
-		$replace ['uname'] = $user_info ['uname'];
-		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
-			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
-		}
-		$replaces = array_keys ( $replace );
-		foreach ( $replaces as &$v ) {
-			$v = "{" . $v . "}";
-		}
-		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
-		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
-		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
-		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
-		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
-
-		//用户提问的问题
-		if($_GET['order']=='reply_time'){
-			$order = 'last_reply_time desc';
-			$this->assign('order','reply_time');
-		}else{
-			$order = 'favorite_count desc';
-			$this->assign('order','favorite');
-		}
-		$share = D('weiba_post') -> where('is_del!=1 and post_type=2 and post_uid='.$this->uid) -> order($order) ->findpage(10);
+		$uid = t($_POST['uid']);
+		$this->_assignUserInfo ( $uid );
+		$share = D('weiba_post') -> where('is_del!=1 and post_type=2 and post_uid='.$uid) ->findpage(10);
 		$this->assign('share', $share);
-		$this->display ();
+		echo $this->fetch();
 	}
 
 
@@ -218,41 +154,17 @@ class ProfileAction extends Action {
 	 * 个人收藏展示页面
 	 */
 	public function collection() {
-		// 获取用户信息
-		$user_info = model ( 'User' )->getUserInfo ( $this->uid );
-		// 用户为空，则跳转用户不存在
-		if (empty ( $user_info )) {
-			$this->error ( L ( 'PUBLIC_USER_NOEXIST' ) );
-		}
-		// 个人空间头部
-		$this->_top ();
-		$this->_assignUserInfo ( $this->uid );
-		
-		// seo
-		$seo = model ( 'Xdata' )->get ( "admin_Config:seo_user_profile" );
-		$replace ['uname'] = $user_info ['uname'];
-		if ($feed_id = model ( 'Feed' )->where ( 'uid=' . $this->uid )->order ( 'publish_time desc' )->limit ( 1 )->getField ( 'feed_id' )) {
-			$replace ['lastFeed'] = D ( 'feed_data' )->where ( 'feed_id=' . $feed_id )->getField ( 'feed_content' );
-		}
-		$replaces = array_keys ( $replace );
-		foreach ( $replaces as &$v ) {
-			$v = "{" . $v . "}";
-		}
-		$seo ['title'] = str_replace ( $replaces, $replace, $seo ['title'] );
-		$seo ['keywords'] = str_replace ( $replaces, $replace, $seo ['keywords'] );
-		$seo ['des'] = str_replace ( $replaces, $replace, $seo ['des'] );
-		! empty ( $seo ['title'] ) && $this->setTitle ( $seo ['title'] );
-		! empty ( $seo ['keywords'] ) && $this->setKeywords ( $seo ['keywords'] );
-		! empty ( $seo ['des'] ) && $this->setDescription ( $seo ['des'] );
+		$uid = t($_POST['uid']);
+		$this->_assignUserInfo ( $uid );
 
-		$favorite = D('weiba_favorite') -> where('uid='.$this->uid) -> field('post_id') -> order('favorite_time') -> findpage(10);
+		$favorite = D('weiba_favorite') -> where('uid='.$uid) -> field('post_id') -> order('favorite_time') -> findpage(10);
 		foreach($favorite['data'] as $k=>$v){
 			 $tmp = D('weiba_post') -> where('post_id='.$v['post_id']) -> find(); 
 			 $tmp['content'] = strip_tags($tmp[content]);
 			 $favorite['data'][$k] = $tmp;
 		}
 		$this->assign('favorite',$favorite);
-		$this->display ();
+		echo $this->fetch();
 	}
 
 	/**

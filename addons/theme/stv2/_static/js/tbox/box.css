@@ -68,7 +68,7 @@
 /*消息弹窗*/
 .wrap-layer .content-layer .pop-message .form-tt{width:50px;padding:3px 0}
 .wrap-layer .content-layer .pop-message .form-row{margin:0;float:left}
-.pop-message{width:460px;padding:15px;position:relative;}
+.pop-message{padding:15px;position:relative;width:490px;}
 .pop-message .s-textarea, .pop-message .s-textarea-focus{width:400px;height:60px}
 .pop-message .s-txt, .pop-message .s-txt-focus{width:400px;margin:0}
 .pop-message .choose-user .mod-at-wrap{width:340px;left:66px\9;top:45px\9}

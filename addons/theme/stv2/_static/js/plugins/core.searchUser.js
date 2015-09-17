@@ -286,9 +286,9 @@ core.searchUser = {
 		_showUserList:function(){
 			var  x = this.input.offset();
 			if(this.input[0].style.display == 'none'){
-				this.userList.css({'left':x.left+'px','top':(x.top+this.input.height()+14)+'px','width':this.input.width()+10+'px','display':'none'});
+				this.userList.css({'left':x.left+'px','top':(x.top+this.input.height()+4)+'px','width':this.input.width()+4+'px','display':'none'});
 			}else{
-				this.userList.css({'left':x.left+'px','top':(x.top+this.input.height()+14)+'px','width':this.input.width()+10+'px','display':'block'});
+				this.userList.css({'left':x.left+'px','top':(x.top+this.input.height()+4)+'px','width':this.input.width()+4+'px','display':'block'});
 			}
 		},
 		_removeUserList:function(){

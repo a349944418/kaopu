@@ -14,9 +14,12 @@
                         </dl>
                     </div>
                     <div class="col-md-8">
-                        <div class="add clearfix">
-                            <p><a href="#">加关注<span class="glyphicon glyphicon-plus" aria-hidden="true" style="padding-left:5px;"></span></a></p><p><a href="#">发私信<span class="glyphicon glyphicon-envelope" aria-hidden="true" style="padding-left:5px;"></span></a></p>
-                        </div>
+                        <if condition="$mid neq $uid">
+                            <div class="add clearfix">
+                                <p>{:W('FollowBtn', array('fid'=>$user_info[$uid][uid], 'uname'=>$user_info[$uid][uname], 'follow_state'=>$follow_state[$user_info[$uid][uid]], 'ztype'=>2, 'isrefresh'=>0))}</p>
+                                <p><a onclick="ui.sendmessage({$user_info[$uid]['uid']}, 0)" href="javascript:void(0)" event-node="postMsg">发私信<span class="glyphicon glyphicon-envelope" aria-hidden="true" style="padding-left:5px;"></span></a></p>
+                            </div>
+                        </if>
                         <div class="synopsis">简介：{$user_info[$uid]['intro']|getShort=100}</div>
                         <div class="marketing">
                             <volist name="user_info[$uid]['weibaList']" id="vo" offset="0" length='10'>
@@ -28,45 +31,38 @@
                         </div>
                         <p class="hei"><span class="nan1"><if condition="$user_info[$uid]['sex'] eq 2">♀ 女<else />♂ 男</if></span><span class="location">来自{$user_info[$uid][location]}</span></p>
                         <div class="obtain clearfix">
-                            <p>获得：934&nbsp;<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;赞同</p> <p>3464&nbsp;<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>&nbsp;感谢</p>
+                            <p>获得：{$zan_count}&nbsp;<span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>&nbsp;赞同</p> <p>3464&nbsp;<span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>&nbsp;感谢</p>
                         </div>
                         <div class="tiwen2 clearfix">
                             <div class="col-md-8">
                                 <div class="row text-center">
                                     <div class="col-xs-3 questions">
-                                        <a href="#" class="hover">提问<br/>{$user_info[$uid]['postCount']|default=0}</a>
+                                        <a href="javascript:;" class="hover" act="question">提问<br/>{$user_info[$uid]['postCount']|default=0}</a>
                                     </div>
                                     <div class="col-xs-3 questions">
-                                        <a href="#">回答<br/>{$user_info[$uid]['replyCount']|default=0}</a>
+                                        <a href="javascript:;" act="answer">回答<br/>{$user_info[$uid]['replyCount']|default=0}</a>
                                     </div>
                                     <div class="col-xs-3 questions">
-                                        <a href="#">分享<br/>{$user_info[$uid]['shareCount']|default=0}</a>
+                                        <a href="javascript:;" act="share">分享<br/>{$user_info[$uid]['shareCount']|default=0}</a>
                                     </div>
                                     <div class="col-xs-3 questions">
-                                        <a href="#">收藏<br />{$user_info[$uid]['favoriteCount']|default=0}</a>
+                                        <a href="javascript:;" act="collection">收藏<br />{$user_info[$uid]['favoriteCount']|default=0}</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="tiwen3">
-                            <div class="row tiyu">
-                                <div class="col-xs-2 text-center">
-                                    <div class="browse"><span>8</span><br/>浏览</div>
+                            <volist name="question.data" id="vo">
+                                <div class="row tiyu">
+                                    <div class="col-xs-2 text-center">
+                                        <div class="browse"><span>{$vo.read_count}</span><br/>浏览</div>
+                                    </div>
+                                    <div class="col-xs-10 riyu1">
+                                        <p class="riyu"><a href="{:U('weiba/Index/postDetail',array('post_id'=>$vo['post_id']))}">{$vo.title}</a></p>
+                                        <p class="riyu"><span class="nine">{$vo.reply_count}</span>个回答｜<span class="nine">{$vo.favorite_count}</span>关注</p>
+                                    </div>
                                 </div>
-                                <div class="col-xs-10 riyu1">
-                                    <p class="riyu">有些日语歌词为什么要写一个词却特别用假名标注唱成另一个词？</p>
-                                    <p class="riyu"><span class="nine">9</span>个回答｜<span class="nine">45</span>关注</p>
-                                </div>
-                            </div>
-                            <div class="row tiyu">
-                                <div class="col-xs-2 text-center">
-                                    <div class="browse"><span>8</span><br/>浏览</div>
-                                </div>
-                                <div class="col-xs-10 riyu1">
-                                    <p class="riyu">有些日语歌词为什么要写一个词却特别用假名标注唱成另一个词？</p>
-                                    <p class="riyu"><span class="nine">9</span>个回答｜<span class="nine">45</span>关注</p>
-                                </div>
-                            </div>
+                            </volist>
                         </div>
                     </div>
                 </div>
@@ -86,28 +82,42 @@
                         <p class="attentionto1">关注了<br/><span>{$userData.following_count|default=0}</span>人</p><p>关注者<br/><span>{$userData.follower_count|default=0}</span>人</p>
                     </div>
                     <div class="theme">
-                      <p>关注了<span>7个话题</span></p>
+                        <p>关注了<span>{:count($user_info[$uid]['weibaList'])}个话题</span></p>
                         <div class="huati">
-                          <a href="#"><img src="image/huati1.jpg"/></a><a href="#"><img src="image/huati2.jpg"/></a><a href="#"><img src="image/huati3.jpg"/></a><a href="#"><img src="image/huati4.jpg"/></a><a href="#"><img src="image/huati5.jpg"/></a><a href="#"><img src="image/huati6.jpg"/></a>
+                          <volist name="user_info[$uid]['weibaList']" id="vo" offset="0" length='6'>
+                            <a href="{:U('weiba/Index/detail',array('weiba_id'=>$vo['weiba_id']))}"><img src="{$vo.logo}"/></a>
+                          </volist>
                         </div>
                     </div>
                     <div class="theme">
-                      <p>加入<span>18个靠谱圈</span></p>
+                      <p>加入<span>0个靠谱圈</span></p>
                         <div class="huati">
-                          <a href="#"><img src="image/huati1.jpg"/></a><a href="#"><img src="image/huati2.jpg"/></a><a href="#"><img src="image/huati3.jpg"/></a><a href="#"><img src="image/huati4.jpg"/></a><a href="#"><img src="image/huati5.jpg"/></a><a href="#"><img src="image/huati6.jpg"/></a>
                         </div>
                     </div>
                     <div class="theme">
-                      <p>发起了<span>8个靠谱活动</span></p>
+                      <p>发起了<span>0个靠谱活动</span></p>
                         <div class="huati">
-                          <a href="#"><img src="image/huati1.jpg"/></a><a href="#"><img src="image/huati2.jpg"/></a><a href="#"><img src="image/huati3.jpg"/></a><a href="#"><img src="image/huati4.jpg"/></a><a href="#"><img src="image/huati5.jpg"/></a><a href="#"><img src="image/huati6.jpg"/></a>
                         </div>
                     </div>
-                    <div class="homepage2">个人主页被5684人浏览</div>
+                    <div class="homepage2">个人主页被{$view_count}人浏览</div>
                 </aside>
             </div>
         </div>
     </div>
 </div>
 <script src="__THEME__/js/module.weibo.js"></script>
+<script>
+$(function(){
+    $('.questions a').click(function(){
+        $('.tiwen3').html('<img src="'+THEME_URL+'/image/loading1.gif" style="display:block;width:75px;margin:30px auto;">');
+        $(this).addClass('hover');
+        $(this).parent('.questions').siblings().children('a').removeClass('hover');
+        var act = $(this).attr('act');
+        var uid = '{$uid}';
+        $.post(U('public/Profile/'+act), {uid: uid}, function(data){
+            $('.tiwen3').html(data);
+        }, 'html');
+    })
+}) 
+</script>
 <include file="__THEME__/public_footer" />

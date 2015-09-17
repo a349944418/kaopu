@@ -1,5 +1,13 @@
-<if condition="0 eq $follow_state['following']">
-    <a event-node="doFollow" event-args="uid={$fid}&uname={$uname}&following={$follow_state['following']}&follower={$follow_state['follower']}&refer={$refer}&isrefresh={$isrefresh}" href="{:U('public/Follow/doFollow', array('fid'=>$fid))}" class="btn-cancel"></a>
+<if condition="2 eq $ztype">
+	<if condition="0 eq $follow_state['following']">
+	    <a event-node="zdoFollow" event-args="uid={$fid}&uname={$uname}&following={$follow_state['following']}&follower={$follow_state['follower']}&refer={$refer}&isrefresh={$isrefresh}" href="{:U('public/Follow/doFollow', array('fid'=>$fid))}" ></a>
+	<else />
+	    <a event-node="zunFollow" event-args="uid={$fid}&uname={$uname}&following={$follow_state['following']}&follower={$follow_state['follower']}&refer={$refer}&isrefresh={$isrefresh}" href="{:U('public/Follow/unFollow', array('fid'=>$fid))}" ></a>
+	</if>
 <else />
-    <a event-node="unFollow" event-args="uid={$fid}&uname={$uname}&following={$follow_state['following']}&follower={$follow_state['follower']}&refer={$refer}&isrefresh={$isrefresh}" href="{:U('public/Follow/unFollow', array('fid'=>$fid))}" class="btn-cancel"></a>
+	<if condition="0 eq $follow_state['following']">
+	    <a event-node="doFollow" event-args="uid={$fid}&uname={$uname}&following={$follow_state['following']}&follower={$follow_state['follower']}&refer={$refer}&isrefresh={$isrefresh}" href="{:U('public/Follow/doFollow', array('fid'=>$fid))}" class="btn-cancel"></a>
+	<else />
+	    <a event-node="unFollow" event-args="uid={$fid}&uname={$uname}&following={$follow_state['following']}&follower={$follow_state['follower']}&refer={$refer}&isrefresh={$isrefresh}" href="{:U('public/Follow/unFollow', array('fid'=>$fid))}" class="btn-cancel"></a>
+	</if>
 </if>

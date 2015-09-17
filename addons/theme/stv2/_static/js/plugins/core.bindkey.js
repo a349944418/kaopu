@@ -16,7 +16,7 @@ core.bindkey = {	//绑定键盘事件
 				this.childName = "undefined" == typeof(childName) ? 'li' : childName;
 				this.curClass = "undefined" == typeof(curClass) ? 'current' : curClass;
 				if("undefined" != typeof(callback)) this.callback = callback;
-				var type = $.browser.opera ? "keypress" : "keydown";
+				var type = $.support.opera ? "keypress" : "keydown";
 				try{
 					$('body').unbind(type,core.bindkey.bindfuc);
 				}catch(e){
@@ -46,7 +46,7 @@ core.bindkey = {	//绑定键盘事件
 			    return true;
 			},
 			unbind:function(){
-				var type = $.browser.opera ? "keypress" : "keydown";
+				var type = $.support.opera ? "keypress" : "keydown";
 				$('body').unbind(type,core.bindkey.bindfuc);
 			},
 			getcurNodeSize:function(){

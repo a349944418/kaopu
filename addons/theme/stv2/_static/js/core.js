@@ -559,7 +559,7 @@ var ui = {
 	 */
 	box: {
 		WRAPPER: '<div class="wrap-layer" id="tsbox" style="display:none">\
-     			  <div class="content-layer" style="background-color:#fff;border:none;">\
+     			  <div class="content-layer">\
      			  <div class="layer-content" id="layer-content"></div>\
      			  </div></div>',
 		inited: false,
@@ -578,9 +578,10 @@ var ui = {
 			}
 			var url = THEME_URL+'/js/tbox/box.css';
 			core.loadCss(url);
+
 			// 添加头部
 			if("undefined" != typeof(title) && title) {
-				$("<div class='hd' style=\"background-color:#fff;\">"+title+"<a class='ico-close' href='#'></a></div>").insertBefore($('#tsbox .layer-content'));
+				$("<div class='hd' >"+title+"<a class='ico-close' href='#'></a></div>").insertBefore($('#tsbox .layer-content'));
 			}
 			
 			//遮罩层
@@ -598,34 +599,38 @@ var ui = {
 			});
 
 			//点击弹出层以外的地方，关闭弹出层
+			/*
 	    	$('#boxy-modal-blackout-iframe').contents().find('html').click(function(){
 	    		ui.box.close(callback);
 				return false;
 	    	});
-	    	
+			*/
 			// 关闭弹窗，回调函数
 			$('#tsbox').find('.ico-close').click(function() {
 				ui.box.close(callback);
 				return false;
 			});
+			/*
 			setTimeout(function(){
 				$('#boxy-modal-blackout-iframe').contents().find('html').click(function(){
 		    		ui.box.close(callback);
 					return false;
 		    	});
 			},500);
-			
+			*/
 			this.center();
 			var show = function(){
 				$('#tsbox').fadeIn(200);
 			}
 			setTimeout(show, 200);
+
 			if(title){
-			$('#tsbox').draggable({ handle: '.hd' });
+			//$('#tsbox').draggable({ handle: '.hd' });
 
 			$('.hd').mousedown(function(){
 				$('.mod-at-wrap').remove();
 			});}
+			return false;
 		},
 		/**
 		 * 设置弹窗中的内容
@@ -643,7 +648,7 @@ var ui = {
 		close: function(fn) {
 			// $('body').css({'overflow': ''});
 
-			$('#ui-fs .ui-fs-all .ui-fs-allinner div.list').find("a").die("click");
+			$('#ui-fs .ui-fs-all .ui-fs-allinner div.list').find("a").off("click");
 
 			// 关闭弹窗，同步弹窗同步消失
 			var $sync = $('#Sync');
@@ -719,6 +724,7 @@ var ui = {
 				var ajaxType = "GET";
 			}
 			this.setcontent('<div style="width:150px;height:70px;text-align:center"><div class="load">&nbsp;</div></div>');
+			
 			var obj = this;
 			if("undefined" == requestData) {
 				var requestData = {};
