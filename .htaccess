@@ -183,5 +183,5 @@ RewriteRule ^/?app/group/([0-9]+)/member/?$                             index.ph
 
 
 # qq 登陆
-RewriteRule ^/?qqLogin$								index.php?app=public&mod=Widget&act=displayAddons&type=qzone&addon=Login&hook=no_register_display [L]
+RewriteRule ^/?qqLogin/?$								index.php?app=public&mod=Widget&act=displayAddons&type=qzone&addon=Login&hook=no_register_display&%{QUERY_STRING} [L]
 </IfModule>
