@@ -2,28 +2,134 @@
 <link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
 <link href="__APP__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="__APP__/js/event.js"></script>
-<div class="content_holder">
-<div class="content no_bg boxShadow">
-<include file="../Public/_mainNav" />
-  <div class="main no_l">
-    <!-- 画布 begin  -->
-    <div class="mainbox clearfix">
-      <include file="../Public/_isHotList" />
-      <div class="mainbox_appC">
-        <div class="tab-menu">
-          <!-- 切换标签 begin  -->
-          <ul>
-            <li <php> echo (empty($_GET['order']) || $_GET['order']=='hot')?'class="current"':NULL;</php>><a href="{:U('//',array('order'=>'hot'))}" ><span>热门{$ts['app']['app_alias']}</span></a></li>
-            <li <php> echo ($_GET['order']=='new')?'class="current"':NULL;</php>><a href="{:U('//',array('order'=>'new'))}" ><span>最新{$ts['app']['app_alias']}</span></a></li>
-            <li <php> echo ($_GET['order']=='following')?'class="current"':NULL;</php>><a href="{:U('//',array('order'=>'following'))}"><span>我关注的{$ts['app']['app_alias']}</span></a></li>
-          </ul>
+<div class="container center1 " style="padding-bottom:20px;">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="activity-left">
+            	<div class="hot clearfix">
+                	<div class="hot-left">
+                    	<p>2015<br/>09月</p>
+                    </div>
+                    <div class="hot-right">
+                    	<p class="month"><a href="#">9月</a><a href="#">10月</a><a href="#">11月</a><a href="#">12月</a><a href="#">1月</a><a href="#">2月</a><a href="#">3月</a><a href="#">4月</a><a href="#">5月</a><a href="#">6月</a><a href="#">7月</a><a href="#">8月</a></p>
+                        <div class="Boutique clearfix">
+                        	<p class="Boutique2"><a href="#">发起活动</a></p><p class="Boutique1"><a href="#">热门活动</a><a href="#">最新活动</a><a href="#">精品活动</a><a href="#">一周热榜</a></p>
+                        </div>
+                        <div class="menu">
+                        	<select><option>按时间</option></select>
+                            <select><option>按类型</option></select>
+                            <select><option>按人物</option></select>
+                            <select><option>按形式</option></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="Favourite clearfix">
+                	<div class="Favourite-left">
+                    	热门<span><img src="__THEME__/image/Favourite1.jpg"/></span>
+                    </div>
+                    <div class="Favourite-right">
+                    	<div class="Journal clearfix">
+                        	<div class="Journal-left">
+                            	<img src="__THEME__/image/Journal.jpg"/>
+                            </div>
+                            <div class="Journal-right">
+                            	<h3>《成长总有好办法》读后感</h3>
+                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
+                                <div class="Journal-problem">
+                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Journal clearfix">
+                        	<div class="Journal-left">
+                            	<img src="__THEME__/image/Journal2.jpg"/>
+                            </div>
+                            <div class="Journal-right">
+                            	<h3>北京高三线下交友</h3>
+                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
+                                <div class="Journal-problem">
+                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Journal clearfix">
+                        	<div class="Journal-left">
+                            	<img src="__THEME__/image/Journal3.jpg"/>
+                            </div>
+                            <div class="Journal-right">
+                            	<h3>推荐一本好书</h3>
+                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
+                                <div class="Journal-problem">
+                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Journal clearfix">
+                        	<div class="Journal-left">
+                            	<img src="__THEME__/image/Journal.jpg"/>
+                            </div>
+                            <div class="Journal-right">
+                            	<h3>《成长总有好办法》读后感</h3>
+                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
+                                <div class="Journal-problem">
+                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Journal clearfix">
+                        	<div class="Journal-left">
+                            	<img src="__THEME__/image/Journal2.jpg"/>
+                            </div>
+                            <div class="Journal-right">
+                            	<h3>北京高三线下交友</h3>
+                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
+                                <div class="Journal-problem">
+                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Journal clearfix">
+                        	<div class="Journal-left">
+                            	<img src="__THEME__/image/Journal3.jpg"/>
+                            </div>
+                            <div class="Journal-right">
+                            	<h3>推荐一本好书</h3>
+                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
+                                <div class="Journal-problem">
+                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="paging">
+                        	<span>共50页/600条</span><p><a href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">9</a><a href="#">下一页》</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-            <include file="../Public/_eventList" />
-          <div class="c"></div>
-      </div>
+        <div class="col-md-3">
+            <div class="activity-right">
+            	<div class="advertising">
+                	<img src="__THEME__/image/advertising.jpg"/>
+                </div>
+                <div class="column">
+                	<h5>推荐专栏<span><a href="#">专栏首页</a></span></h5>
+                    <dl>
+                    	<dt><img src="__THEME__/image/column.jpg"/></dt>
+                        <dd class="chen">沉睡者梦里也不曾见过的美丽</dd>
+                        <dd class="bei">北欧的海岸线就像是一地碎玻璃，船在狭窄的水道上穿行，无数岛屿点缀其间。到达开阔水域的时候，已经是夜色迷茫，玛</dd>
+                    </dl>
+                </div>
+                <div class="strategy clearfix">
+                	<h5>旅游攻略推荐<span><a href="#">更多</a></span></h5>
+                    <dl>
+                    	<dt><img src="__THEME__/image/strategy.jpg"/></dt>
+                        <dd class="yun">云台山行摄</dd>
+                        <dd class="xiang">详细的吃、住、行、景点、线路、实用信息</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-</div>
-<!-- 右侧内容 end  -->
 <include file="__THEME__/public_footer" /> 

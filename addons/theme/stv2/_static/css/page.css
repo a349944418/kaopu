@@ -627,6 +627,64 @@ a.ico-close, a.ico-close:hover, .ico-close1 {background: url(../image/del.png) n
 .lap1 a.kaopupeople2:hover{background-position:-147px -147px;}
 .lap1 a.kaopupeople3:hover{background-position:-294px -147px;}
 
+
+/*靠谱圈活动*/
+.activity{}
+.activity-left{ margin-top:51px;}
+.hot-left{ float:left; width:10%;}
+.hot-right{ float:left; width:80%; padding-left:3%;}
+.hot-left p{ font-family:"微软雅黑"; font-size:21px; color:#fff; background:#61B9DD; text-align:center; margin:0px;}
+.hot-right p.month{ font-size:14px; background:url(../image/month.jpg) repeat-x left bottom; line-height:24px; width:85%; margin:0px;}
+.hot-right p.month a{ color:#9A9899; display:inline-block; padding:0px 2%;}
+.hot-right p.month a:hover{ background:url(../image/month-hover.jpg) repeat-x left bottom;}
+.Boutique1{ float:left; width:80%;}
+.Boutique2{ float:right; width:20%}
+.Boutique2 a{ display:inline-block; background:url(../image/Boutique2.jpg) no-repeat; width:100%; line-height:36px; padding-left:34%; color:#fff; font-family:"微软雅黑"; font-size:16px;}
+.Boutique{ padding-top:16px;}
+.Boutique1 a{ color:#555; display:inline-block; margin-right:3%; font-family:"微软雅黑"; font-size:16px; line-height:36px;}
+.menu select{ margin-right:1%; line-height:27px; height:27px;}
+.menu{ padding-top:8px;}
+.Favourite-left{ float:left; width:13%;}
+.Favourite-right{ float:left; width:80%;}
+.Favourite{ background:url(../image/Favourite.jpg) repeat-y left top; margin-top:25px;}
+.Favourite-left{ font-size:20px; color:#ACA7AE;}
+.Favourite-left span{ padding-left:12%;}
+.Journal-left{ float:left; width:35%;}
+.Journal-right{ float:left; width:55%; border-bottom:1px dashed #C2C2C2;}
+.Journal-right h3{ margin:0px; font-family:"微软雅黑"; font-size:18px; color:#333; line-height:34px; padding-top:10px;}
+.Journal-right p{ margin:0px; font-family:"宋体"; font-size:12px; line-height:22px;}
+.Journal-problem{ font-size:12px; line-height:38px;}
+.Journal-problem span.chakan{ float:right; display:inline-block; background:#F0F0F0; padding:0 5px;}
+.Journal-problem span.chakan a{ color:#afafaf;}
+.Journal-problem span{ display:inline-block; color:#aaa;}
+.Journal-problem span a{ color:#ababab;}
+.Journal-pinglun{ background:url(../image/pinglun.png) no-repeat left center; padding-left:7%; margin-left:6%;}
+.Journal-zan{ background:url(../image/zan.png) no-repeat left center; padding-left:7%; margin-left:4%;}
+.Journal-fenxiang{ background:url(../image/fenxiang.png) no-repeat left center; padding-left:7%; margin-left:4%;}
+.Journal-shou{ background:url(../image/shou.png) no-repeat left center; padding-left:7%; margin-left:4%;}
+.Journal{ padding-bottom:30px;}
+.paging span{ color:#969A99; float:left; width:15%;}
+.paging p{ float:left; width:85%; margin:0px;}
+.paging p a{ display:inline-block; padding:0px 1%; color:#666465;}
+.paging{ width:100%;}
+.paging p a:hover{ background:#FD9F00; color:#fff; border-radius:2px;}
+.activity-right{ margin-top:54px;}
+.column{ padding-top:21px;}
+.column h5{ line-height:56px; font-family:"微软雅黑"; font-size:20px;}
+.column h5 span{ float:right; font-size:12px;}
+.column h5 span a{ color:#999997;}
+.column dl dd.chen{ font-size:16px; font-family:"微软雅黑"; line-height:35px; padding-top:6px;}
+.column dl dd.bei{ font-size:12px; font-family:"微软雅黑"; line-height:20px; color:#666668;}
+.strategy{}
+.strategy h5{ font-family:"微软雅黑"; font-size:18px; line-height:34px; padding-top:25px;}
+.strategy h5 span{ float:right; font-size:12px;}
+.strategy h5 span a{ color:#999997;}
+.strategy dl dt{ float:left; width:50%;}
+.strategy dl dd{ float:left; width:50%;}
+.strategy dl{ padding-top:13px;}
+.strategy dl dd.yun{ font-size:22px;font-family:"微软雅黑"; line-height:46px;}
+.strategy dl dd.xiang{ font-size:12px; color:#666; line-height:20px;}
+
 @media (min-width: 768px){ .toggle {display: none; } .information1{ text-align:right;}} 
 @media (max-width: 768px){ .birthday,.school,.birthday1 {width:  100%;height: 34px;margin-bottom: 10px;} .nan,.nv {width: 30%;} .Interest-left,.confused-left{display: none;},}
 input.error { border: 1px solid red; }

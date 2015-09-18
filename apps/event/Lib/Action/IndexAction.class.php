@@ -40,6 +40,59 @@ class IndexAction extends Action {
      * @return void
      */
     public function index() {
+        $order = NULL;
+        switch( $_GET['order'] ) {
+            case 'new':    //最新排行
+                $order = 'cTime DESC';
+                $this->setTitle('最新' . $this->appName);
+                break;
+            case 'following':    
+                //关注的人的活动
+                // $following = M('weibo_follow')->field('fid')->where("uid={$this->mid} AND type=0")->findAll();
+                // foreach($following as $v) {
+                //  $in_arr[] = $v['fid'];
+                // }
+                // $map['uid'] = array('in',$in_arr);
+            // 关注的活动
+                $map['uid'] = $this->mid;
+                $map['action'] = 'attention';
+                $eventIds = M('event_user')->where($map)->field('eventId')->findAll();unset($map);
+                foreach ($eventIds as $key => $value) {
+                    $ids[$key] = $value['eventId'];
+                }
+                $map['id'] = array('IN',$ids);
+                $this->setTitle('我关注的' . $this->appName);
+                break;
+             default:      //默认热门排行
+                $order = 'joinCount DESC,attentionCount DESC,cTime DESC';
+                $this->setTitle('热门' . $this->appName);
+        }
+
+        //查询
+        $title = t($_POST['title']);
+        if ($_POST['title']) {
+            $map['title'] = array( 'like',"%".t($_POST['title'])."%" );
+            $this->assign('searchkey',$title);
+            $this->setTitle('搜索' . $this->appName);
+        }
+        if ($_GET['cid']) {
+            $map['type']  = intval($_GET['cid']);
+            $this->setTitle('分类浏览');
+        }
+
+        $result  = $this->event->getEventList($map,$order,$this->mid,$_GET['order']);
+        $this->assign($result);
+        $this->display();
+    }
+
+
+    /**
+     * index
+     * 备注首页
+     * @access public
+     * @return void
+     */
+    public function index_bak() {
 		$order = NULL;
         switch( $_GET['order'] ) {
         	case 'new':    //最新排行

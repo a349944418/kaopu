@@ -1388,7 +1388,8 @@ class IndexAction extends Action {
 					$map['post_id'] = array('in', join($post_ids, ','));
 				}
 			}			
-		} 
+		}
+		$domain = model('User')->getDomain(); 
 		$answer_List = D('weiba_reply')->where($map)->group('post_id')->field('post_id')->findpage(20);
 		foreach($answer_List['data'] as $k=>$v){
 			$res_tmp = D('weiba_reply')->where('post_id='.$v['post_id'])->order('zan desc, ctime desc')->find(); 
@@ -1404,6 +1405,7 @@ class IndexAction extends Action {
 			$answer_List['data'][$k]['post_title'] = $post_info['title'];
 			$answer_List['data'][$k]['post_type'] = $post_info['post_type'];
 			$answer_List['data'][$k]['favorite'] = $this->_getFavoriteStatus($v['post_id']);
+			$answer_List['data'][$k]['udomain'] = $domain[$v['post_uid']];
 		}
 		$uids = getSubByKey($answer_List['data'], 'post_uid');
 		$this->_assignUserInfo($uids);
