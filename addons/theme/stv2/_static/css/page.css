@@ -481,8 +481,6 @@ button.nav_button:hover {color: white;}
 .weibo-login, .qq-login {width:46px; height: 46px; display: inline-block; margin-right: 10px;position:relative;top:13px;}
 .weibo-login {background: url(../image/weibo.png);}
 .qq-login {background: url(../image/qq.png);}
-.weibo-login:hover {background: url(../image/weibo-1.png);}
-.qq-login:hover {background: url(../image/qq-1.png);}
 .btn-main, .btn-main:hover {background: #fb5240; color: #fff;}
 .md a {color:#fff; font-family:'微软雅黑';text-decoration: none;}
 

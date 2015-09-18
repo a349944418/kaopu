@@ -110,7 +110,7 @@ class ProfileAction extends Action {
 	public function answer() {
 		$uid = t($_POST['uid']);
 		$this->_assignUserInfo ( $uid );
-
+		$this->assign('uid', $uid);
 		$ans = D('weiba_reply') -> where('uid='.$uid.' and is_del=0') -> findpage(10);
 		foreach($ans['data'] as $k=>$v){
 			if(strstr($v['content'],'<img')) {
