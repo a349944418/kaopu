@@ -345,7 +345,8 @@ M.addEventFns({
 				$.post(U('weiba/Comment/reply_commentList'), attrs, function(res){
 					$('.rightComment .review3-right').html(res);
 				})
-			}			
+			}
+			$('html,body').animate({ scrollTop:0});	
         }
 	}
 });
