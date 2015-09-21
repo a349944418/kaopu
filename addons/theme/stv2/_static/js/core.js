@@ -514,6 +514,18 @@ var ui = {
 		this.box.load(U('public/Message/post')+'&touid='+touid+'&editable='+editable, L('PUBLIC_SETPRIVATE_MAIL'));
 	},
 	/**
+	 * 发活动弹窗API
+	 * @param string touid 收件人ID
+	 * @return void
+	 */
+	sendmessage: function(touid, editable) {
+		if(typeof(editable) == "undefined" ) {
+			editable = 1;
+		}
+		touid = touid || '';
+		this.box.load(U('public/Message/post')+'&touid='+touid+'&editable='+editable, L('PUBLIC_SETPRIVATE_MAIL'));
+	},
+	/**
 	 * @Me弹窗API
 	 * @param string touid @人ID
 	 * @return void
