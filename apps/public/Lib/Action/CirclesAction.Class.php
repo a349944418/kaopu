@@ -12,5 +12,6 @@ class CirclesAction extends Action {
 	 */
 	public function index() {
 		$this->display();
+		echo 1;
 	}
 }
