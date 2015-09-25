@@ -1,108 +1,93 @@
 <include file="__THEME__/header" />
 <link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
-<link href="__APP__/js/pagination/pagination.css" rel="stylesheet" type="text/css" />
+
 <script type="text/javascript" src="__APP__/js/event.js"></script>
-<div class="container center1 " style="padding-bottom:20px;">
+<style>
+    #body_page{background:none;}
+</style>
+<div class="container center1 " style="padding-bottom:20px;background:#fff;">
     <div class="row">
         <div class="col-md-9">
             <div class="activity-left">
             	<div class="hot clearfix">
                 	<div class="hot-left">
-                    	<p>2015<br/>09月</p>
+                    	<p>{$now_year}<br/>{$now_month}月</p>
                     </div>
                     <div class="hot-right">
-                    	<p class="month"><a href="#">9月</a><a href="#">10月</a><a href="#">11月</a><a href="#">12月</a><a href="#">1月</a><a href="#">2月</a><a href="#">3月</a><a href="#">4月</a><a href="#">5月</a><a href="#">6月</a><a href="#">7月</a><a href="#">8月</a></p>
+                        <p class="month">
+                        <php>
+                            for($i=0; $i<12; $i++){
+                                $tmp_year = $now_year;
+                                $tmp_month = $now_month + $i;
+                                if($tmp_month > 12){
+                                    $tmp_year += 1;
+                                    $tmp_month -= 12;
+                                }
+                                $current = $tmp_month == $_GET['month'] ? 'class="current"' : '';
+                                echo '<a href="'.U('event/Index/index', array('year'=>$tmp_year,'month'=>$tmp_month)).'" '.$current.' >'.$tmp_month.'月</a>';
+                            }
+                        </php>
+                    	</p>
                         <div class="Boutique clearfix">
-                        	<p class="Boutique2"><a href="#">发起活动</a></p><p class="Boutique1"><a href="#">热门活动</a><a href="#">最新活动</a><a href="#">精品活动</a><a href="#">一周热榜</a></p>
+                        	<p class="Boutique2"><a href="javascript:ui.addEvent();">发起活动</a></p>
+                            <p class="Boutique1">
+                                <a href="{:U('event/Index/index', array('year'=>$_GET['year'],'month'=>$_GET['month'],'order'=>'hot','imt'=>$_GET[imt],'evob'=>$_GET[evob],'evt'=>$_GET[evt]))}" <if condition="$_GET[order] eq 'hot'">class="hover"</if> >热门活动</a>
+                                <a href="{:U('event/Index/index', array('year'=>$_GET['year'],'month'=>$_GET['month'],'order'=>'new','imt'=>$_GET[imt],'evob'=>$_GET[evob],'evt'=>$_GET[evt]))}" <if condition="$_GET[order] eq 'new'">class="hover"</if> >最新活动</a>
+                                <a href="{:U('event/Index/index', array('year'=>$_GET['year'],'month'=>$_GET['month'],'order'=>'following','imt'=>$_GET[imt],'evob'=>$_GET[evob],'evt'=>$_GET[evt]))}" <if condition="$_GET[order] eq 'following'">class="hover"</if> >关注的人的活动</a>
+                            <!-- <a href="#">精品活动</a><a href="#">一周热榜</a> -->
+                            </p>
                         </div>
                         <div class="menu">
-                        	<select><option>按时间</option></select>
-                            <select><option>按类型</option></select>
-                            <select><option>按人物</option></select>
-                            <select><option>按形式</option></select>
+                            <select id="ev_type">
+                                <option value="0">按标签</option>
+                                <volist name="type" id="v">
+                                    <option value="{$v.id}" <if condition="$_GET[evt] eq $v[id]">selected</if>>{$v.name}</option>
+                                </volist>
+                            </select>
+                            <select id="ev_obj">
+                                <option value="0">按对象</option>
+                                <option value="1" <if condition="$_GET[evob] eq 1">selected</if> >学生</option>
+                                <option value="2" <if condition="$_GET[evob] eq 2">selected</if> >家长</option>
+                                <option value="3" <if condition="$_GET[evob] eq 3">selected</if> >老师</option>
+                                <option value="4" <if condition="$_GET[evob] eq 4">selected</if> >过来人</option>
+                            </select>
+                            <select id="imt">
+                                <option value="0">按形式</option>
+                                <option value="1" <if condition="$_GET[imt] eq 1">selected</if> >线上</option>
+                                <option value="2" <if condition="$_GET[imt] eq 2">selected</if> >线下</option>
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="Favourite clearfix">
                 	<div class="Favourite-left">
-                    	热门<span><img src="__THEME__/image/Favourite1.jpg"/></span>
+                    	{$type1}<span><img src="__THEME__/image/Favourite1.jpg"/></span>
                     </div>
                     <div class="Favourite-right">
-                    	<div class="Journal clearfix">
-                        	<div class="Journal-left">
-                            	<img src="__THEME__/image/Journal.jpg"/>
-                            </div>
-                            <div class="Journal-right">
-                            	<h3>《成长总有好办法》读后感</h3>
-                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
-                                <div class="Journal-problem">
-                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
+                        <if condition="$data">
+                            <volist name="data" id="vo">
+                            	<div class="Journal clearfix">
+                                    <if condition="$vo['cover']">
+                                    	<div class="Journal-left">
+                                        	<a href="{:U('event/Index/eventDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}"><img src="{$vo['cover']}" /></a>
+                                        </div>
+                                    </if>
+                                    <div class="Journal-right" <if condition="$vo['cover'] eq ''">style="width:90%"</if> >
+                                    	<h3><a href="{:U('//eventDetail', array('id'=>$vo['id'], 'uid'=>$vo['uid']))}">{$vo['title']}</a></h3>
+                                        <p style="height:66px;overflow:hidden;">{$vo['short_explain']|getshort=130}</p>
+                                        <div class="Journal-problem">
+                                            <span>{:Date('Y/m/d',$vo[sTime])}</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">{$vo['attentionCount']} 人关注</a></span><span class="Journal-shou"><a href="#">{$vo['joinCount']} 人参加</a></span>
+                                        </div>
+                                    </div>
                                 </div>
+                            </volist>
+                        
+                            <div class="paging">
+                                <span>共{$totalPages}页/{$totalRows}条</span><p>{$html}</p>
                             </div>
-                        </div>
-                        <div class="Journal clearfix">
-                        	<div class="Journal-left">
-                            	<img src="__THEME__/image/Journal2.jpg"/>
-                            </div>
-                            <div class="Journal-right">
-                            	<h3>北京高三线下交友</h3>
-                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
-                                <div class="Journal-problem">
-                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Journal clearfix">
-                        	<div class="Journal-left">
-                            	<img src="__THEME__/image/Journal3.jpg"/>
-                            </div>
-                            <div class="Journal-right">
-                            	<h3>推荐一本好书</h3>
-                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
-                                <div class="Journal-problem">
-                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Journal clearfix">
-                        	<div class="Journal-left">
-                            	<img src="__THEME__/image/Journal.jpg"/>
-                            </div>
-                            <div class="Journal-right">
-                            	<h3>《成长总有好办法》读后感</h3>
-                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
-                                <div class="Journal-problem">
-                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Journal clearfix">
-                        	<div class="Journal-left">
-                            	<img src="__THEME__/image/Journal2.jpg"/>
-                            </div>
-                            <div class="Journal-right">
-                            	<h3>北京高三线下交友</h3>
-                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
-                                <div class="Journal-problem">
-                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="Journal clearfix">
-                        	<div class="Journal-left">
-                            	<img src="__THEME__/image/Journal3.jpg"/>
-                            </div>
-                            <div class="Journal-right">
-                            	<h3>推荐一本好书</h3>
-                                <p>在北京 呆了三年多了，第一次见到彩虹，第一次在风雨交加的夜晚去尝试拍闪电,拍山雨欲来的感觉。延时摄影，当我第一次看到的时候就被震撼到了。</p>
-                                <div class="Journal-problem">
-                                    <span>2015/6/15</span><span class="Journal-pinglun"><a href="#">101条评论</a></span><span class="Journal-zan"><a href="#">赞</a></span><span class="Journal-fenxiang"><a href="#">分享</a></span><span class="Journal-shou"><a href="#">收藏</a></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="paging">
-                        	<span>共50页/600条</span><p><a href="#">1</a><a href="#">2</a><a href="#">3</a><a href="#">4</a><a href="#">5</a><a href="#">6</a><a href="#">7</a><a href="#">8</a><a href="#">9</a><a href="#">下一页》</a></p>
-                        </div>
+                        <else />
+                            <div class="Journal clearfix" style="margin: 30px auto;color: #6c6c6c;width:160px;font-size:15px;">暂无符合条件的活动</div>
+                        </if>
                     </div>
                 </div>
             </div>
@@ -112,24 +97,65 @@
             	<div class="advertising">
                 	<img src="__THEME__/image/advertising.jpg"/>
                 </div>
-                <div class="column">
-                	<h5>推荐专栏<span><a href="#">专栏首页</a></span></h5>
+                <div class="strategy clearfix">
+                    <h5>我感兴趣的活动<span><a href="#">更多</a></span></h5>
                     <dl>
-                    	<dt><img src="__THEME__/image/column.jpg"/></dt>
-                        <dd class="chen">沉睡者梦里也不曾见过的美丽</dd>
-                        <dd class="bei">北欧的海岸线就像是一地碎玻璃，船在狭窄的水道上穿行，无数岛屿点缀其间。到达开阔水域的时候，已经是夜色迷茫，玛</dd>
+                        <volist name="favourite_event" id="vo"> 
+                            <dd class="xiang"><a href="{:U('event/Index/eventDetail', array('id'=>$vo[id], 'uid'=>$vo['uid']))}" >{$vo.title}</a></dd>
+                        </volist>
                     </dl>
                 </div>
                 <div class="strategy clearfix">
-                	<h5>旅游攻略推荐<span><a href="#">更多</a></span></h5>
+                	<h5>我感兴趣的活动<span><a href="#">更多</a></span></h5>
                     <dl>
-                    	<dt><img src="__THEME__/image/strategy.jpg"/></dt>
-                        <dd class="yun">云台山行摄</dd>
-                        <dd class="xiang">详细的吃、住、行、景点、线路、实用信息</dd>
+                        <volist name="joinIn_event" id="vo"> 
+                            <dd class="xiang"><a href="{:U('event/Index/eventDetail', array('id'=>$vo[id], 'uid'=>$vo['uid']))}" >{$vo.title}</a></dd>
+                        </volist>
                     </dl>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(function(){
+        var url = "{:U('event/Index/index')}";
+        var opt = window.location.search;
+        opt = opt.substring(1);        
+        $('#imt').change(function(){
+            var i = $(this).val();
+            if(opt){
+                var opts = M.URI2Obj(opt);
+                opts.imt = i;
+                var search = OBJ2URI(opts, 'p');
+                window.location.href = url+search;
+            }else{
+                window.location.href = url+"?imt="+i;
+            }
+        })
+        $('#ev_type').change(function(){
+            var i = $(this).val();
+            if(opt){
+                var opts = M.URI2Obj(opt);
+                opts.evt = i;
+                var search = OBJ2URI(opts, 'p');
+                window.location.href = url+search;
+            }else{
+                window.location.href = url+"?evt="+i;
+            }
+        })
+        $('#ev_obj').change(function(){
+            var i = $(this).val();
+            if(opt){
+                var opts = M.URI2Obj(opt);
+                opts.evob = i;
+                var search = OBJ2URI(opts, 'p');
+                window.location.href = url+search;
+            }else{
+                window.location.href = url+"?evob="+i;
+            }
+        })
+    })
+
+</script>
 <include file="__THEME__/public_footer" /> 

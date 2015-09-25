@@ -140,6 +140,7 @@ class AttachModel extends Model {
 
 		// 载入默认规则
 		$default_options = array();
+		$default_options['attach_type'] = $data['attach_type'];
 		$default_options['custom_path']	= date($system_default['attach_path_rule']);					// 应用定义的上传目录规则：'Y/md/H/'
 		$default_options['max_size'] = floatval($system_default['attach_max_size']) * 1024 * 1024;		// 单位: 兆
 		$default_options['allow_exts'] = $system_default['attach_allow_extension']; 					// 'jpg,gif,png,jpeg,bmp,zip,rar,doc,xls,ppt,docx,xlsx,pptx,pdf'

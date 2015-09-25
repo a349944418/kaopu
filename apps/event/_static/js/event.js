@@ -8,22 +8,22 @@ function EventAction( id,allow,action ){
         }
       	if( action == 'joinIn' ){
       		if( allow == 1 ){
-      			$('.list_joinIn_'+id).html('<a href="javascript:EventDelAction( '+id+','+allow+',\'joinIn\' )">取消申请</a>');
+      			//$('.list_joinIn_'+id).html('<a class="btn" href="javascript:EventDelAction( '+id+','+allow+',\'joinIn\' )">取消申请</a>');
       			$('.detail_joinIn_'+id).html(
       					'<span class="cGreen lh35">已提交申请,等待审核中,'+
-      					'<button class="btn_w" style="margin-right:5px;" onclick="javascript:EventDelAction( '+id+','+allow+',\'joinIn\' )">取消申请</button>'
+      					'<button class="btn" onclick="javascript:EventDelAction( '+id+','+allow+',\'joinIn\' )">取消申请</button>'
       			);
       		}else{
-      			$('.list_joinIn_'+id).html('<a href="javascript:EventDelAction( '+id+',null,\'joinIn\' )">取消参加</a>');
-      			$('.detail_joinIn_'+id).html('<button class="btn_w" style="margin-right:5px;" onclick="javascript:EventDelAction( '+id+',null,\'joinIn\' )">取消参加</button>'
+      			//$('.list_joinIn_'+id).html('<a class="btn" href="javascript:EventDelAction( '+id+',null,\'joinIn\' )">取消参加</a>');
+      			$('.detail_joinIn_'+id).html('<button class="btn"onclick="javascript:EventDelAction( '+id+',null,\'joinIn\' )">取消参加</button>'
             );
       		}
       	}
         if( action == 'attention' ){
-      		$('.list_attention_'+id).html('<a href="javascript:EventDelAction( '+id+',null,\'attention\')">取消关注</a>');
-      		$('.detail_attention_'+id).html('<button class="btn_w" style="margin-right:5px;" onclick="javascript:EventDelAction( '+id+',null,\'attention\')">取消关注</button>'
+      		//$('.list_attention_'+id).html('<a href="javascript:EventDelAction( '+id+',null,\'attention\')">取消关注</a>');
+      		$('.detail_attention_'+id).html('<button class="btn" onclick="javascript:EventDelAction( '+id+',null,\'attention\')">取消关注</button>'
           );
-          $("span").remove(".old_detail_attention");
+          //$("span").remove(".old_detail_attention");
         }
       }
       if( text == -2 ){
@@ -44,8 +44,10 @@ function EventAction( id,allow,action ){
         ui.error('参加活动人数已满，不能再参加');
       }
       if(text == -6){
-        ui.error('活动已结束');
+        ui.error('活动已结束报名');
         setTimeout(location.reload(),1500);
+      }else{
+        ui.error(text);
       }
   });
 }
@@ -59,34 +61,25 @@ function EventDelAction( id,allow,action ){
         	ui.success( '操作成功' );
         }
     	if( action == 'joinIn' ){
-    		$('.list_joinIn_'+id).html(
-    				'<a href="javascript:EventAction( '+id+','+allow+',\'joinIn\' )">我要参加</a>'+
-    				'<span class="list_attention_'+id+'">'+
-    				'<a href="javascript:EventAction( '+id+',null,\'attention\')">我要关注</a>'+
-                    '</span>'
-    		);
     		$('.detail_joinIn_'+id).html(
-    				'<button class="btn_b" style="margin-right:5px;" onclick="javascript:EventAction( '+id+','+allow+',\'joinIn\' )">我要参加</button>'+
-    				'<span class="detail_attention_'+id+'">'+
-    				'<button class="btn_b" style="margin-right:5px;" onclick="javascript:EventAction( '+id+',null,\'attention\')">我要关注</button>'
+    				'<button class="btn active" onclick="javascript:EventAction( '+id+','+allow+',\'joinIn\' )">我要参加</button>'+
+    				'<br /><span class="detail_attention_'+id+'">'+
+    				'<button class="btn favourite" onclick="javascript:EventAction( '+id+',null,\'attention\')">我感兴趣</button>'
     		);
     	}else if( action == 'attention' ){
-        	$('.list_attention_'+id).html('<a href="javascript:EventAction( '+id+',null,\'attention\')">我要关注</a>');
-        	$('.detail_attention_'+id).html('<button class="btn_b" style="margin-right:5px;" onclick="javascript:EventAction( '+id+',null,\'attention\')">我要关注</button>'
-            );
-          $("span").remove(".old_detail_attention");
+        	$('.detail_attention_'+id).html('<button type="button" class="btn favourite" onclick="javascript:EventAction( '+id+',null,\'attention\')">我感兴趣</button>');
     	}
-      }else if( text == -2 ){
-    	  ui.error( '您没有对本活动进行过操作' );
-    	  location.reload();
-      }else if( text == -1 ){
-    	  ui.error( '这个活动已不存在，即将刷新本页面' );
-    	  location.reload();
-      }else if( text == 0 ){
-    	  ui.error( '操作失败,请稍后再试' );
-      }else{
-    	  ui.error( '未知错误' );
-      }
+    }else if( text == -2 ){
+  	  ui.error( '您没有对本活动进行过操作' );
+  	  location.reload();
+    }else if( text == -1 ){
+  	  ui.error( '这个活动已不存在，即将刷新本页面' );
+  	  location.reload();
+    }else if( text == 0 ){
+  	  ui.error( '操作失败,请稍后再试' );
+    }else{
+  	  ui.error( '未知错误' );
+    }
   });
 }
 
@@ -163,7 +156,7 @@ function delEvent(eventId,jump){
             if( text == 1 ){
               ui.success('删除活动成功');
               if(jump == true){
-            	  location.href=U('event/Index/personal');
+            	  location.reload();
               }else{
             	  $('#event_'+eventId).remove();
               }
@@ -188,35 +181,7 @@ var selectArea = function(){
     ui.box.load(U('event/Area/area')+'&selected='+typevalue,'选择城市');
 }
 
-/**
- * 异步提交表单
- * @param object form 表单DOM对象
- * @return void
- */
-var ajaxSubmit = function(form) {
-  var args = M.getModelArgs(form);
-  M.getJS(THEME_URL + '/js/jquery.form.js', function() {
-        var options = {
-          dataType: "json",
-            success: function(txt) {
-            if(1 == txt.status) {
-              if("function" ===  typeof form.callback) {
-                form.callback(txt);
-              } else {
-                if("string" == typeof(args.callback)) {
-                  eval(args.callback+'()');
-                } else {
-                  ui.success(txt.info);
-                }
-              }
-            } else {
-              ui.error(txt.info);
-            }
-            }
-        };
-        $(form).ajaxSubmit(options);
-  });
-};
+
 
 /**
  * 处理ajax返回数据之后的刷新操作
@@ -261,7 +226,7 @@ function JSTime(time){//格式  2013-04-07 14:22:00
 M.addEventFns({
   submit_btn: {
     click: function(){
-      E.sync();
+      alert(123);
     // 当前时间
       var myDate = new Date();
       var month = myDate.getMonth()+1;
@@ -275,11 +240,8 @@ M.addEventFns({
       if($('#title').val()== '' || 　getLength($('#title').val()) < 1){
         ui.error('活动名称不能为空');return false;
       }
-      if($('#address').val()== '' || 　getLength($('#address').val()) < 1){
+      if($('input[name=implement_type]').val() == 2 && ($('#address').val()== '' || 　getLength($('#address').val()) < 1)){
         ui.error('活动地点不能为空');return false;
-      }
-      if($('#type').val()== 0){
-        ui.error('请选择活动分类');return false;
       }
       if($('#sTime').val() == ''){
         ui.error('活动开始时间不能为空');return false;
@@ -300,11 +262,18 @@ M.addEventFns({
       if(deadline > eTime){
         ui.error('报名截止时间不能晚于活动结束时间');return false;
       }
-      E.sync();//提交时编辑器需要先执行的方法
-      if($('#explain').val()== '' && getLength($('#explain').val()) < 1){
-        ui.error('活动介绍不能为空');return false;
+      var event_type = $('#event_type').val();
+      if(event_type.length < 1) {
+          ui.error('请选择标签')
+          return false;
       }
-
+      var txt = ue.getContent();
+      txt = txt.replace(/\s+/g,"");
+      if(txt.length < 1 || txt.length < 20) {         
+          ue.focus();
+          ui.error('请填写内容且内容不能小于20字');
+          return false;
+      }
       // if(getLength($('#explain').val()) < 10){
       //   ui.error('活动介绍不得小于20个字符');return false;
       // }

@@ -123,7 +123,8 @@ class Page
 
         if(0 == $this->totalRows) return;
 
-		$url = $_SERVER['QUERY_STRING'];
+		$url = $_SERVER['REQUEST_URI'];
+        
         $url = preg_replace("/<script(.*?)<\/script>/is","",$url);
         $url = preg_replace("/<frame(.*?)>/is","",$url);
         $url = preg_replace("/<\/fram(.*?)>/is","",$url);
@@ -136,22 +137,24 @@ class Page
         $url = str_replace("\t","&nbsp; &nbsp; ",$url);
         $url = str_replace("\r","",$url);
         $url = str_replace("   ","&nbsp; &nbsp;",$url);
-        $url = eregi_replace("(#.+$|".C('VAR_PAGE')."=[0-9]+)",'',t($_SERVER['PHP_SELF']).'?'.$url);
+        //$url = eregi_replace("(#.+$|".C('VAR_PAGE')."=[0-9]+)",'',t($_SERVER['PHP_SELF']).'?'.$url);
+        $url = eregi_replace("(#.+$|".C('VAR_PAGE')."=[0-9]+)",'',$url);
 		$url = $url.(strpos($url,'?')?'':"?");
 		$url = eregi_replace("(&+)",'&',$url);
         $url = trim($url,'&');
+        $zfg = substr($url, -1) == '?' ? '' : '&';
 
         //上下翻页字符串
         $upRow   = $this->nowPage-1;
         $downRow = $this->nowPage+1;
         if ($upRow>0){
-            $upPage="<a href='".$url."&".C('VAR_PAGE')."=$upRow' class='pre'>".$this->config['prev']."</a>";
+            $upPage="<a href='".$url.$zfg.C('VAR_PAGE')."=$upRow' class='pre'>".$this->config['prev']."</a>";
         }else{
             $upPage="";
         }
 
         if ($downRow <= $this->totalPages){
-            $downPage="<a href='".$url."&".C('VAR_PAGE')."=$downRow' class='next'>".$this->config['next']."</a>";
+            $downPage="<a href='".$url.$zfg.C('VAR_PAGE')."=$downRow' class='next'>".$this->config['next']."</a>";
         }else{
             $downPage="";
         }
@@ -177,13 +180,13 @@ class Page
 
 		if($leftPages>0){
 			for($i=$this->nowPage-$leftPages;$i<$this->nowPage;$i++){
-				$linkPage .= "<a href='".$url."&".C('VAR_PAGE')."=$i'>".$i."</a>";
+				$linkPage .= "<a href='".$url.$zfg.C('VAR_PAGE')."=$i'>".$i."</a>";
 			}
 		}
 		$linkPage .= " <a class='current'>".$this->nowPage."</a>";
 		if($rightPages>0){
 			for($i=$this->nowPage+1;$i<=$this->nowPage+$rightPages;$i++){
-				$linkPage .= "<a href='".$url."&".C('VAR_PAGE')."=$i'>".$i."</a>";
+				$linkPage .= "<a href='".$url.$zfg.C('VAR_PAGE')."=$i'>".$i."</a>";
 			}
 		}
         // << < > >>
@@ -192,8 +195,8 @@ class Page
             $prePage = "";
         }else{
             $preRow =  $this->nowPage-$this->rollPage;
-            $prePage = "<a href='".$url."&".C('VAR_PAGE')."=$preRow' >上".$this->rollPage."页</a>";
-            $theFirst = "<a href='".$url."&".C('VAR_PAGE')."=1' >1..</a>";
+            $prePage = "<a href='".$url.$zfg.C('VAR_PAGE')."=$preRow' >上".$this->rollPage."页</a>";
+            $theFirst = "<a href='".$url.$zfg.C('VAR_PAGE')."=1' >1..</a>";
         }
 
 		if( ($this->totalPages-$this->nowPage) < $halfRoll || $this->totalPages <= $this->rollPage ){
@@ -202,8 +205,8 @@ class Page
         }else{
             $nextRow = $this->nowPage+$this->rollPage;
             $theEndRow = $this->totalPages;
-            $nextPage = "<a href='".$url."&".C('VAR_PAGE')."=$nextRow' >下".$this->rollPage."页</a>";
-            $theEnd = "<a href='".$url."&".C('VAR_PAGE')."=$theEndRow' >..{$theEndRow}</a>";
+            $nextPage = "<a href='".$url.$zfg.C('VAR_PAGE')."=$nextRow' >下".$this->rollPage."页</a>";
+            $theEnd = "<a href='".$url.$zfg.C('VAR_PAGE')."=$theEndRow' >..{$theEndRow}</a>";
         }
 
 		if( ( $this->totalPages+1 - $halfRoll ) == $this->nowPage || $this->totalPages == $this->nowPage ){

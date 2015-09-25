@@ -83,7 +83,7 @@ function rcalendar(text, mode, retfunction) { //文本域对象, 模式(dateonly
 		var css = "";
 		if (document.compatMode == "BackCompat" && navigator.userAgent.indexOf("MSIE") != -1) {
 			css += "#rcalendar {width:200px; height:200px; background:#FFFFFF; font-size:12px; font-family:宋体; border:1px solid #999999; padding:4px; overflow:hidden;}";
-			css += "#rcalendar_ym {width:190px; height:14px; overflow:hidden; margin-bottom:4px;}";
+			css += "#rcalendar_ym {width:198px; height:14px; overflow:hidden; margin-bottom:4px;}";
 			css += "#rcalendar_y {width:50px; float:left; font-weight:bold; color:#777777; padding-left:2px;}";
 			css += "#rcalendar_m {width:50px; float:left; font-weight:bold; color:#777777;}";
 			css += "#rweeks {width:190px; height:20px; overflow:hidden;}";
@@ -95,7 +95,7 @@ function rcalendar(text, mode, retfunction) { //文本域对象, 模式(dateonly
 			css += "#ryear_add {padding:0px; height:12px; width:36px; overflow:hidden; cursor:pointer;}";
 			css += "#rmonths {background:#B0B0B0; border:1px solid #999999; border-top:0px; color:#FFFFFF; font-weight:bold; text-align:center; width:80px; height:81px; overflow:hidden;}";
 			css += ".rmonth {padding:4px 4px 4px 4px; width:26px; height:20px; overflow:hidden; float:left; cursor:pointer;}";
-			css += "#rtime {width:90px; height:13px; float:left; overflow:hidden;}";
+			css += "#rtime {width:90px;  float:left; overflow:hidden;}";
 			css += "#rhour {padding:0px 7px 0px 7px; background:#E9E9E9; cursor:pointer;}";
 			css += "#rminute {padding:0px 7px 0px 7px; background:#E9E9E9; cursor:pointer;}";
 			css += "#rsecond {padding:0px 7px 0px 7px; background:#E9E9E9; cursor:pointer;}";
@@ -110,14 +110,14 @@ function rcalendar(text, mode, retfunction) { //文本域对象, 模式(dateonly
 			css += "#rainic a, #rainic a:visited, #rainic a:hover {font-size:9px;font-family:Arial; color:#FFFFFF; text-decoration:none;}";
 		}
 		else {//173  17  190
-			css += "#rcalendar {width:190px; height:190px; background:#FFFFFF; font-size:12px; font-family:宋体; border:1px solid #999999; padding:4px; overflow:hidden;}";
+			css += "#rcalendar {width:198px; height:190px; background:#FFFFFF; font-size:12px; font-family:宋体; border:1px solid #999999; padding:4px; overflow:hidden;}";
 			css += "#rcalendar_ym {width:190px; height:14px; overflow:hidden; margin-bottom:4px;}";
 			css += "#rcalendar_y {width:48px; float:left; font-weight:bold; color:#777777; padding-left:2px;}";
 			css += "#rcalendar_m {width:50px; float:left; font-weight:bold; color:#777777;}";
 			css += "#rweeks {width:190px; height:20px; overflow:hidden;}";
 			css += "#rdates {width:190px; height:120px; overflow:hidden;}";
-			css += ".rweek {width:27px; height:12px; padding:4px 0px 4px 0px; float:left; text-align:center; background:#CCCCCC; color:#FFFFFF; overflow:hidden;}";
-			css += ".rdate {width:27px; height:12px; padding:4px 0px 4px 0px; float:left; text-align:center; overflow:hidden; cursor:pointer;}";
+			css += ".rweek {width:27px;  padding:4px 0px 4px 0px; float:left; text-align:center; background:#CCCCCC; color:#FFFFFF; overflow:hidden;}";
+			css += ".rdate {width:27px;  padding:4px 0px 4px 0px; float:left; text-align:center; overflow:hidden; cursor:pointer;}";
 			css += "#ryears {background:#B0B0B0; border:1px solid #999999; border-top:0px; color:#FFFFFF; text-align:center;}";
 			css += ".ryear {padding:4px 4px 4px 4px; height:12px; width:28px; overflow:hidden; cursor:pointer; font-weight:bold;}";
 			css += "#ryear_add {padding:0px; height:12px; width:36px; overflow:hidden; cursor:pointer;}";
@@ -129,11 +129,11 @@ function rcalendar(text, mode, retfunction) { //文本域对象, 模式(dateonly
 			css += "#rsecond {padding:0px 7px 0px 7px; background:#E9E9E9; cursor:pointer;}";
 			css += "#rbtns {width:90px; margin-left:10px; height:13px; float:right; text-align:right; overflow:hidden;}";
 			css += "#rhours {width:104px; height:108px; overflow:hidden;}";
-			css += ".rhour {padding:3px 7px 3px 7px; background:#B0B0B0; color:#FFFFFF; height:12px; overflow:hidden; float:left; cursor:pointer;}";
+			css += ".rhour {padding:3px 7px 3px 7px; background:#B0B0B0; color:#FFFFFF; height:18px; overflow:hidden; float:left; cursor:pointer;}";
 			css += "#rminutes {width:104px; height:54px; overflow:hidden;}";
-			css += ".rminute {padding:3px 7px 3px 7px; background:#B0B0B0; color:#FFFFFF; height:12px; overflow:hidden; float:left; cursor:pointer;}";
+			css += ".rminute {padding:3px 7px 3px 7px; background:#B0B0B0; color:#FFFFFF;  overflow:hidden; float:left; cursor:pointer;}";
 			css += "#rseconds {width:104px; height:54px; overflow:hidden;}";
-			css += ".rsecond {padding:3px 7px 3px 7px; background:#B0B0B0; color:#FFFFFF; height:12px; overflow:hidden; float:left; cursor:pointer;}";
+			css += ".rsecond {padding:3px 7px 3px 7px; background:#B0B0B0; color:#FFFFFF;  overflow:hidden; float:left; cursor:pointer;}";
 			css += "#rainic {width:184px; height:11px; padding:0px 3px 0px 3px; overflow:hidden; text-align:right; background:#E0E0E0; margin-top:4px;}";
 			css += "#rainic a, #rainic a:visited, #rainic a:hover {font-size:9px;font-family:Arial; color:#FFFFFF; text-decoration:none;}";
 		}
@@ -178,7 +178,7 @@ function rcalendar(text, mode, retfunction) { //文本域对象, 模式(dateonly
 		str += '  <div class="rweek">六</div>';
 		str += '</div>';
 		str += '<div id="rdates"></div>';
-		str += '<div style="width:190px; height:13px; margin-top:4px; overflow:hidden;">';
+		str += '<div style="width:190px; height:13px; margin-top:4px; margin-bottom: 10px; overflow:hidden;">';
 		str += '  <div id="rtime">';
 		str += '	<span id="rhour" onmouseover="this.style.background=\'#66FF66\';" onmouseout="this.style.background=\'#E9E9E9\';" onclick="rselect_hours(this)"></span>:<span id="rminute" onmouseover="this.style.background=\'#66FF66\';" onmouseout="this.style.background=\'#E9E9E9\';" onclick="rselect_minutes(this)"></span>:<span id="rsecond" onmouseover="this.style.background=\'#66FF66\';" onmouseout="this.style.background=\'#E9E9E9\';" onclick="rselect_seconds(this)"></span>';
 		str += '  </div>';

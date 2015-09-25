@@ -1,145 +1,92 @@
-<include file="__THEME__/header" />
-<include file="__THEME__/editor" />
 <link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
 <script  type="text/javascript" src="__APP__/js/rcalendar.js" ></script>
 <script type="text/javascript" src="__APP__/js/event.js"></script>
+<style>
+  .wrap-layer .content-layer div.hd{background: #fff;}
+  .edui-default .edui-editor-iframeholder {min-height: 375px;}
+  .edui-default .edui-editor {border-radius: 0px; -webkit-border-radius: 0px; 
+    -moz-border-radius: 0px;}
+  .edui-default .edui-toolbar .edui-button, .edui-default .edui-toolbar .edui-splitbutton, .edui-default .edui-toolbar .edui-menubutton, .edui-default .edui-toolbar .edui-combox { padding: 10px 5px;}
+  .edui-default .edui-editor-toolbarboxouter {background: #EFEDEE}
+  .edui-default .edui-toolbar .edui-separator {margin: 12px 6px 2px 6px;}
+  #type-selected a {margin-right: 10px; line-height: 20px;}
+</style>
 <div class="content_holder">
-<div class="content no_bg boxShadow">
-  <!-- 内容 begin  -->
-  <include file="../Public/_mainNav" />
-
+<div class="no_bg boxShadow">
   <div class="main no_l">
     <!-- 画布 begin  -->
     <div class="mainbox clearfix">
-      <include file="../Public/_isHotList" />
       <div class="mainbox_appC">
-        <div class=page_title>
-          <h2>发起活动</h2>
-        </div>
         <!-- page_title end -->
         <div class="groupBox">
             <div class="box1">
-              <form method="post" action="{:U('event/Index/doAddEvent')}"  enctype="multipart/form-data"  model-node='event_post' >
-              <div class="elist">
-                <dl class="add_event">
-                  <dd>
-                    <label><span class="txt_impt">*</span>活动名称：</label>
-                    <div class="c2">
-                      <input name="title" type="text" class="text" id="title" onfocus="this.className='text2'" onblur="this.className='text'" maxlength="60" />
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label><span class="txt_impt"></span>活动城市：</label>
-                    <div class="c2">
-                      <input type="hidden" id="current" value=""/>
-                      <input type="text" name="city" class="text" onfocus="this.className='text2'" onblur="this.className='text'" size="30" id="selectarea" readonly />
-                      <input type="button" class="btn_b" value="选择地区" onclick="selectArea()" />
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label> <span class="txt_impt">*</span>活动地点：</label>
-                    <div class="c2">
-                      <input name="address" type="text" class="text" id="address" onfocus="this.className='text2'" onblur="this.className='text'"  maxlength="30"/>
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label> <span class="txt_impt">*</span>活动分类：</label>
-                    <div class="c2">
-                      <select name="type" id="type" class="text">
-                        <option value="0" selected>请选择活动分类</option>
-                        <?php foreach($type as $k=>$cate){ ?>
-                        <option value="{$k}">{$cate}</option>
-                        <?php } ?>
-                        </volist>
-                      </select>
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label> <span class="txt_impt"></span>活动经费：</label>
-                    <div class="c2">
-                      <select name="cost" class="text">
-                        <option value="0" selected="selected">免费</option>
-                        <option value="1">AA制</option>
-                        <option value="2">50元以下</option>
-                        <option value="3">50-200元</option>
-                        <option value="4">200-500元</option>
-                        <option value="5">500-1000元</option>
-                        <option value="6">1000元以上</option>
-                      </select>
-                      资费说明：
-                      <input name="costExplain" type="text" class="text" id="textfield2" onfocus="this.className='text2'" onblur="this.className='text'" size="30" />
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label> <span class="txt_impt">*</span>活动时间：</label>
-                    <div class="c2">
-                      <input name="sTime" type="text" class="text" id="sTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
-                      -
-                      <input name="eTime" type="text" class="text" id="eTime" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label> <span class="txt_impt">*</span>截止报名：</label>
-                    <div class="c2">
-                      <input name="deadline" type="text" class="text" id="deadline" onfocus="this.className='text2';rcalendar(this,'full');" onblur="this.className='text'" readonly />
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label> <span class="txt_impt"></span>活动人数：</label>
-                    <div class="c2">
-                      <input name="limitCount" type="text" class="text" id="limitCount" onfocus="this.className='text2'" onblur="this.className='text'" onKeyUp="this.value=this.value.replace(/\D/g,'')" maxlength="5" value="0" />
-                      <span class="cGray2"> 活动人数上限，设0表示无限制</span>
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label><span class="txt_impt">*</span>活动介绍：</label>
-                    <div class="c2">{:W('Editor',array('contentName'=>'explain','value'=>''))}</div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label><span class="txt_impt"></span>联系方式：</label>
-                    <div class="c2">
-                      <input name="contact" type="text" class="text" id="contact" onfocus="this.className='text2'" onblur="this.className='text'" size="30" />
-                      <br />
-                      <span class="cGray2">填写联系人电话，如：张小姐，1346665XXXX </span></div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label><span class="txt_impt"></span>活动选项：</label>
-                    <div class="c2">
-                      <div>
-                        <input type="checkbox" name="friend" id="choice1" value="1" />
-                        只允许我关注的人参加该活动 </div>
-                      <div>
-                        <input type="checkbox" name="allow" id="choice2" value="1" />
-                        活动参加人员需要审批 </div>
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label><span class="txt_impt"></span>活动海报：</label>
-                    <div class="c2">
-                      <input name="cover" type="file" />
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                  <dd>
-                    <label>&nbsp;</label>
-                    <div class="c2">
-                      <input name="button" type="submit" class="btn_b" id="button" value="发起活动" event-node="submit_btn" editor="true"/>
-                    </div>
-                    <div class="c"></div>
-                  </dd>
-                </dl>
-              </div>
+              <form method="post" action="{:U('event/Index/doAddEvent')}"  enctype="multipart/form-data"  id='eventPost' model-node="event_post">
+                <div class="tanchu">
+                      <div class="title1">
+                          标题
+                      </div>
+                      <input class="form-control" name="title" type="text" id="title" maxlength="60">
+                      <div class="c"></div>
+                      <div class="details">
+                        <p>内容<span></p>
+                          <div class="details1">
+                            {:W('Editor',array('contentName'=>'explain','value'=>''))}
+                          </div>
+                          <div class="c"></div>
+                      </div>
+                      <div class="label1">
+                        <p>标签<span>（最多三个）</span></p>
+                          <div class="type" id="type-checked">
+                            <p>类型标签<span>（必选）</span>
+                              <?php foreach($type as $k=>$cate){ ?>
+                                <a href="javascript:;" data-value="{$k}" onclick="event_type_selected(this);">{$cate}</a>
+                              <?php } ?></p>
+                          </div>
+                          <div class="form-control" style="height:74px;" id="type-selected"></div>
+                          <input type="hidden" name="type" value="" id="event_type"/>
+                      </div>
+                      <div class="start-stop">
+                        <p>起止时间</p>
+                        <input type="text" class="qizhi" name="sTime" id="sTime" onfocus="rcalendar(this,'full');" readonly/><span>──</span><input type="text" class="qizhi" name="eTime" id="eTime" onfocus="rcalendar(this,'full');" readonly/>
+                        <div class="c"></div>
+                      </div>
+                      <div class="start-stop">
+                        <p>截止报名</p>
+                        <input name="deadline" class="qizhi" type="text" id="deadline" onfocus="rcalendar(this,'full');" readonly />
+                        <div class="c"></div>
+                      </div>
+                      <div class="shape">
+                        <p>形式</p>
+                        <span><input type="radio" name="implement_type" value="1" checked>线上</span><span><input type="radio" name="implement_type"  value="2">线下</span>
+                      </div>
+                      <div class="shape" id="event_address" style="display:none;">
+                        <p>活动地址</p>
+                        <input type="text" name="address" value="" class="form-control" id="address" />
+                      </div>
+                      <div class="shape">
+                        <p>活动人数</p>
+                        <input type="text" class="qizhi" id="limitCount" name="limitCount"/><span class="cGray2"> 活动人数上限，设0表示无限制</span>
+                      </div>
+                      <div class="shape">
+                        <p>选择抵押积分</p>
+                        <span><input type="radio" name="cost" value="0" checked>0分</span><span><input type="radio" name="cost"  value="10">10分</span><span><input type="radio" name="cost"  value="20">20分</span><span><input type="radio" name="cost"  value="30">30分</span>
+                      </div>
+                      <div class="shape">
+                        <p>参与对象</p>
+                        <span><input type="radio" name="evob" value="0" checked>全部</span><span><input type="radio" name="evob"  value="1">学生</span><span><input type="radio" name="evob"  value="2">家长</span><span><input type="radio" name="evob"  value="3">老师</span><span><input type="radio" name="evob"  value="4">过来人</span>
+                      </div>
+                      <div class="shape">
+                        <p>活动选项</p>
+                        <span><input type="checkbox" name="allow" id="choice2" value="1" /> 活动参加人员需要审批 </span>
+                      </div>
+                      <div class="shape">
+                        <p>活动海报</p>
+                        <input name="cover" type="file" />
+                      </div>
+                      <div class="submit">
+                        <a class="btn btn-default" id="button" onclick="return addEvent_check(ue);return false;" editor="true" >发起活动</a>
+                      </div>
+                  </div>
               </form>
             </div>
           </div>
@@ -150,6 +97,138 @@
   </div>
 </div>
   <!-- 画布 end  -->
+<script>
+  $(function(){
+    $('input[name=implement_type]').click(function(){
+      var v = $(this).val();
+      if(v == 1){
+        $('#event_address').slideUp();
+      }else {
+        $('#event_address').slideDown();
+      }
+    })
+  })
+  //选取活动类型
+  function event_type_selected(obj) {
+    if($('#type-selected a').length > 2) {
+      ui.error('您已经选择3个标签，不能继续添加');
+    } else {
+      var value = $(obj).attr('data-value');
+      var name = $(obj).html();
+      var type = $('#event_type').val();
+      type_tmp = ':,'+type;
+      if(type_tmp.indexOf(','+value+',') > 0) {
+        if(!$('#type-selected #event_type'+value).length) {
+          $('#type-selected').append('<a href="javascript:;" onclick="unselect_type(this)" id="event_type'+value+'" data-value="'+value+'">'+name+' <span aria-hidden="true">&times;</span></a>');
+        }
+      } else {
+        if(!$('#type-selected #event_type'+value).length) {
+          $('#type-selected').append('<a href="javascript:;" onclick="unselect_type(this)" id="event_type'+value+'" data-value="'+value+'">'+name+' <span aria-hidden="true">&times;</span></a>');
+        }
+        type += value+','; 
+        $('#event_type').val(type);        
+      } 
+      $(obj).css('display', 'none');
+    }      
+  }
+  //删除活动类型
+  function unselect_type(obj) {
+    var value = $(obj).attr('data-value');
+    var name = $(obj).html();
+    var type = $('#event_type').val();
+    type = type.replace(','+value+',', ',');
+    type = type == ',' ? '' : type;
+    $('#event_type').val(type);
+    $('#type-checked a[data-value="'+value+'"]').css('display', 'inline-block');
+    $(obj).remove();
+  }
 
-<!-- 内容 end -->
-<include file="__THEME__/footer" />
+
+  /**
+   * [弹窗发布活动]
+   * @param  {[type]} ue [description]
+   * @return {[type]}    [description]
+   */
+  function addEvent_check(ue) {
+      var title = $('#title').val();
+      if(title.length < 1) {
+          $('#title').focus();
+          ui.error('请填写标题')
+          return false;
+      }
+
+      var txt = ue.getContent();
+      txt = txt.replace(/\s+/g,"");
+      if(txt.length < 1 || txt.length < 20) {         
+          ue.focus();
+          ui.error('请填写内容且内容不能小于20字');
+          return false;
+      }
+
+      var event_type = $('#event_type').val();
+      if(event_type.length < 1) {
+          ui.error('请选择标签')
+          return false;
+      }
+
+      
+      var sTime = $('#sTime').val();
+      var eTime = $('#eTime').val();
+      var deadline = $('#deadline').val();
+      if(sTime.length < 1){
+        $('#sTime').focus();
+        ui.error('活动开始时间必填');
+        return false;
+      }
+
+      if(eTime.length < 1){
+        $('#eTime').focus();
+        ui.error('活动结束时间必填');
+        return false;
+      }
+
+      if(deadline.length < 1){
+        $('#deadline').focus();
+        ui.error('报名截止时间必填');
+        return false;
+      }
+
+      if(eTime < sTime) {
+        ui.error('结束时间不能再开始时间之前');
+        return false;
+      }
+
+      if(deadline >= eTime) {
+        ui.error('报名截止时间应该在活动结束之前');
+        return false;
+      }
+
+      var implement_type = $('input[name=implement_type]').val();
+      if(implement_type == 2) {
+        var address = $('input[name=address]').val();
+        if(address.length < 1) {
+          $('input[name=address]').focus();
+          ui.error('线下活动必须填写活动地址');
+          return false;
+        }
+      }
+
+      ue.getKfContent(function(content){
+          $('#eventPost').ajaxSubmit({
+            success:function(returnd){
+              var res = eval('('+returnd+')');
+              if(res.status){
+                ui.success(res.info);
+                setTimeout(function() {
+                  location.href = U('event/Index/eventDetail')+'&id='+res.data['id']+'&uid='+res.data['uid'];
+                }, 1500);
+              }else{
+                ui.error(res.info);
+              } 
+            }  
+          });
+          
+      })
+      return false;
+  }
+</script>

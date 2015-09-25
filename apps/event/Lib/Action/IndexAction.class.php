@@ -45,6 +45,7 @@ class IndexAction extends Action {
             case 'new':    //最新排行
                 $order = 'cTime DESC';
                 $this->setTitle('最新' . $this->appName);
+                $type1 = '最新';
                 break;
             case 'following':    
                 //关注的人的活动
@@ -62,79 +63,46 @@ class IndexAction extends Action {
                 }
                 $map['id'] = array('IN',$ids);
                 $this->setTitle('我关注的' . $this->appName);
+                $type1 = '关注';
                 break;
              default:      //默认热门排行
                 $order = 'joinCount DESC,attentionCount DESC,cTime DESC';
                 $this->setTitle('热门' . $this->appName);
+                $type1 = '热门';
+        }
+        $this->assign('type1', $type1);
+
+        if ($_GET['imt']) 
+            $map['implement_type'] = intval($_GET['imt']);
+
+        $now_year = Date('Y');
+        $now_month = Date('m');
+
+        $type = D('event_type')->select();
+        $this->assign(array('now_year'=>$now_year, 'now_month'=>$now_month, 'type'=> $type));
+
+        if ($_GET['month'] && $_GET['year']){
+            $tmp_start_time = strtotime($_GET['year'].'-'.$_GET['month'].'-1 00:00:01');
+            $tmp_end_time = strtotime('+1 month',$tmp_start_time);
+            $map['sTime'] = array('lt', $tmp_end_time);
+            $map['eTime'] = array('gt', $tmp_start_time);
+        } 
+        if ($_GET['evt']) {
+            $map['type'] = array( 'like',"%,".t($_GET['evt']).",%" );
+        }
+        if ($_GET['evob']) {
+            $map['evob'] = array( 'in', '0,'.$_GET['evob']);
         }
 
-        //查询
-        $title = t($_POST['title']);
-        if ($_POST['title']) {
-            $map['title'] = array( 'like',"%".t($_POST['title'])."%" );
-            $this->assign('searchkey',$title);
-            $this->setTitle('搜索' . $this->appName);
-        }
-        if ($_GET['cid']) {
-            $map['type']  = intval($_GET['cid']);
-            $this->setTitle('分类浏览');
-        }
+        $map['is_del'] = 0;
 
         $result  = $this->event->getEventList($map,$order,$this->mid,$_GET['order']);
         $this->assign($result);
-        $this->display();
-    }
 
+        $favourite_event = $this->event->getSelfEvent('attention', 5);
+        $joinIn_event = $this->event->getSelfEvent('joinIn', 5);
+        $this->assign(array('favourite_event'=>$favourite_event, 'joinIn_event'=>$joinIn_event));
 
-    /**
-     * index
-     * 备注首页
-     * @access public
-     * @return void
-     */
-    public function index_bak() {
-		$order = NULL;
-        switch( $_GET['order'] ) {
-        	case 'new':    //最新排行
-       			$order = 'cTime DESC';
-       			$this->setTitle('最新' . $this->appName);
-                break;
-            case 'following':    
-                //关注的人的活动
-				// $following = M('weibo_follow')->field('fid')->where("uid={$this->mid} AND type=0")->findAll();
-				// foreach($following as $v) {
-				// 	$in_arr[] = $v['fid'];
-				// }
-                // $map['uid'] = array('in',$in_arr);
-            // 关注的活动
-                $map['uid'] = $this->mid;
-                $map['action'] = 'attention';
-                $eventIds = M('event_user')->where($map)->field('eventId')->findAll();unset($map);
-                foreach ($eventIds as $key => $value) {
-                    $ids[$key] = $value['eventId'];
-                }
-                $map['id'] = array('IN',$ids);
-                $this->setTitle('我关注的' . $this->appName);
-                break;
-	         default:      //默认热门排行
-                $order = 'joinCount DESC,attentionCount DESC,cTime DESC';
-                $this->setTitle('热门' . $this->appName);
-        }
-
-        //查询
-        $title = t($_POST['title']);
-        if ($_POST['title']) {
-        	$map['title'] = array( 'like',"%".t($_POST['title'])."%" );
-        	$this->assign('searchkey',$title);
-        	$this->setTitle('搜索' . $this->appName);
-        }
-        if ($_GET['cid']) {
-        	$map['type']  = intval($_GET['cid']);
-        	$this->setTitle('分类浏览');
-        }
-
-        $result  = $this->event->getEventList($map,$order,$this->mid,$_GET['order']);
-		$this->assign($result);
         $this->display();
     }
 
@@ -230,30 +198,35 @@ class IndexAction extends Action {
      * @return void
      */
     public function doAddEvent() {
+
         $this->_createLimit($this->mid);
 
         $map['title']      = t($_POST['title']);
         $map['address']    = t($_POST['address']);
-        $map['limitCount'] = intval(t($_POST['limitCount']));
-        $map['type']       = intval($_POST['type']);
-        $map['explain']    = h($_POST['explain']);
+        $map['limitCount'] = intval(t($_POST['limitCount'])) ? intval(t($_POST['limitCount'])): 0;
+        $map['type']       = ','.trim($_POST['type'],',').',';
+        $map['explain']    = preg_replace('/class="[0-9a-zA-Z_\-]+"/', '', h($_POST['content']));
         $map['contact']    = t($_POST['contact']);
         $map['deadline']   = $this->_paramDate($_POST['deadline']);
         $map['sTime']      = $this->_paramDate($_POST['sTime']);
         $map['eTime']      = $this->_paramDate($_POST['eTime']);
         $map['uid']        = $this->mid;
+        $map['evob']       = intval(t($_POST['evob']));
+        $map['implement_type'] = intval(t($_POST['implement_type'])) ? intval(t($_POST['implement_type'])) : 1;
         //$map['name']       = getUserName($this->mid);
+
         if(!t($_POST['title'])){
             $this->error("活动标题不能为空");
         }
-        if(!t($_POST['address'])){
+        if($map['implement_type'] == 2 && !t($_POST['address']) ){
             $this->error("活动地址不能为空");
-        }
-        if(intval($_POST['type']) == 0){
-            $this->error("请选择活动分类");
         }
         if( $map['sTime'] > $map['eTime'] ) {
             $this->error( "结束时间不得早于开始时间" );
+        }
+        /*
+        if(intval($_POST['type']) == 0){
+            $this->error("请选择活动分类");
         }
 		if( $map['sTime'] < mktime(0, 0, 0, date('M'), date('D'), date('Y')) ) {
             $this->error( "开始时间不得早于当前时间" );
@@ -264,23 +237,23 @@ class IndexAction extends Action {
         if( $map['deadline'] > $map['eTime'] ) {
         	$this->error('报名截止时间不能晚于结束时间');
         }
-
-		$string=iconv("UTF-8","GBK", t($map['explain']));
-        $length = strlen($string);
+        */
+		//$string=iconv("UTF-8","GBK", t($map['explain']));
+        $length = strlen(t($map['explain']));
         if($length < 20){
         	$this->error('介绍不得小于20个字符');
         }
-        	
+    
         //处理省份，市，区
-        list( $opts['province'],$opts['city'],$opts['area'] ) = explode(" ",safe($_POST['city']));
+        //list( $opts['province'],$opts['city'],$opts['area'] ) = explode(" ",safe($_POST['city']));
 
         //得到上传的图片
         $data['attach_type'] =  'event';
         $data['upload_type'] =  'image';
         $cover = model('attach')->upload($data);
-
+        
         //处理选项
-        $opts['cost']        = intval( $_POST['cost'] );
+        $opts['cost']        = intval( $_POST['cost'] ) ? intval( $_POST['cost'] ): 0;
         $opts['costExplain'] = t( $_POST['costExplain'] );
         $opts['costExplain'] = keyWordFilter(t($_POST['costExplain']));
         $friend              = isset( $_POST['friend'] )?1:0;
@@ -315,23 +288,21 @@ class IndexAction extends Action {
         //检测id和uid是否为0
         if( false == $this->checkUrl( $data ) ) {
             echo -4;
+            die();
         }
         // 判断活动人数是否已满不能参加
-        $limitCount = $this->event->where( 'id ='.$data['id'] )->field('limitCount,eTime')->find();
+        $limitCount = $this->event->where( 'id ='.$data['id'] )->field('limitCount,deadline')->find();
         if($limitCount['limitCount'] <= 0){
             if($allow){
                 echo -5;
+                die();
             }
         }
-        if($limitCount['eTime'] < time()){
+        if($limitCount['deadline'] < time()){
             echo -6;
+            die();
         }
-        if($allow){
-            echo $this->event->doAddUser( $data,$allow );
-        }
-        if(!$allow){
-            echo $this->event->doAddUser( $data,$allow );
-        }
+        echo $this->event->doAddUser( $data,$allow );
         // echo  111;
     }
 
@@ -366,30 +337,39 @@ class IndexAction extends Action {
         $uid  = intval( $_GET['uid'] );
         $test = array( $id,$uid );
         //检测id和uid是否为0
+        /*
         if( false == $this->checkUrl( $test ) ) {
             $this->assign('jumpUrl',U('event/Index/index'));
             $this->error( "错误的访问页面，请检查链接" );
         }
+        */
 
         $this->event->setMid( $this->mid );
         if($result = $this->event->getEventContent( $id,$uid )) {
             // 图片大小控制
-            $result['cover']     = getCover($result['coverId'],200,200);
+            $result['cover']     = getCover($result['coverId'],161,161);
+            $result['explain']   = preg_replace('/class="[0-9a-zA-Z_\-]+"/', '', $result['explain']);
+            //dump($result);
         	//计算待审核人数
 	        if( $this->mid == $result['uid'] )
 	            $result['verifyCount'] = D( 'EventUser' )->where( "status = 0 AND action='joinIn' AND eventId ={$result['id']}" )->count();
+            $result['attention'] = $result['attention'] ? $result['attention'] : array();
+            $result['member'] = $result['member'] ? $result['member'] : array();
+            $result['members'] = array_merge($result['attention'], $result['member']);
             $this->assign($result);
             $this->assign('event', $result);
-            $attentionUids = getSubByKey($result['attention'],'uid');
-            $memberUids = getSubByKey($result['member'],'uid');
-            // $uids = array_unique(array_merge(array($result['uid']),$attentionUids,$memberUids));
 
-            // if($result['uid'] == $this->mid){
-            //     $uids = $this->mid;
-            // }
+            $memberUids = getSubByKey($result['members'],'uid');
+
+            $uids = array_merge($memberUids, array(0=>$result['uid']));
             $this->assign('user_info',model('User')->getUserInfoByUids($uids));
-            $this->assign('user_info',model('User')->getUserInfoByUids($result['uid']));
+
             $this->setTitle($result['title'].' - '.$result['time'].' - '.$result['city'].' - '.$result['address'].' - '.$result['type']);
+
+            $utype = array('1'=>'学生','2'=>'家长','3'=>'老师','4'=>'过来人');
+            $evob = $result['evob'] ? $utype[$result[evob]] : '不限';
+            $this->assign('evob', $evob);
+
             $this->display();
         }else {
             $this->assign('jumpUrl',U('event/Index/index'));
@@ -463,6 +443,11 @@ class IndexAction extends Action {
         $typeDao = D( 'EventType' );
         $this->event->setMid( $this->mid );
         if($result = $this->event->getEventContent( $id,$uid )) {
+            foreach($result['type'] as $v){
+                $result['checkCat'][] = $v['tid'];
+                $result['checkCat_str'] .= $v['tid'].',';
+            }
+            
             $this->assign( $result );
             $this->display('edit');
         }else {
@@ -487,22 +472,26 @@ class IndexAction extends Action {
         $map['title']      = t($_POST['title']);
         $map['address']    = t($_POST['address']);
         $map['limitCount'] = intval(t( $_POST['limitCount'] ));
-        $map['type']       = intval($_POST['type']);
-        $map['explain']    = h($_POST['explain']);
+        $map['type']       = ','.trim($_POST['type'],',').',';
+        $map['explain']    = preg_replace('/class="[0-9a-zA-Z_\-]+"/', '', h($_POST['content']));
         $map['contact']    = t($_POST['contact']);
         $map['deadline'] = $deadline = $this->_paramDate( $_POST['deadline'] );
         $map['sTime']    = $stime = $this->_paramDate($_POST['sTime']);
         $map['eTime']    = $etime = $this->_paramDate($_POST['eTime']);
+        $map['evob']       = intval(t($_POST['evob']));
+        $map['implement_type'] = intval(t($_POST['implement_type'])) ? intval(t($_POST['implement_type'])) : 1;
 
         if(!t($_POST['title'])){
             $this->error("活动标题不能为空");
         }
-        if(!t($_POST['address'])){
+        if($map['implement_type'] == 2 && !t($_POST['address']) ){
             $this->error("活动地址不能为空");
         }
+        /*
         if(intval($_POST['type']) == 0){
             $this->error("请选择活动分类");
         }
+        */
         if( $stime > $etime) {
             $this->error( "结束时间不得早于开始时间" );
         }
@@ -510,14 +499,14 @@ class IndexAction extends Action {
             $this->error( "报名截止时间不能晚于结束时间" );
         }
 
-        $string=iconv("UTF-8","GBK", t($map['explain']));
-        $length = strlen($string);
+        //$string=iconv("UTF-8","GBK", t($map['explain']));
+        $length = strlen($map['explain']);
         if($length < 20){
             $this->error('活动介绍不得小于20个字符');
         }
 
         //处理省份，市，区
-        list( $opts['province'],$opts['city'],$opts['area'] ) = explode( " ",safe($_POST['city']));
+        //list( $opts['province'],$opts['city'],$opts['area'] ) = explode( " ",safe($_POST['city']));
 
         //得到上传的图片
         $config     =   event_getConfig();
@@ -547,7 +536,9 @@ class IndexAction extends Action {
          //    $this->success($this->appName.'修改成功！');
             $res['id'] = intval( $_POST['id'] );
             $res['uid'] = $this->mid;
-            return $this->ajaxReturn($res, $this->appName.'发布成功', 1);
+            return $this->ajaxReturn($res, $this->appName.'保存成功', 1);
+        }else{
+            $this->error($this->appName.'修改失败');
         }
     }
 
@@ -659,7 +650,7 @@ class IndexAction extends Action {
             	echo 0;exit;
             }
             
-            $result         = $this->event->doDeleteEvent($eventid);
+            $result = $this->event->doDeleteEvent($eventid);
             if( false != $result){
                 echo 1;
             }else{
@@ -718,6 +709,34 @@ class IndexAction extends Action {
         }
     }
 
+    /**
+     * 获取某个用户的评论
+     * @return [type] [description]
+     */
+    public function getUserComment() {
+        $map = array ();
+        $map ['app'] = 'public';
+        $map ['table'] = 'event';
+        $map ['row_id'] = intval ( $_POST ['id'] ); // 必须存在
+        $map ['uid'] = t ($_POST['uid']);
+        if (! empty ( $map ['row_id'] )) {
+            // 分页形式数据
+            $var ['limit'] = 100;
+            $var ['order'] = 'DESC';
+            $list = model ( 'Comment' )->getCommentList ( $map, 'comment_id ' . $var ['order'], $var ['limit'] );
+            foreach($list['data'] as &$v){
+                $v['year'] = date('Y', $v['ctime']);
+                $v['month'] = ltrim(date('m', $v['ctime']), 0);
+                $v['day'] = date('d', $v['ctime']);
+                $v['timeNum'] = $v['year'].$v['month'].$v['day'];
+            }
+            $this->assign( 'list', $list);
+            return $this->ajaxReturn($this->fetch(), '获取成功', 1);
+        }else{
+            $this->error('获取失败');
+        }
+
+    }
     /**
      * upload
      * 上传图片

@@ -634,13 +634,14 @@ a.ico-close, a.ico-close:hover, .ico-close1 {background: url(../image/del.png) n
 .hot-left p{ font-family:"微软雅黑"; font-size:21px; color:#fff; background:#61B9DD; text-align:center; margin:0px;}
 .hot-right p.month{ font-size:14px; background:url(../image/month.jpg) repeat-x left bottom; line-height:24px; width:85%; margin:0px;}
 .hot-right p.month a{ color:#9A9899; display:inline-block; padding:0px 2%;}
-.hot-right p.month a:hover{ background:url(../image/month-hover.jpg) repeat-x left bottom;}
+.hot-right p.month a:hover, .hot-right p.month a.current{ background:url(../image/month-hover.jpg) repeat-x left bottom;}
 .Boutique1{ float:left; width:80%;}
 .Boutique2{ float:right; width:20%}
 .Boutique2 a{ display:inline-block; background:url(../image/Boutique2.jpg) no-repeat; width:100%; line-height:36px; padding-left:34%; color:#fff; font-family:"微软雅黑"; font-size:16px;}
 .Boutique{ padding-top:16px;}
-.Boutique1 a{ color:#555; display:inline-block; margin-right:3%; font-family:"微软雅黑"; font-size:16px; line-height:36px;}
-.menu select{ margin-right:1%; line-height:27px; height:27px;}
+.Boutique1 a{ color:#929292; display:inline-block; margin-right:3%; font-family:"微软雅黑"; font-size:16px; line-height:36px;}
+.Boutique1 a:hover, .Boutique1 a.hover {color:#555;}
+.menu select{ margin-right:1%; line-height:28px; height:28px;}
 .menu{ padding-top:8px;}
 .Favourite-left{ float:left; width:13%;}
 .Favourite-right{ float:left; width:80%;}
@@ -658,14 +659,13 @@ a.ico-close, a.ico-close:hover, .ico-close1 {background: url(../image/del.png) n
 .Journal-problem span a{ color:#ababab;}
 .Journal-pinglun{ background:url(../image/pinglun.png) no-repeat left center; padding-left:7%; margin-left:6%;}
 .Journal-zan{ background:url(../image/zan.png) no-repeat left center; padding-left:7%; margin-left:4%;}
-.Journal-fenxiang{ background:url(../image/fenxiang.png) no-repeat left center; padding-left:7%; margin-left:4%;}
-.Journal-shou{ background:url(../image/shou.png) no-repeat left center; padding-left:7%; margin-left:4%;}
+.Journal-fenxiang, .Journal-shou{ margin-left:4%;}
 .Journal{ padding-bottom:30px;}
 .paging span{ color:#969A99; float:left; width:15%;}
 .paging p{ float:left; width:85%; margin:0px;}
 .paging p a{ display:inline-block; padding:0px 1%; color:#666465;}
 .paging{ width:100%;}
-.paging p a:hover{ background:#FD9F00; color:#fff; border-radius:2px;}
+.paging p a:hover, .paging p a.current{ background:#FD9F00; color:#fff; border-radius:2px;}
 .activity-right{ margin-top:54px;}
 .column{ padding-top:21px;}
 .column h5{ line-height:56px; font-family:"微软雅黑"; font-size:20px;}
@@ -682,6 +682,86 @@ a.ico-close, a.ico-close:hover, .ico-close1 {background: url(../image/del.png) n
 .strategy dl{ padding-top:13px;}
 .strategy dl dd.yun{ font-size:22px;font-family:"微软雅黑"; line-height:46px;}
 .strategy dl dd.xiang{ font-size:12px; color:#666; line-height:20px;}
+
+
+/*靠谱活动-弹出*/
+.popup{ width:50%; background:#fff; position:absolute; z-index:9999; left:50%; top:10%; margin-left:-25%;}
+.close1 span{ float:right; display:block;}
+.close1{ margin-top:10px; height:18px; margin-bottom:0px; margin-right:2%;}
+.title1{ line-height:28px;}
+.tanchu{ width:90%; margin:0 auto;}
+.biaoti{ width:100%; border:1px solid #D3D3D3; height:42px; line-height:42px;}
+.details p{ line-height:28px; padding-top:22px; padding-bottom:7px; margin:0px;}
+.details p span{ float:right; font-size:12px;}
+.label1 p{ line-height:44px; margin:0px;}
+.label1 p span{ color:#B4B2B5; font-size:12px;}
+.type{ border:1px solid #D3D3D3; border-bottom:none;}
+.type p{ font-size:12px; padding-left:3%; line-height:40px; margin:0px;}
+.type p span{ color:#B9B4B1; margin-right:3%;}
+.type p a{ display:inline-block; margin:0 1%;}
+.form-control{ border-radius:0px;}
+.start-stop p{ line-height:37px; padding-top:5px; margin:0px;}
+.qizhi{ width:20%; line-height:36px; line-height:36px;}
+.start-stop span{ display:inline-block; margin:0 2%;}
+.shape p{ line-height:47px; padding-top:7px; margin:0px;}
+.shape span{ margin-right:2%;}
+#optionsRadios2{ margin-right:1%;}
+.submit{ text-align:center; margin:20px 0;}
+.btn{ color:#C9C9C9;}
+
+/*靠谱圈活动内容*/
+.supervision{ margin-top:31px;}
+.supervision h5{ font-family:"微软雅黑"; line-height:38px; color:#3b3b3b; font-size:22px;    margin-bottom: 10px;}
+.will-left{ float:left; width: 20%;}
+.will-right{ float:left; padding-left: 25px;}
+.will-right p{ margin:0px; font-size:12px; color:#626262;}
+.will-right p.hui{ font-family:"宋体"; font-size:14px; color:#3b3b3b;}
+.will1{ background:url(../image/will1.png) no-repeat left center; padding-left:22px; line-height:28px;}
+.will2{ background:url(../image/will2.png) no-repeat left center; padding-left:22px; line-height:28px;}
+.will3{ background:url(../image/will3.png) no-repeat left center; padding-left:22px; line-height:26px;}
+.will1 span:nth-child(odd){ color:#fff; background:#FC513D; border:1px solid #DEDEDC; padding:0 8px; border-radius:20px; height:22px; line-height:22px; display:inline-block; margin-right:4px;}
+.will-right .will4{ color:#b1b1b1;}
+.will1 span:nth-child(even){ color:#fff; background:#89CA3A; border:1px solid #DEDEDC; padding:0 8px; border-radius:20px; height:22px; line-height:22px; display:inline-block;}
+.will .btn { padding: 4px 20px; margin-bottom: 20px; color: #fff; }
+.will .active { margin-top: 30px; background:#FC513D;}
+.will .favourite { background: #89CA3A;}
+.time2{ line-height:26px;}
+.Roman{ width:80%; padding-left:6%;}
+.Roman p{ line-height:24px; font-size:13px; margin:0px;}
+.respond-left{ float:left;}
+.respond-right{ float:right;}
+.respond{ border-bottom:1px solid #DEDEDE; margin-top:27px; padding-bottom:13px; padding-left:6%;}
+.respond-right p{ margin:0px;}
+.respond-left img{ padding-right:5px;}
+.respond-right p.huiying{ color:#777; font-size:12px;}
+.respond-right p.huiying span{ padding:0 10px;}
+.respond-right p.xingqu{ float:right;}
+.respond-right p.xingqu a{ display:inline-block; padding:0 15px; background:#FAE8DA; line-height:24px; color:#CC6346; margin-right:10px;}
+.responses h5{ font-family:"微软雅黑"; font-size:18px; margin:0px; line-height:58px; color:#414141;}
+.responses-left p{ background:url(../image/responses1.jpg) no-repeat; padding-top:6px; line-height:32px; padding-bottom:6px; padding-left:8px; width:64%;}
+.responses1{background:url(../image/responses-left.jpg) repeat-y;}
+.responses-left p b{ font-weight:bold; color:#FD3331; font-size:20px; float:left; display:inline-block; margin-left:9px; }
+.responses-left p span{ float:left;}
+.responses-left{ padding:0px; margin:0px; padding-top:6px; width: 20%; float:left;}
+.responses-right {width: 80%; float:left; margin-top: 10px;}
+.wangchao-left{ float:left;}
+.wangchao-right{ float:left; padding-left:1%; width: 510px;}
+.wangchao-right p{ margin:0px; font-size:12px; line-height:22px;}
+.wangchao{ border-bottom:1px solid #eee; width:540px; padding-bottom:7px; margin-bottom:12px;}
+.chao{ color:#225597;}
+.shouji{ color:#222;}
+.shij{color:#989A99; float: left;}
+.responses {width: 92%;}
+.responses .feed_list .zishu {display:none;}
+.responses .pinglunkuang{ margin-left:6%; margin-top:30px; width: 90%;  margin-bottom: 20px;}
+.input_tips{width:100%;height:52px;display:block;overflow-y:auto;padding:5px;font-size:14px;line-height:18px;cursor:text;outline:none;border:#ddd solid 1px;background:#fff;box-shadow:1px 1px 3px #dcdcdc inset;-moz-box-shadow:1px 1px 3px #dcdcdc inset;-khtml-box-shadow:1px 1px 3px #dcdcdc inset;}
+.responses .input_tips {min-height: 100px;}
+.ev_people h4{ line-height:46px; font-family:"微软雅黑"; font-size:16px;}
+.ev_people .ev_members a {    margin-right: 10px; margin-bottom: 10px; display: inline-block;}
+.ev_people .supervise a {margin-bottom: 8px;margin-top:0;display: inline-block; padding: 0 7px;}
+.ev_people .supervise a:hover {background: #FC5241; color: white; }
+.responses h5 img {border-radius: 3px; cursor: pointer; width: 30px;}
+.responses h5 img:hover {width: 35px;}
 
 @media (min-width: 768px){ .toggle {display: none; } .information1{ text-align:right;}} 
 @media (max-width: 768px){ .birthday,.school,.birthday1 {width:  100%;height: 34px;margin-bottom: 10px;} .nan,.nv {width: 30%;} .Interest-left,.confused-left{display: none;},}

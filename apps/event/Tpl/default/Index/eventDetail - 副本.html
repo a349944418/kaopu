@@ -1,0 +1,79 @@
+<include file="__THEME__/header" />
+<link rel="stylesheet" href="__APP__/event.css" type="text/css" media="screen" charset="utf-8" />
+<script type="text/javascript" src="__APP__/js/rcalendar.js" ></script>
+<script type="text/javascript" src="__APP__/js/event.js"></script>
+<style>
+    #body_page {background: none;}
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="supervision">
+                <h5>{$title}</h5>
+                <div class="will clearfix row">
+                    <div class="col-md-3 will-left">
+                        <img src="{$cover}" style="width:161px;height:141px;"/>
+                    </div>
+                    <div class="col-md-5 will-right" <if condition="$coverID">style="width:90%"</if>>
+                        <p class="time2"><i class="sui-icon icon-tb-my" style="font-size: 14px; padding-left: 2px; padding-right: 8px;"></i>发布者：{$user_info[$uid]['space_link']}</p> <p class="time2" ><span class="glyphicon glyphicon-time" aria-hidden="true" style="padding-right:8px;padding-left:3px;"></span>截止报名：{$dl}</p>
+                        <p class="will1">标签：<volist name="type" id="v"><span class="event_bg{$v.tid}">{$v.tname}</span></volist></p>
+                        <p class="will2">形式：<if condition="$implement_type eq 1">线上<else />线下</if></p>
+                        <p class="will3">抵押靠谱分：{$cost}分</p>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn active">我要参加</button><br />
+                        <button type="button" class="btn favourite">我感兴趣</button>
+                    </div>
+                </div>
+            </div>
+            <div class="responses" style="border-top: 1px solid #DEDEDE;margin-top:20px;">
+                <h5>活动介绍</h5>
+                <div class="Roman">
+                    {$explain}
+                </div>
+                <div class="respond clearfix">
+                    <div class="respond-left">
+                        分享：<img src="__THEME__/image/respond1.jpg"/><img src="__THEME__/image/respond2.jpg"/>
+                    </div>
+                    <div class="respond-right">
+                        <p class="huiying"><span>活动时间：{$time}</span><span>3条回应</span>|<span>0人感兴趣</span></p>                  
+                    </div>
+                </div>
+            </div>
+            <div class="responses" style="margin-bottom: 30px;">
+                <h5>大家的回应</h5>
+                <div class="feed_list">
+                    <div class="repeat">
+                       {:W('EventComment',array('tpl'=>'detail', 'table'=>'event', 'row_id'=>$id, 'canrepost'=>'0', 'cancomment'=>1, 'cancomment_old'=>0, 'showlist'=>1, 'limit'=>'20', 'order'=>'DESC'))}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="activity-right">
+                <div class="advertising">
+                  <img src="__THEME__/image/advertising.jpg"/>
+                </div>
+                <div class="column">
+                  <h5>推荐专栏<span><a href="#">专栏首页</a></span></h5>
+                    <dl>
+                      <dt><img src="__THEME__/image/column.jpg"/></dt>
+                        <dd class="chen">沉睡者梦里也不曾见过的美丽</dd>
+                        <dd class="bei">北欧的海岸线就像是一地碎玻璃，船在狭窄的水道上穿行，无数岛屿点缀其间。到达开阔水域的时候，已经是夜色迷茫，玛</dd>
+                    </dl>
+                </div>
+                <div class="strategy clearfix">
+                  <h5>旅游攻略推荐<span><a href="#">更多</a></span></h5>
+                    <dl>
+                      <dt><img src="__THEME__/image/strategy.jpg"/></dt>
+                        <dd class="yun">云台山行摄</dd>
+                        <dd class="xiang">详细的吃、住、行、景点、线路、实用信息</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__THEME__/js/module.weibo.js"></script>
+<!-- 内容 end -->
+<include file="__THEME__/public_footer" /> 

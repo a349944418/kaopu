@@ -92,7 +92,7 @@ core.comment = {
 		var _textarea = $(mini_editor).find('textarea');
 		var html = L('PUBLIC_RESAVE')+'@'+this.to_comment_uname+' ：';			
 		//_textarea.focus();
-		_textarea.inputToEnd(html);
+		_textarea.val(html);
 		_textarea.focus();
 	},
 	// 发表评论
@@ -164,10 +164,41 @@ core.comment = {
 						if(addToEnd == 1){
 							$(commentListObj).find(' .comment_lists').eq(0).prepend(msg.data);
 						}else{
-							$(msg.data).insertBefore($(commentListObj.childModels['comment_list'][0]));
+							if(_this.table == 'event') {
+								$('.member_user img[data-id='+MID+']').click();
+								/*
+								var nowDate = new Date();
+								var nowYear = nowDate.getFullYear();
+								var nowMonth = parseInt(nowDate.getMonth()) + 1;
+								var nowDay = nowDate.getDate();
+								if($('#T'+nowYear+nowMonth+nowDay).length > 0 ) {
+									$(msg.data).insertBefore($(commentListObj.childModels['comment_list'][0]));
+								} else {
+									var zbq_event_comment = '<div class="clearfix" id="T'+nowYear+nowMonth+nowDay+'"><div class="responses-left"><p class="clearfix"><span>'+nowYear+'-'+nowMonth+'</span><b>'+nowDay+'</b></p></div><div class="responses-right">'+msg.data+'</div></div>';
+									var old_zbq_event_comment = $('#commentlist_'+_this.row_id).html();
+									$('#commentlist_'+_this.row_id).html(zbq_event_comment + old_zbq_event_comment);
+								}
+								*/
+							} else {
+								$(msg.data).insertBefore($(commentListObj.childModels['comment_list'][0]));
+							}							
 						}
 					}else{
-						$(commentListObj).find('.comment_lists').eq(0).html(msg.data);
+						if(_this.table == 'event') {
+							var nowDate = new Date();
+							var nowYear = nowDate.getFullYear();
+							var nowMonth = parseInt(nowDate.getMonth()) + 1;
+							var nowDay = nowDate.getDate();
+							if($('#T'+nowYear+nowMonth+nowDay).length > 0 ) {
+								$(commentListObj).find('.comment_lists').eq(0).html(msg.data);
+							} else {
+								var zbq_event_comment = '<div class="clearfix" id="T'+nowYear+nowMonth+nowDay+'"><div class="responses-left col-xs-2"><p class="clearfix"><span>'+nowYear+'-'+nowMonth+'</span><b>'+nowDay+'</b></p></div><div class="responses-right col-xs-10">'+msg.data+'</div></div>';
+								var old_zbq_event_comment = $('#commentlist_'+_this.row_id).html();
+								$('#commentlist_'+_this.row_id).html(zbq_event_comment + old_zbq_event_comment);
+							}
+						} else {
+							$(commentListObj).find('.comment_lists').eq(0).html(msg.data);
+						}						
 					}
 					M(commentListObj);
 					//重置

@@ -429,3 +429,18 @@ function checkIdcard(value, element, sexE, birthdayE) {
             break;
     }
 }
+
+/**
+ * 对象转成URL参数;
+ * @param {[type]} 对象  [description]
+ * @param {String} 被忽略的项 [description]
+ */
+function OBJ2URI( obj, type) {
+    var str = '?';
+    for (a in obj) {
+        if(a != type){
+            str += a+'='+obj[a]+'&';
+        }           
+    }
+    return str.substring(0, str.length-1);
+}

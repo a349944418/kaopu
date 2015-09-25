@@ -1,0 +1,18 @@
+<div class="wangchao clearfix comment_list" model-node="comment_list">
+    <div class="wangchao-left">
+        <a href="{$userInfo.space_url}"><img width="25" height="25" src="{$userInfo.avatar_tiny}" style="border-radius: 4px;"></a>
+    </div>
+    <div class="wangchao-right">
+        <p class="chao"><a href="{$userInfo.space_url}">{$userInfo.uname}</a></p>
+        <p class="shouji">{$content}</p>
+        <p class="shij"><span class="time">({:L('PUBLIC_JUST')})</span></p>
+        <p class="info right"><span>
+            <php>if($iscommentdel){</php>
+			<a href="javascript:void(0);" event-node="comment_del" event-args="comment_id={$comment_id}">{:L('PUBLIC_STREAM_DELETE')}</a>
+			<!-- <i class="vline">|</i> -->
+			<php>}</php>
+            <!-- 
+			<a href="javascript:void(0);" event-args='row_id={$row_id}&app_uid={$app_uid}&to_comment_id={$comment_id}&to_uid={$userInfo.uid}&to_comment_uname={$userInfo.uname}' event-node="reply_comment">{:L('PUBLIC_STREAM_REPLY')}</a> -->
+        </span></p>
+    </div>
+</div>

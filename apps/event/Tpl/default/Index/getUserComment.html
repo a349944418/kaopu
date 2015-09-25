@@ -1,0 +1,57 @@
+<volist name="list.data" id="vo">
+    <if condition="$key eq 0">
+        <div class="clearfix" id="T{$vo.timeNum}">
+            <div class="responses-left">
+                <p class="clearfix"><span>{$vo.year}-{$vo.month}</span><b>{$vo.day}</b></p>
+            </div>
+            <div class="responses-right">
+    </if>
+    <if condition="$key neq 0 and $vo[timeNum] neq $list[data][($key-1)][timeNum]">
+            </div>
+        </div>
+        <div class="clearfix" id="T{$vo.timeNum}">
+            <div class="responses-left">
+                <p class="clearfix"><span>{$vo.year}-{$vo.month}</span><b>{$vo.day}</b></p>
+            </div>
+            <div class="responses-right">
+    </if>
+                <div class="wangchao clearfix comment_list" model-node="comment_list">
+                    <div class="wangchao-right">
+                        <p class="chao"><a href="{$vo.user_info.space_url}">{$vo.user_info.uname}</a></p>
+                        <p class="shouji">{$vo.content}</p>
+                        <p class="shij"><span class="time">({$vo.ctime|friendlyDate})</span></p>
+                        <p class="info right" style="display:none;"><span>
+                            <php>
+                            $isdel = 0;
+                            if(($vo['uid'] == $GLOBALS['ts']['mid'] && CheckPermission('core_normal','comment_del')) || CheckPermission('core_admin','comment_del')){
+                            $isdel = 1;
+                            </php>
+                                <a href="javascript:void(0);" event-node="comment_del" event-args="comment_id={$vo.comment_id}" <php>if($vo['user_info']['uid'] != $GLOBALS['ts']['mid'] && CheckPermission('core_admin','comment_del')){</php>style="color:red;"<php>}</php>>{:L('PUBLIC_STREAM_DELETE')}</a>
+                            <php>}</php>
+                            <php>if( $isdel && $cancomment){</php>
+                                <i class="vline">|</i>
+                            <php>}</php>
+                            <eq name='cancomment' value="1">
+                                <a href="javascript:void(0)" event-args='row_id={$vo.row_id}&app_uid={$vo.app_uid}&to_comment_id={$vo.comment_id}&to_uid={$vo.uid}&to_comment_uname={$vo.user_info.uname}&app_name={$app_name}&table={$table}' 
+                                event-node="reply_comment">{:L('PUBLIC_STREAM_REPLY')}</a>
+                            </eq>
+                        </span></p>
+                    </div>
+                </div>
+</volist>
+<if condition="$list[data]">
+      </div>
+  </div>
+</if>
+<!--页码-->
+<neq name='list.html' value=''>
+    <div id="page" class="page">
+        {$list.html}
+    </div>
+</neq>
+<!--页码/end-->
+
+<script>
+var initNums = '{$initNums}';
+atWho($("#comment_inputor"));
+</script>

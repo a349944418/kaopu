@@ -407,18 +407,17 @@ M.addEventFns({
 		click:function(){
 			var attrs = M.getEventArgs(this);
 			// 添加删除后的楼层统计数变化
-			$(this.parentModel).fadeOut('normal', function () {
-				var $commentList = $(this).parent();
-				if ($commentList.length > 0) {
-					// 获取微博ID
-					var wid = parseInt($commentList.attr('id').split('_')[1]);
-					var $commentListVisible = $commentList.find('dl:visible');
-					var len = parseInt($commentListVisible.eq(0).find('span.floor').html());
-					$commentListVisible.each(function (i, n) {
-						$(this).find('span.floor').html((len - i)+'楼');
-					});
+			var $commentList = $(this).parents('.responses-right');
+			if(typeof($commentList) == 'object'){
+				var a = $commentList.children('.comment_list').length;
+				if(a == 1) {
+					$commentList.parent('.clearfix').remove();
+				} else {
+					$(this.parentModel).remove();
 				}
-			});
+			} else {
+				$(this.parentModel).remove();
+			}
 			if("undefined"==typeof(core.comment)){
 				core.plugFunc('comment',function(){
 					core.comment.delComment(attrs.comment_id);
@@ -452,7 +451,9 @@ M.addEventFns({
 					ui.success( L('PUBLIC_CENTSUCCESS') );
 				}
 			}
+			
 			core.comment.addComment(after,this);
+			
 			this.noreply = 1;
 			setTimeout(function (){
 				_this.noreply = 0;

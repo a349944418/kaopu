@@ -515,15 +515,12 @@ var ui = {
 	},
 	/**
 	 * 发活动弹窗API
-	 * @param string touid 收件人ID
+	 * @param string id 活动ID
 	 * @return void
 	 */
-	sendmessage: function(touid, editable) {
-		if(typeof(editable) == "undefined" ) {
-			editable = 1;
-		}
-		touid = touid || '';
-		this.box.load(U('public/Message/post')+'&touid='+touid+'&editable='+editable, L('PUBLIC_SETPRIVATE_MAIL'));
+	addEvent: function(id) {
+		var event_url = id ? U('event/Index/edit')+'&id='+id : U('event/Index/addEvent');
+		this.box.load(event_url, '<span style="display:none;">发布活动</span>');
 	},
 	/**
 	 * @Me弹窗API

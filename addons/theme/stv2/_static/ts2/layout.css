@@ -13,7 +13,7 @@
 .user_app a:hover{text-decoration:none;}
 .user_app .user_follow strong{font-size:12px;font-family:Arial, Helvetica, sans-serif;color:#fff}
 .user_app .userinfo .user_name p{line-height:20px;margin:0;color:#507FA5;width:70px;white-space:nowrap;padding:0 5px 0 0;overflow:hidden;}
- body {font:12px Arial,Helvetica,sans-serif,Simsun;color:#333;}
+ body {font:14px Arial,Helvetica,sans-serif,Simsun;color:#333;}
 .page_home{background:#BEE3FD url(images/body_bg.jpg) no-repeat center top;_padding:0;}
 .wrap{padding:57px 0 0 0;}
 .top_holder{z-index:99999999;position:fixed;_position:absolute;width:100%;min-width:1000px;background:url(images/ip_nav_bg.gif) repeat-x 0 top;left:0;top:0;height:53px}
@@ -25,8 +25,8 @@
 .content_share{background-color:#193E5C;text-align: left;clear: both;margin: 0 auto;border-radius:3px 3px 3px 3px}
 .main {margin-left:150px;background-color:#fff;*overflow:hidden}
 .mainbox{background-color:#fff;border-radius:2px;} 
-.mainbox_C{margin-right:220px;background-color:#fff;min-height:580px;border-radius:0 3px 3px 0;_margin-right:225px;}
-.mainbox_appC{margin-right:280px;_margin-right:280px;background-color:#fff;border-radius:2px 3px 3px 2px;padding:20px;}
+.mainbox_C{background-color:#fff;min-height:580px;border-radius:0 3px 3px 0;}
+.mainbox_appC{background-color:#fff;border-radius:2px 3px 3px 2px;padding:20px;}
 .mainbox_appS{margin-right:280px;_margin-right:280px;background-color:#fff;border-radius:2px 3px 3px 2px;padding:20px}/*文档分享左侧样式*/
 .no_l .mainbox_C{border-left:0 none;padding:20px;}
 .mainbox_Gl{margin-right:330px;_margin-right:320px;background-color:#fff;min-height:580px;border-radius:0 3px 3px 0}

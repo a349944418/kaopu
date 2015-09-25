@@ -43,7 +43,8 @@ class EventModel extends BaseModel{
                 //追加参与者
                 $map['eventId'] = $value['id'];
                 $value['users'] = $user->where( $map )->findAll();
-                $value['cover'] = getCover($value['coverId']);
+                $value['cover'] = $value['coverId'] ? getCover($value['coverId'], 220, 150) : '';
+                $value['short_explain'] = strip_tags($value['explain']);
                 //计算待审核人数
 	            if( $value['opts']['allow'] && $this->mid == $value['uid'] ){
 	               $value['verifyCount'] = $user->where( "status = 0 AND action='joinIn' AND eventId =".$value['id'] )->count();
@@ -63,7 +64,15 @@ class EventModel extends BaseModel{
 	public function appendContent( $data ){
 		$opts = self::factoryModel( 'opts' );
 		$type = self::factoryModel( 'type' );
-		$data['type'] = $type->getTypeName( $data['type'] );
+		$data['type'] = trim($data['type'], ',');
+		$type_arr = explode(',', $data['type']);
+		$data['type'] = array();
+		foreach($type_arr as $v){
+			$type_tmp_arr['tid'] = $v;
+			$type_tmp_arr['tname'] = $type->getTypeName( $v );
+			$data['type'][] = $type_tmp_arr;
+		}
+		
 
 		//反解析时间
 		$data['time'] = date( 'Y-m-d H:i:s',$data['sTime'] )." 至 ".date( 'Y-m-d H:i:s',$data['eTime'] );
@@ -193,7 +202,6 @@ class EventModel extends BaseModel{
 		$map['id'] = $eventId;
 
 		$result = $this->where( $map )->find();
-
 		//检查是否正确的管理员id
 		if( $uid != $result['uid']  ){
 			return false;
@@ -214,7 +222,6 @@ class EventModel extends BaseModel{
 		$result['member']    = $user->getUserList( $join,16 );
 
 		$result['lc'] = 5000000 < $result['limitCount'] ? "无限制":$result['limitCount'];
-		$result['cover']     = getCover($result['coverId'],200,200);
 		$result = $this->appendContent( $result );
 		return $result;
 	}
@@ -270,6 +277,14 @@ class EventModel extends BaseModel{
 			return -1;
 		}
 
+		if($event['evob'] != 0) {
+			$evob = M('User')->where('uid='.$data['uid'])->getField('utype');
+			if($evob != $event['evob']) {
+				$utype = array('1'=>'学生','2'=>'家长','3'=>'老师','4'=>'过来人');
+				return '您的身份不符，该活动只允许'.$utype[$event[evob]].'参加';
+			}			
+		}
+
 		if( $data['action'] === 'joinIn' ){
 			//自动获取已填写的联系方式
             $contact_fields = M('user_set')->where('module=\'contact\'')->findAll();
@@ -291,6 +306,13 @@ class EventModel extends BaseModel{
 		// 判断活动的人数不能为负数
 		if($event['limitCount'] <= 0){
 			$role['canJoin'] = false;
+		}
+
+		if($opts['cost'] != 0) {
+			$Credit = D('Credit')->getUserCredit($data['uid']);
+			if($Credit[credit][experience][value] < $opts['cost']) {
+				return '您的靠谱分不足，请做些靠谱的事后再来报名';
+			}			
 		}
 
 		//检查是否已经加入或者关注
@@ -341,9 +363,11 @@ class EventModel extends BaseModel{
                 }
 				if( $res ){
 					if($map['status']){
+
 						$this->setInc('joinCount','id='.$map['eventId']);
 						$this->setDec('limitCount','id='.$map['eventId']);
                         model('Credit')->setUserCredit($map['uid'],'join_event');
+                        model('Credit')->setUserCredit($map['uid'], array('experience'=>'-'.$opts['cost']));                    
 					}
 					return 1;
 				}else{
@@ -364,6 +388,7 @@ class EventModel extends BaseModel{
 	 */
 	public function doArgeeUser( $data ){
 		$userDao = self::factoryModel( 'user' );
+		$optsDao = self::factoryModel( 'opts' );
 		if($userDao->where('id='.$data['id'])->setField( 'status',1)){
 			$this->setInc('joinCount','id='.$data['eventId']);
 			$this->setDec('limitCount','id='.$data['eventId']);
@@ -373,6 +398,9 @@ class EventModel extends BaseModel{
 				$userDao->delete( $id );
 				$this->setDec('attentionCount','id='.$data['eventId']);
 			}
+			$optsId = $this->where( 'id ='.$data['id'] )->getField('optsId');
+			$cost = $optsDao->where( 'id='.$optsId )->getField('cost');
+			model('Credit')->setUserCredit($map['uid'], array('experience'=>'-'.$cost)); 
 			return 1;
 		}
 		return 0;
@@ -500,12 +528,24 @@ class EventModel extends BaseModel{
         $opts_map['id'] = array('in',$optsIds);
 
 		//删除活动
-		if( $this->where( $eventId )->delete() ){
+		$data['is_del'] = 1;
+		
+		if( $this->where('id='.$eventId[id])->save($data) ){
+			$opts_id = $this->where($eventId)->getField('optsId');
+			$cost = D('event_opts')->where('id='.$opts_id)->getField($cost);
+			if($cost > 0){
+				$uids = D('event_user')->where('eventId='.$eventId[id].' and action="joinIn"')->field('uid')->select();
+				foreach($uids as $v){
+					model('Credit')->setUserCredit($v['uid'],array('experience'=>$cost));
+				}
+			}
 	        //删除选项
+	        /*
 	        self::factoryModel( 'opts' )->where($opts_map)->delete();
 	        //删除成员
 	        $user_map['eventId'] = $eventId['id'];
 	        self::factoryModel( 'user' )->where($user_map)->delete();
+	        */
 			return true;
 		}
 
@@ -593,6 +633,22 @@ class EventModel extends BaseModel{
 		}else{
 			return false;
 		}
+	}
+
+	/**
+	 * 获取与我相关的活动
+	 * @param  [type]  $type  joinIn 参加  attention 感兴趣
+	 * @param  integer $limit 几条  
+	 * @return [type]         [description]
+	 */
+	public function getSelfEvent( $type , $limit=10) {
+		$eventIds = D('event_user')->where('uid='.$this->mid.' and action="'.$type.'"')->field('eventId')->limit($limit)->order('id Desc')->select();
+		foreach($eventIds as $v){
+			$tmp_event = $this->where('id='.$v['eventId'])->field('title, uid') ->find();
+			$tmp_event[id] = $v['eventId']; 
+			$list[] = $tmp_event;
+		}
+		return $list;
 	}
 }
 ?>

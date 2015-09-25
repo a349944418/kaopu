@@ -245,7 +245,8 @@ class CommentWidget extends Widget {
 		$data ['content'] = preg_html ( $data ['content'] );
 		$data ['content'] = parse_html ( $data ['content'] );
 		$data ['iscommentdel'] = CheckPermission ( 'core_normal', 'comment_del' );
-		return $this->renderFile ( dirname ( __FILE__ ) . "/_parseComment.html", $data );
+		$htmlname = $data['table'] == 'event' ? '_parseEventComment.html' : '_parseComment.html';
+		return $this->renderFile ( dirname ( __FILE__ ) . "/" . $htmlname, $data );
 	}
 
 	// 同步到微吧
