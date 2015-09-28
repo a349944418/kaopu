@@ -403,13 +403,13 @@ M.addEventFns({
 				return false;
 			}
 
-			$.post(sUrl, {email:sValue}, function(oTxt) {
+			$.post(sUrl, {Reg_email:sValue}, function(oTxt) {
 				var oArgs = M.getEventArgs(dEmail);
-				if(oTxt) {
+				if(oTxt.status) {
 					"false" == oArgs.success ? tips.clear( dEmail ) : tips.success( dEmail );
 					dEmail.bIsValid = true;
 				} else {
-					"false" == oArgs.error ? tips.clear( dEmail ) : tips.error( dEmail, '您输入的邮箱有误或已被注册' );
+					"false" == oArgs.error ? tips.clear( dEmail ) : tips.error( dEmail, oTxt.info );
 					dEmail.bIsValid = false;
 				}
 				return true;
