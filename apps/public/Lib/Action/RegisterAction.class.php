@@ -218,7 +218,6 @@ class RegisterAction extends Action
 		}
 
 		$map['uname'] = $uname;
-		$map['sex'] = $sex;
 		$map['login_salt'] = $login_salt;
 		$map['password'] = md5(md5($password).$login_salt);
 		$map['login'] = $map['email'] = $email;
@@ -226,12 +225,14 @@ class RegisterAction extends Action
 		$map['ctime'] = time();
 		
 		// 添加地区信息
+		/*
 		$map['location'] = t($_POST['city_names']);
 		$cityIds = t($_POST['city_ids']);
 		$cityIds = explode(',', $cityIds);
 		isset($cityIds[0]) && $map['province'] = intval($cityIds[0]);
 		isset($cityIds[1]) && $map['city'] = intval($cityIds[1]);
 		isset($cityIds[2]) && $map['area'] = intval($cityIds[2]);
+		*/
 
 		// 审核状态： 0-需要审核；1-通过审核
 		$map['is_audit'] = $this->_config['register_audit'] ? 0 : 1;

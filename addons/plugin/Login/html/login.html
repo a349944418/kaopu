@@ -1,7 +1,11 @@
 <include file="__THEME__/public_header" />
 <link type="text/css" rel="stylesheet" href="{:APP_URL}/_static/login.css">
+<style>
+  dl {margin-top: 1em;margin-bottom: 1px}
+  .reg-wrap .title {margin: 0 0 15px 0;}
+</style>
   <div id="page-wrap">
-    <div class="reg-wrap">      
+    <div class="reg-wrap container">      
       <!--设置账号-->
       <div class="reg-main">
         <neq name='config.register_type' value='closed'>
@@ -62,7 +66,7 @@
                 <div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_PASSWORD')}：</div>
                 <div class="form-row">
                     <input event-node="password" name="password" type="password" value=""/>
-                    <div model-node="password_weight" class="psw-state-empty">
+                    <div model-node="password_weight" class="psw-state-empty" style="display:none;">
                         <div class="progress progress-green-transition"><div class="bar"></div></div>
                         <div class="txt"><span>{:L('PUBLIC_PASSWORD_WEAK')}</span><span>{:L('PUBLIC_PASSWORD_MIDDLE')}</span><span>{:L('PUBLIC_PASSWORD_STRONG')}</span></div>
                     </div>
@@ -72,21 +76,6 @@
                 <div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_CONFIRM_PASSWORD')}：</div>
                 <div class="form-row">
                   <input event-node="repassword" name="repassword" type="password" />
-                </div>
-              </dd>
-              <dd>
-                <div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_GENDER')}：</div>
-                <div class="form-row">
-                  <label><input name="sex" type="radio" class="s-radio" value="1" checked="checked" event-node="radio" event-args="error={:L('PUBLIC_CHOOSE_GENDER')}" />{:L('PUBLIC_MALE')}</label>
-                  <label><input event-node="radio" type="radio" name="sex" value="2" class="s-radio"  />{:L('PUBLIC_FEMALE')}</label>
-                </div>
-              </dd>
-              <dd>
-                <div class="form-tt"><i class="text-required">*</i>地区：</div>
-                <div class="form-row">
-                  <div style="padding:3px 0 0 0;*height:30px;overflow:hidden;*zoom:1;">
-                  {:W('Area',array('curPro'=>0,'curCity'=>0,'area'=>0,'tpl'=>'selectArea'))}
-                  </div>
                 </div>
               </dd>
               <dd>
@@ -101,7 +90,7 @@
               <dd class="mt15">
                 <div class="form-tt"></div>
                 <div class="form-row actionBtn">
-                  <input style="float:left;" class="btn-register" type="submit" value="完善资料" />  
+                  <input style="float:left;" class="btn btn-default" type="submit" value="完善资料" />  
                   <if condition="$config['bindemail'] neq 1">
                     <a style="float:left;margin-left:30px;line-height:30px" href="javascript:void(0);" onclick="$('#ajax_direct_bind_form').submit();">直接进去，以后再完善。</a>
                   </if>
