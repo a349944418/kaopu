@@ -394,7 +394,7 @@ M.addEventFns({
 		},
 		blur: function() {
 			this.className = 's-txt';
-
+			
 			var dEmail = this;
 			var sUrl = dEmail.getAttribute("checkurl");
 			var sValue = dEmail.value;
@@ -409,7 +409,7 @@ M.addEventFns({
 					"false" == oArgs.success ? tips.clear( dEmail ) : tips.success( dEmail );
 					dEmail.bIsValid = true;
 				} else {
-					"false" == oArgs.error ? tips.clear( dEmail ) : tips.error( dEmail, oTxt.info );
+					"false" == oArgs.error ? tips.clear( dEmail ) : tips.error( dEmail, '您输入的邮箱有误或已被注册' );
 					dEmail.bIsValid = false;
 				}
 				return true;

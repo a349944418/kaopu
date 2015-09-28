@@ -689,7 +689,7 @@ class RegisterAction extends Action
 	 * 验证邮箱是否已被使用
 	 */
 	public function isEmailAvailable() {
-		$email = t($_GET['Reg_email']);
+		$email = t($_REQUEST['Reg_email']);
 		$result = $this->_register_model->isValidEmail($email);
 		$result = $result ? "true" : "false";
 		echo $result;

@@ -184,7 +184,7 @@ li{list-style-type:none}
 
 /*.reg-main .article .item dd{padding:0 0 20px;color:#333;*zoom:1}*/
 .reg-main .article .item dd:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
-.reg-main .article .item dd label {display: block;float: left;font-size: 14px;padding: 5px 0 0;width: 80px}
+.reg-main .article .item dd label {display: block;float: left;font-size: 14px;padding: 3px 0 0;width: 80px}
 .reg-main .article .item dd.terms{position:relative;}
 .reg-main .article .item dd.terms .box-ver{position:absolute;left:295px;}
 .item .edit-department{padding:5px 0;display:block}
