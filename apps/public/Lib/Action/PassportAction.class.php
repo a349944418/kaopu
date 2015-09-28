@@ -43,8 +43,7 @@ class PassportAction extends Action
 	 * @return void
 	 */
 	public function login(){
-		$site = empty($GLOBALS['ts']['site']) ? model('Xdata')->get('admin_Config:site') : $GLOBALS['ts']['site'];
-		dump($site['logo']);
+		
 		if(model('Passport')->isLogged()){
 			U('weiba/Index/index','',true);
 		}
