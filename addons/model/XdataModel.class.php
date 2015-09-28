@@ -68,7 +68,7 @@ class XdataModel extends Model {
 			if($result) {
 				foreach($result as $v) {
 					$data[$v['key']] = unserialize($v['value']);
-				}	
+				}
 			}
 			F($cache_id, $data);
 		}
