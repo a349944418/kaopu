@@ -405,7 +405,7 @@ M.addEventFns({
 
 			$.post(sUrl, {email:sValue}, function(oTxt) {
 				var oArgs = M.getEventArgs(dEmail);
-				if(oTxt.status) {
+				if(oTxt) {
 					"false" == oArgs.success ? tips.clear( dEmail ) : tips.success( dEmail );
 					dEmail.bIsValid = true;
 				} else {
