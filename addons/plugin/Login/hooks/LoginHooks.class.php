@@ -544,7 +544,7 @@ class LoginHooks extends Hooks {
             $this->assign('oauth_token', $oauth_token);
             $oauth_token_secret = isset($_GET['oauth_token_secret']) ? t($_GET['oauth_token_secret']) : $_SESSION[$type]['access_token']['oauth_token_secret'];
             $this->assign('oauth_token_secret', $oauth_token_secret);
-            $this->setTitle('账号绑定');
+            
             $this->display ( "login" );
         }
     }
