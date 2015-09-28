@@ -140,9 +140,9 @@ abstract class Action
      */
 	private function initUser() {
 		// 邀请跳转
-		if(isset($_GET['invite']) && APP_NAME.'/'.MODULE_NAME!='public/Register') {
-			redirect(U('public/Register/index', array('invite'=>t($_GET['invite']))));exit();
-		}		
+		// if(isset($_GET['invite']) && APP_NAME.'/'.MODULE_NAME!='public/Register') {
+		// 	redirect(U('public/Register/index', array('invite'=>t($_GET['invite']))));exit();
+		// }		
         // 验证登陆
         if (model('Passport')->needLogin()) {
             if(defined('LOGIN_URL')){

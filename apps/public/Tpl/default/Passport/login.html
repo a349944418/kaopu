@@ -114,6 +114,7 @@
 </div>
 <script>
 	$(function(){
+		var invite = '{$invite}';
 		var wh = $(window).height();
 		var ww = $(window).width();
 		var bw = $('.login-container').width();
@@ -131,6 +132,10 @@
 		}
 		setTimeout(function(){
 		 	$('.login_text').animate({'left':'0%'}, 1000);
+
+			if(invite) {
+				$('.btn-regist').click();
+			}
 		}, 1000);
 
 		$('#comModal').on('show.bs.modal', function (e) {
@@ -144,7 +149,7 @@
 	        	$('.close').css({'color':'#fff', 'opacity':'1', 'font-weight':'normal', 'font-size': '30px'});
 	        	$('.close:hover').css({'color':'#fff'})
 	            $('.modal-dialog').addClass('modal-sm');
-	            $.post('{:U("public/Register/ajaxReg")}',{},function(data){
+	            $.post('{:U("public/Register/ajaxReg")}',{invite: invite},function(data){
 	              	modal.find('.modal-body').html(data);
 	            },'html');
 	        } else if (type == 'login') {

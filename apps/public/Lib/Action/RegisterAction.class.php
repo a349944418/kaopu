@@ -88,6 +88,32 @@ class RegisterAction extends Action
 	 * @return [type] [description]
 	 */
 	public function ajaxReg() {
+		if(empty($this->mid)) {
+			if((isset($_POST['invite']) || $this->_config['register_type'] != 'open') && !in_array(ACTION_NAME, array('isEmailAvailable', 'isUnameAvailable', 'doStep1'))) {
+				// 提示信息语言
+				$messageHash = array('invite'=>'抱歉，本站目前仅支持邀请注册。', 'admin'=>'抱歉，本站目前仅支持管理员邀请注册。');
+				$message = $messageHash[$this->_config['register_type']];
+				if(!isset($_POST['invite'])) {
+					$this->error($message);
+				}
+				$inviteCode = t($_POST['invite']);
+				$status = model('Invite')->checkInviteCode($inviteCode, $this->_config['register_type']);
+				if($status == 1) {
+					$this->_invite = true;
+					$this->_invite_code = $inviteCode;
+				} else if($status == 2) {
+					$this->error('抱歉，该邀请码已使用。');
+				} else {
+					$this->error($message);
+				}
+			}
+		}
+		
+		$this->assign('is_invite', $this->_invite);
+		$this->assign('invite_code', $this->_invite_code);
+		$this->assign('config', $this->_config);		
+		$this->assign('invate_key', t($_POST['key']));
+		$this->assign('invate_uid', t($_POST['uid']));
 		$con = $this->fetch();
 		echo $con;
 	}

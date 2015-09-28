@@ -26,6 +26,7 @@ class PassportAction extends Action
 		// 如果没设置
 		
 		$this->login();
+
 	}
 
 	/**
@@ -45,7 +46,7 @@ class PassportAction extends Action
 		if(model('Passport')->isLogged()){
 			U('weiba/Index/index','',true);
 		}
-
+		
 		// 获取邮箱后缀
 		$registerConf = model('Xdata')->get('admin_Config:register');
 		$this->assign('emailSuffix', explode(',', $registerConf['email_suffix']));
@@ -55,7 +56,7 @@ class PassportAction extends Action
         !empty($data['keywords']) && $this->setKeywords($data['keywords']);
         !empty($data['des'] ) && $this->setDescription ( $data ['des'] );
         
-
+        $this->assign('invite', $_GET['invite'] ? $_GET['invite'] : '');
 
         // 时间轴数据
         $domain = model('User')->getDomain();
