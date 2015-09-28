@@ -531,22 +531,18 @@ M.addEventFns({
 		},
 		blur: function() {
 			this.className = 's-txt';
-			var dWeight = this.parentModel.childModels["password_weight"][0];
 			var sValue = this.value + "";
 			var nL = sValue.length;
 			var min = 6
 			var max = 15;
 			if ( nL < min ) {
-				dWeight.style.display = "none";
 				tips.error( this, L('PUBLIC_PASSWORD_TIPES_MIN',{'sum':min}));
 				this.bIsValid = false;
 			} else if ( nL > max ) {
-				dWeight.style.display = "none";
 				tips.error( this, L('PUBLIC_PASSWORD_TIPES_MAX',{'sum':max}) );
 				this.bIsValid = false;
 			} else {
 				tips.clear( this );
-				dWeight.style.display = "";
 				this.bIsValid = true;
 				var args = M.getEventArgs(this);
 				if (typeof args.repeat === 'undefined') {
@@ -563,7 +559,6 @@ M.addEventFns({
 			this.className='s-txt';
 
 			var dPwd = this,
-				dWeight = this.parentModel.childModels["password_weight"][0],
 				aLevel = [ "psw-state-empty", "psw-state-poor", "psw-state-normal", "psw-state-strong" ];
 
 			setInterval( function() {
@@ -576,15 +571,11 @@ M.addEventFns({
 				}
 				// 空值判断
 				if ( ! sValue ) {
-					dWeight.className = aLevel[0];
-					dWeight.setAttribute('className',aLevel[0]);
 					return ;
 				}
 				var nL = sValue.length;
 
 				if ( nL < 6 ) {
-					dWeight.className = aLevel[0];
-					dWeight.setAttribute('className',aLevel[0]);
 					return ;
 				}
 
@@ -595,9 +586,6 @@ M.addEventFns({
 				sValue.match( /[0-9]+/ ) && nMixFactor ++;
 				sValue.match( /[^a-zA-Z0-9]+/ ) && nMixFactor ++;
 				nMixFactor > 1 && nMixFactor --;
-
-				dWeight.className = aLevel[nLFactor + nMixFactor];
-				dWeight.setAttribute('className',aLevel[nLFactor + nMixFactor]);
 
 			}, 200 );
 		}
