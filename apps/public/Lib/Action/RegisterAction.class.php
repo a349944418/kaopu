@@ -691,8 +691,9 @@ class RegisterAction extends Action
 	public function isEmailAvailable() {
 		$email = t($_REQUEST['Reg_email']);
 		$result = $this->_register_model->isValidEmail($email);
-		$result = $result ? "true" : "false";
-		echo $result;
+		//$result = $result ? "true" : "false";
+		//echo $result;
+		$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);
 	}
 
 	/**
