@@ -18,10 +18,10 @@
             </dl>
           </div>
           <div class="tab-menu">
-            <ul>
-              <li class="current"><span><a href="#" uri="tab-pannel-1">新帐号</a></span></li>
+            <ul class="nav nav-tabs">
+              <li role="presentation" class="active"><span><a href="#" uri="tab-pannel-1">新帐号</a></span></li>
               <if condition="$config['bindemail'] neq 1">
-              <li><span><a href="#" uri="tab-pannel-2">绑定已有帐号</a></span></li>
+              <li role="presentation" ><span><a href="#" uri="tab-pannel-2">绑定已有帐号</a></span></li>
               </if>
             </ul>
           </div>
@@ -49,7 +49,7 @@
             <input type="hidden" name="other_signature" value="{$user.signature}" >
             <dl class="item">
               <dd>
-                <div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_NICKNAME')}：</div>
+                <div class="form-tt">{:L('PUBLIC_NICKNAME')}：</div>
                 <div class="form-row">
                   <div style="overflow:hidden;*zoom:1">
                     <input event-node="uname" name="uname" checkurl="{:U('public/Register/isUnameAvailable')}" autocomplete="off" type="text" value="{$user.uname}" />
@@ -57,13 +57,13 @@
                 </div>
               </dd>
               <dd>
-                <div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_EMAIL')}：</div>
+                <div class="form-tt">{:L('PUBLIC_EMAIL')}：</div>
                 <div class="form-row" style="z-index:99">
                   <input event-node="email" event-args="<if condition="'appoint' eq $config['register_type']">suffix={$config['email_suffix']}</if>" name="email" checkurl="{:U('public/Register/isEmailAvailable')}" autocomplete="off" type="text" value="" />
                 </div>
               </dd>
               <dd>
-                <div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_PASSWORD')}：</div>
+                <div class="form-tt">{:L('PUBLIC_PASSWORD')}：</div>
                 <div class="form-row">
                     <input event-node="password" name="password" type="password" value=""/>
                     <div model-node="password_weight" class="psw-state-empty" style="display:none;">
@@ -73,13 +73,13 @@
                 </div>
               </dd>
               <dd>
-                <div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_CONFIRM_PASSWORD')}：</div>
+                <div class="form-tt">{:L('PUBLIC_CONFIRM_PASSWORD')}：</div>
                 <div class="form-row">
                   <input event-node="repassword" name="repassword" type="password" />
                 </div>
               </dd>
               <dd>
-                <div class="form-tt"><i class="text-required">*</i>使用头像：</div>
+                <div class="form-tt">使用头像：</div>
                 <div class="form-row">
                   <img src="{$user.userface}" width="50" height="50" />
                   <br />
@@ -109,13 +109,13 @@
             <input type="hidden" name="other_signature" value="{$user.signature}" >
             <dl class="item">
               <dd>
-                <div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_EMAIL')}：</div>
+                <div class="form-tt">{:L('PUBLIC_EMAIL')}：</div>
                 <div class="form-row" style="z-index:99">
                   <input event-node="input_text" name="email" type="text" value="" />
                 </div>
               </dd>
               <dd>
-                <div class="form-tt"><i class="text-required">*</i>{:L('PUBLIC_PASSWORD')}：</div>
+                <div class="form-tt">{:L('PUBLIC_PASSWORD')}：</div>
                 <div class="form-row">
                   <input event-node="input_text" name="password" type="password" value="" />
                 </div>
@@ -139,8 +139,8 @@
   <script type="text/javascript">
     $(function() {
         $(".tab-menu ul > li > span > a").click(function(e) {
-            $(this).parent().parent().parent().children('li').removeClass('current');
-            $(this).parent().parent().addClass('current');
+            $(this).parent().parent().parent().children('li').removeClass('active');
+            $(this).parent().parent().addClass('active');
             if ($(this).attr('uri') == 'tab-pannel-1'){
               $('#tab-pannel-1').show();
               $('#tab-pannel-2').hide();

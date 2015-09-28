@@ -216,7 +216,7 @@ li{list-style-type:none}
 .reg-main .article .text-required{margin:0 3px 0 0;}
 .reg-main .article .item dd{margin:0 0 20px 0;overflow:hidden;*zoom:1;}
 .reg-main .article .item .profession-type dd{margin:0 0 10px 120px}
-.reg-main .article .item dd .form-tt{float:left;font-size:14px;width:80px;display:block;padding:8px 10px 0 0;text-align:right}
+.reg-main .article .item dd .form-tt{float:left;font-size:14px;width:80px;display:block;line-height: 26px;text-align:right}
 .reg-main .article .item dd .form-tt-complete{float:left;font-size:14px;width:300px;display:block;padding:5px 5px 0 0;text-align:right}
 
 .reg-main .article .tab-menu .current a:link,.reg-main .article .tab-menu .current a:visited{cursor:text;}
