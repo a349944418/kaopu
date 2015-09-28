@@ -116,9 +116,6 @@
 	$(function(){
 		var invite = '{$invite}';
 		var o = {};
-		if (invite) {
-			o.invite = invite;
-		}
 		var wh = $(window).height();
 		var ww = $(window).width();
 		var bw = $('.login-container').width();
@@ -138,6 +135,7 @@
 		 	$('.login_text').animate({'left':'0%'}, 1000);
 
 			if(invite) {
+				o.invite = invite;
 				$('.btn-regist').click();
 			}
 		}, 1000);

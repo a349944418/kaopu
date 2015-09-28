@@ -715,9 +715,20 @@ class RegisterAction extends Action
 		$uname = t($_GET['Reg_name']);
 		$oldName = t($_POST['old_name']);
 		$result = $this->_register_model->isValidName($uname, $oldName);
-		//$result = $result ? "true" : "false";
-		//echo $result;
-		$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);
+		$result = $result ? "true" : "false";
+		echo $result;
+		//$this->ajaxReturn(null, $this->_register_model->getLastError(), $result);
+	}
+
+
+	/**
+	 * 验证邮箱是否已被使用
+	 */
+	public function isEmailAvailable_zbq() {
+		$email = t($_REQUEST['Reg_email']);
+		$result = $this->_register_model->isValidEmail($email);
+		$result = $result ? "true" : "false";
+		echo $result;
 	}
 
 	/**
