@@ -19,9 +19,9 @@
           </div>
           <div class="tab-menu">
             <ul class="nav nav-tabs">
-              <li role="presentation" class="active"><span><a href="#" uri="tab-pannel-1">新帐号</a></span></li>
+              <li role="presentation" class="active"><a href="#" uri="tab-pannel-1">新帐号</a></li>
               <if condition="$config['bindemail'] neq 1">
-              <li role="presentation" ><span><a href="#" uri="tab-pannel-2">绑定已有帐号</a></span></li>
+              <li role="presentation" ><a href="#" uri="tab-pannel-2">绑定已有帐号</a></li>
               </if>
             </ul>
           </div>
@@ -139,8 +139,8 @@
   <script type="text/javascript">
     $(function() {
         $(".tab-menu ul > li > span > a").click(function(e) {
-            $(this).parent().parent().parent().children('li').removeClass('active');
-            $(this).parent().parent().addClass('active');
+            $(this).parent().parent().children('li').removeClass('active');
+            $(this).parent().addClass('active');
             if ($(this).attr('uri') == 'tab-pannel-1'){
               $('#tab-pannel-1').show();
               $('#tab-pannel-2').hide();
