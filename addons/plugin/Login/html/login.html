@@ -123,7 +123,7 @@
               <dd class="mt15">
                 <div class="form-tt"></div>
                 <div class="form-row actionBtn">
-                  <input class="btn-register" type="submit" value="绑定" />
+                  <input  class="btn btn-default" type="submit" value="绑定" />
                 </div>
               </dd>
             </dl>
@@ -138,6 +138,7 @@
   </div>
   <script type="text/javascript">
     $(function() {
+        $('title').html('账户绑定');
         $(".tab-menu ul > li > a").click(function(e) {
             $(this).parent().parent().children('li').removeClass('active');
             $(this).parent().addClass('active');
@@ -186,9 +187,4 @@
     }
   </script>
 <script src="__THEME__/js/module.form.js"></script>
-<script>
-  $(function(){
-    $('title').html('账户绑定');
-  })
-</script>
 <include file="__THEME__/public_footer" />
