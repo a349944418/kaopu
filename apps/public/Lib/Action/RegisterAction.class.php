@@ -714,7 +714,7 @@ class RegisterAction extends Action
 		$uname = t($_GET['Reg_name']);
 		$oldName = t($_POST['old_name']);
 		$result = $this->_register_model->isValidName($uname, $oldName);
-		$result = $result ? "true" : "false";
+		//$result = $result ? "true" : "false";
 		echo $result;
 	}
 
