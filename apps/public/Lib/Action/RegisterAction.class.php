@@ -180,6 +180,7 @@ class RegisterAction extends Action
 
 		$email = t($_POST['email']);
 		$uname = t($_POST['uname']);
+		$utype = t($_POST['Reg_capacity']);
 		$sex = isset($_POST['sex']) ? intval($_POST['sex']) : 1;
 
 		$bindemail = model('AddonData')->get('login:bindemail');
